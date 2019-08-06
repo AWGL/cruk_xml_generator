@@ -1,8 +1,14 @@
 import os
 from lxml import etree as ET
+from import_genes_numbers import ImportGenesNumbers
+
+input_path = "/Users/sararey/Documents/cruk_reporting/" #temp path for testing"
+input_file_name = "gene_numbers.csv" #temp for testing
 
 output_path = "/Users/sararey/Documents/cruk_reporting/xml_report" #temp path for testing"
 output_file_name = "test.xml" #should be in the format date_hospitalorgcode_patientid_sampleid
+
+genes_numbers = {"stuff":1, "test":2} #TODO Replace this: it is only for testing- complete this with gets from data objects
 
 def load_existing_xml(xml_file):
     tree = ET.parse(xml_file)
@@ -17,6 +23,12 @@ def load_existing_xml(xml_file):
     for sample in root.iter('smpSample'):
         print(sample.text)
     print(ET.tostring(root, encoding="UTF-8"))
+
+
+def data_import(import_file):
+    imported_data = ImportGenesNumbers(import_file)
+    genes_numbers = imported_data.load_csv()
+    return genes_numbers
 
 
 def generate_xml(info_dict):
@@ -60,20 +72,21 @@ def generate_xml(info_dict):
     tech_hub = ET.SubElement(root, "smTechnologyHub", name=tech_hub_name)
     test_res = ET.SubElement(tech_hub, "testResults")
     # the below for all genes
-    test = ET.SubElement(test_res, "test")
-    ET.SubElement(test, "gene")
-    test_method = ET.SubElement(test, "methodOfTest")
-    test_method.text = ET.CDATA("Num")
-    test_scope = ET.SubElement(test, "scopeOfTest")
-    test_scope.text = ET.CDATA("Exon")
-    ET.SubElement(test, "dateTestResultsReleased")
-    test_result = ET.SubElement(test, "testResult")
-    test_result.text = ET.CDATA("No variant detected")
-    test_report = ET.SubElement(test, "testReport")
-    test_report.text = ET.CDATA("High confidence")
-    ET.SubElement(test, "testStatus")
-    comments = ET.SubElement(test, "comments")
-    comments.text = ET.CDATA("These results are intended for research purposes only.")
+    for g in genes_numbers.keys():
+        test = ET.SubElement(test_res, "test")
+        ET.SubElement(test, "gene")
+        test_method = ET.SubElement(test, "methodOfTest")
+        test_method.text = ET.CDATA("Num")
+        test_scope = ET.SubElement(test, "scopeOfTest")
+        test_scope.text = ET.CDATA("Exon")
+        ET.SubElement(test, "dateTestResultsReleased")
+        test_result = ET.SubElement(test, "testResult")
+        test_result.text = ET.CDATA("No variant detected")
+        test_report = ET.SubElement(test, "testReport")
+        test_report.text = ET.CDATA("High confidence")
+        ET.SubElement(test, "testStatus")
+        comments = ET.SubElement(test, "comments")
+        comments.text = ET.CDATA("These results are intended for research purposes only.")
 
     edited_tree = ET.ElementTree(root)
     return edited_tree
@@ -84,6 +97,7 @@ def write_xml(element_tree, output_xml):
 
 
 def main():
+    print(data_import(os.path.join(input_path, input_file_name))) #TODO Use this imported data to populate xml
     parsed_data = None #TODO create dictionary of required data parsed from data sources
     load_existing_xml(os.path.join("/Users/sararey/Documents/cruk_reporting/", "20190730 RVFAR-W014779Y-H19G5842 A1.xml"))
     tree = generate_xml(parsed_data)
