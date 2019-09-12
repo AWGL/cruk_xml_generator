@@ -80,9 +80,164 @@ class ValidData:
                     "7 - Voluntary repeat biopsy after targetted therapy"]
         return valid
 
+    def valid_sample_date(self):
+        #TODO implement this- format YYYY-MM-DD
+        return None
 
+    def valid_tumour_type(self):
+        valid = [Value List:
+ - "1 - Breast"
+ - "2 - Colorectal"
+ - "3 - Lung"
+ - "4 - Melanoma"
+ - "5 - Ovarian"
+ - "6 - Prostate"
+ - "7 - Other" ]
+        return valid
 
+    def valid_pathology_t_cat(self):
+        Value
+        List
+        IF
+        date
+        sample
+        taken is before
+        1 / 1 / 2018(TNM7):
+        0 - unknown
+        TX - Primary
+        tumour
+        cannot
+        be
+        assessed
+        T0 - No
+        evidence
+        of
+        primary
+        tumour
+        Tis - Carcinoma in situ
+        T1a - Tumour ≤20
+        mm
+        diameter
+        T1b - Tumour > 20–≤30
+        mm
+        T2 - Tumour >= 20
+        mm
+        from the carina, invades
+        visceral
+        pleura, partial
+        atelectasis
+        T2a - > 30–≤50
+        mm
+        T2b - > 50–≤70
+        mm
+        T3 - > 70
+        mm;
+        involvement
+        of
+        parietal
+        pleura, mediastinal
+        pleura, chest
+        wall, pericardium or
+        diaphragm;
+        tumour
+        within
+        20
+        mm
+        of
+        the
+        carina;
+        atelectasis / obstructive
+        pneumonitis
+        involving
+        whole
+        lung;
+        separate
+        nodule(s) in the
+        same
+        lobe
+        T4 - Involvement
+        of
+        great
+        vessels, mediastinum, carina, trachea, oesophagus, vertebra, or heart
+        Separate
+        tumour
+        nodule(s) in different
+        ipsilateral
+        lobe
+        9 -
+        not applicable
 
+        Value
+        List
+        OTHERWISE
+        ie if date
+        sample
+        taken is on or after
+        1 / 1 / 2018(TNM8):
+        0 - Unknown
+        TX - Primary
+        tumour
+        cannot
+        be
+        assessed
+        T0 - No
+        evidence
+        of
+        primary
+        tumour
+        Tis - Carcinoma in situ
+        T1a - Tumour <= 10
+        mm
+        T1b - Tumour > 10–=20
+        mm
+        T1c - Tumour > 20–=30
+        mm
+        T1mi - Minimally
+        invasive
+        adenocarcinoma
+        T2 - > 30–=50
+        mm
+        T2a - > 30–=40
+        mm
+        T2b - > 40–=50
+        mm
+        T3 - > 50–=70
+        mm
+        T4 - > 70
+        mm
+        9 - Not
+        applicable
+
+    def valid_pathology_n_cat(self):
+        valid = [Value List:
+0 - unknown
+NX - Regional lymph nodes cannot be assessed
+N0 - No regional node involvement
+N1 - Ipsilateral hilar/intrapulmonary nodes (node stations 10–14)
+N2 - Ipsilateral mediastinal nodes (node stations 1–9)
+N3 - Contralateral mediastinal, hilar, ipsilateral or contralateral scalene, supraclavicular nodes
+9 - not applicable]
+        return valid
+
+        def valid_pathology_m_cat(self):
+            valid = [Value List IF date sample taken is before 1/1/2018 (TNM7):
+0 - unknown
+M0 - No distant metastasis
+M1 - Distant metastasis
+M1a - Separate tumour nodule(s) in a contralateral lobe; pleural nodules or malignant pleural or
+pericardial effusion.
+M1b - Distant metastasis
+9 - not applicable
+
+Value List OTHERWISE ie if date sample taken is on or after 1/1/2018 (TNM8):
+0 - Unknown
+M0 - No distant metastasis
+M1 - Distant metastasis
+M1a - Separate tumour nodule(s) in a contralateral lobe; pleural nodules or malignant pleural or pericardial effusion
+M1b - Single extrathoracic metastasis in a single organ and involvement of a single distant (non-regional) lymph node
+M1c - Multiple extrathoracic metastases in one or several organs
+9 - Not applicable]
+            return valid
 
 
 

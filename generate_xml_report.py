@@ -4,6 +4,8 @@ from import_genes_numbers import ImportGenesNumbers
 
 genes_numbers = {"stuff":1, "test":2} #TODO Replace this: it is only for testing- complete this with gets from data objects
 
+#TODO check validation with lxml
+
 class GenerateXml:
 
     def __init__(self, info_dict):
