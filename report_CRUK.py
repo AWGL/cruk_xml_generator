@@ -1,6 +1,7 @@
 import os
 from parse_report import ParseReport
 from generate_xml_report import GenerateXml
+from is_valid import IsValid
 
 path = "/Users/sararey/Documents/cruk_reporting" #temp path for testing
 worksheet_id = "19-5037" #temp for testing- obtain from ?- entry by scientist?
@@ -21,10 +22,11 @@ def main():
     write_xml.load_existing_xml(
         os.path.join("/Users/sararey/Documents/cruk_reporting/", "20190730 RVFAR-W014779Y-H19G5842 A1.xml"))
     tree = write_xml.generate_xml(parsed_data)
-    write_xml(tree)
     write_xml.load_existing_xml(os.path.join(write_xml.output_path, write_xml.output_file_name))
 
-
+    # Test validity
+    #check_validity = IsValid(tree)
+    #check_validity.itera()
 
 
 

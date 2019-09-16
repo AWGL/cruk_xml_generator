@@ -1,27 +1,40 @@
 from lxml import etree as ET
 import logging
-import re
-from valid_data import ValidData
-from t import valid_clinical_hub
 
-class IsValid:
-    def __init__(self, input):
-        self. input = input
-        self.data = ValidData()
+class IsValid(object):
 
-    def select_field(self):
-        return None
+    def __init__(self, input, validate_dict=None):
+        self.validate_dict = {"smClinicalHub":"clinical_hub", "organisationCode":"org_code"}
+        self.input = input
+        #self.field = None
+        #print(ET.tostring(self.input, encoding="UTF-8"))
+        #print(self.input.find(".//smClinicalHub"))
 
+    def itera(self):
+        for elem in self.input.iter():
+            print(elem.tag)
+            method_name = self.validate_dict.get(elem.tag, "Not in dict")
+            print(method_name)
+            print(self.select_method(method_name))
+
+    def select_method(self, method_name):
+        method = getattr(self, method_name, lambda: "Not found")
+        #field = self.input.find(f".//{to_find}")
+        #print(field)
+        return method() #self.field
 
     def clinical_hub(self):
-        ValidData.valid_clinical_hub(0)
-        #if val in
-        valid = None
+        from valid_data import valid_clinical_hub as validate
+        #selected = self.select_field("smClinicalHub")
+        print("testing")
+        #print(selected)
+        #valid = self.field in validate
+        valid = True
         if valid:
             logging.info("smClinicalHub OK")
         else:
             raise Exception
-        return None
+        return "executed clinical_hub"
 
     def org_code(self):
         if not isinstance(self.input ,str):
@@ -167,7 +180,7 @@ class IsValid:
 
     def sample_date(self):
         # Optional for TH
-        ValidData.valid_sample_date(0)
+        ValidData.valid_date(0)
         # if val in
         valid = None
         if valid:
@@ -279,7 +292,7 @@ class IsValid:
         return None
 
     def sample_sent_date(self):
-        ValidData.valid_sample_date(0)
+        ValidData.valid_date(0)
         # if val in
         valid = None
         if valid:
@@ -289,7 +302,7 @@ class IsValid:
         return None
 
     def sample_received_date(self):
-        ValidData.valid_sample_date(0)
+        ValidData.valid_date(0)
         # if val in
         valid = None
         if valid:
@@ -305,7 +318,7 @@ class IsValid:
 
     def report_release_date(self):
         #TODO get date of xml generation as that is this date
-        ValidData.valid_sample_date(0)
+        ValidData.valid_date(0)
         # if val in
         valid = None
         if valid:
@@ -382,7 +395,7 @@ class IsValid:
         # if val in
         valid = None
         if valid:
-            logging.info("smTechnologyHub/test/Results/test/gene OK")
+            logging.info("smTechnologyHub/testResults/test/gene OK")
         else:
             raise Exception
         return None
@@ -392,13 +405,60 @@ class IsValid:
         # if val in
         valid = None
         if valid:
-            logging.info("smTechnologyHub/test/Results/test/methodOfTest OK")
+            logging.info("smTechnologyHub/testResults/test/methodOfTest OK")
         else:
             raise Exception
         return None
 
-    def 
+    def scope(self):
+        if not isinstance(self.input, ET.CDATA):
+            raise Exception("smTechnologyHub/testResults/test/scopeOfTest is not correctly formatted as CDATA")
+        if len(self.input) > 200:  # TODO fix this line to work with CDATA
+            raise Exception("smTechnologyHub/testResults/test/scopeOfTest is longer than 200 characters")
+        return None
 
+    def test_results_date(self):
+        # TODO If all test results released this date should be set to same as report release date
+        ValidData.valid_date(0)
+        # if val in
+        valid = None
+        if valid:
+            logging.info("smTechnologyHub/testResults/test/dateTestResultsReleased OK")
+        else:
+            raise Exception
+        return None
+
+    def test_results(self):
+        #TODO Multiple mutations should be separated by a semicolon
+        if not isinstance(self.input, ET.CDATA):
+            raise Exception("smTechnologyHub/testResults/test/testResult is not correctly formatted as CDATA")
+        if len(self.input) > 600:  # TODO fix this line to work with CDATA
+            raise Exception("smTechnologyHub/testResults/test/testResult is longer than 600 characters")
+        return None
+
+    def test_report(self):
+        if not isinstance(self.input, ET.CDATA):
+            raise Exception("smTechnologyHub/testResults/test/testReport is not correctly formatted as CDATA")
+        if len(self.input) > 600:  # TODO fix this line to work with CDATA
+            raise Exception("smTechnologyHub/testResults/test/testReport is longer than 600 characters")
+        return None
+
+    def test_status(self):
+        ValidData.valid_test_status(0)
+        # if val in
+        valid = None
+        if valid:
+            logging.info("smTechnologyHub/testResults/test/dateTestResultsReleased OK")
+        else:
+            raise Exception
+        return None
+
+    def comments(self):
+        if not isinstance(self.input, ET.CDATA):
+            raise Exception("smTechnologyHub/testResults/test/comments is not correctly formatted as CDATA")
+        if len(self.input) > 600:  # TODO fix this line to work with CDATA
+            raise Exception("smTechnologyHub/testResults/test/comments is longer than 600 characters")
+        return None
 
 
 

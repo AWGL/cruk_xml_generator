@@ -20,16 +20,16 @@ class GenerateXml:
     def load_existing_xml(self, xml_file):
         tree = ET.parse(xml_file)
         root= tree.getroot()
-        print(root.tag) # XML rooted in this tag
-        print(root.attrib) # obtain attributes of root
-        for child in root:
-            print(child.tag, child.attrib)
-            for c in child:
-                print(c.tag)
+        #print(root.tag) # XML rooted in this tag
+        #print(root.attrib) # obtain attributes of root
+        #for child in root:
+            #print(child.tag, child.attrib)
+            #for c in child:
+                #print(c.tag)
         #[print(elem.tag, elem.attrib) for elem in root.iter()]
-        for sample in root.iter('smpSample'):
-            print(sample.text)
-        print(ET.tostring(root, encoding="UTF-8"))
+        #for sample in root.iter('smpSample'):
+            #print(sample.text)
+        #print(ET.tostring(root, encoding="UTF-8"))
 
 
     def data_import(self):
@@ -39,7 +39,7 @@ class GenerateXml:
         return genes_numbers
 
 
-    def generate_xml(self):
+    def generate_xml(self, info_dict):
         # for testing
         clinical_hub_name = "2 - Cardiff"
         tech_hub_name = "2 - Cardiff"
