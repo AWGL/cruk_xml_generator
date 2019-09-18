@@ -30,7 +30,8 @@ class ParseReport:
         wb = load_workbook(filename=worksheet, data_only=True)
         report_tab = wb["Report"]
         data = report_tab.values
-        cols = next(data)[15:] # Starting from column P of Excel workbook
+        # Starting from column P of Excel workbook- known a priori
+        cols = next(data)[15:] #TODO update these values for new app output
         data = list(data)
         idx = [r[15] for r in data]
         data_subset = (islice(r, 15, None) for r in data)
