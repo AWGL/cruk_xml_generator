@@ -1,12 +1,22 @@
 import datetime
 import logging
 
+ch_dict = {"Birmingham": "1 - Birmingham", "Cardiff":"2 - Cardiff", "Cambridge":"3 - Cambridge",
+                   "Edinburgh":"4 - Edinburgh", "Glasgow":"5 - Glasgow", "Leeds":"6 - Leeds",
+                    "Manchester":"7 - Manchester", "Royal Marsden":"8 - Royal Marsden",
+                    "Barts & Brighton":"9 – Barts & Brighton", "Belfast":"10 – Belfast", "Imperial":"11 – Imperial",
+                    "KCL":"12 - KCL", "Leicester":"13 – Leicester", "Newcastle":"14 – Newcastle",
+                    "Oxford":"15 – Oxford", "Sheffield":"16 – Sheffield", "Southampton":"17 – Southampton",
+                    "UCL":"18 - UCL", "Liverpool":"7 - Manchester"} #TODO FINAL VALUE IS TMP WAITING FOR WHAT IS LIVERPOOL CH
 
 def valid_clinical_hub():
+    '''
     valid = ["1 - Birmingham", "2 - Cardiff", "3 - Cambridge", "4 - Edinburgh", "5 - Glasgow", "6 - Leeds",
                 "7 - Manchester", "8 - Royal Marsden", "9 – Barts & Brighton", "10 – Belfast", "11 – Imperial",
                 "12 - KCL", "13 – Leicester", "14 – Newcastle", "15 – Oxford", "16 – Sheffield", "17 – Southampton",
                 "18 - UCL"]
+    '''
+    valid = ch_dict.values()
     return valid
 
 def valid_gender():

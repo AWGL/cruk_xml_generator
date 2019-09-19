@@ -460,6 +460,11 @@ class IsValid(object):
             raise Exception("smTechnologyHub/testResults/test/comments is longer than 600 characters")
         return None
 
+def main():
+    return None
+
+if __name__ == "__main__":
+    main()
 
 
 

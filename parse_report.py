@@ -11,11 +11,6 @@ class ParseReport:
         self.worksheet_id = worksheet_id
 
 
-    def locate_samples(self, path_to_project):
-        samples_list = next(os.walk(path_to_project))[1] #directories
-        return samples_list
-
-
     def find_analysis_worksheet(self, path_to_analysis, ext):
         sample_name = os.path.basename(path_to_analysis)
         worksheet_name = glob(f"{os.path.join(path_to_analysis, '')}*{sample_name}*{ext}")
@@ -25,7 +20,6 @@ class ParseReport:
 
 
     def load_analysis_worksheet(self, worksheet):
-        print(worksheet)
         worksheet_sample = (os.path.basename(os.path.dirname(worksheet)))
         wb = load_workbook(filename=worksheet, data_only=True)
         report_tab = wb["Report"]
