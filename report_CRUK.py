@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from reporter import locate_samples
 from parse_report import ParseReport
 from parse_database import ParseDatabase
@@ -12,6 +13,9 @@ worksheet_id = "19-5037" #temp for testing- obtain from ?- entry by scientist?
 
 def main():
     sample_dict = {}
+
+    # Obtain today's date
+    current_date = datetime.today().strftime('%Y-%m-%d')
 
     # Identify samples with data generated on this worksheet id- relies on directories created one for each sample
     samples = locate_samples(os.path.join(path, worksheet_id))
@@ -29,12 +33,18 @@ def main():
         sample_data = database_parser.get_sample(samples_dataframe, sample)
         info_dict["clinical_hub"] = database_parser.get_clinical_hub(sample_data)
         info_dict["org_code"] = None
-        info_dict["Local_patient_id"] = database_parser.get_patient_id(sample_data)
+        info_dict["local_patient_id"] = database_parser.get_patient_id(sample_data)
         info_dict["source_id"] = database_parser.get_source_sample_id(sample_data)
         info_dict["sample_type"] = database_parser.get_sample_type(sample_data)
-        
-
-
+        info_dict["tumour_type"] = None
+        info_dict["morphology_snomed"] = None
+        info_dict["date_sample_sent"] = None
+        info_dict["date_sample_received"] = database_parser.get_date_sample_received(sample_data)
+        info_dict["lab_id"] = database_parser.get_lab_id(sample_data)
+        info_dict["release_date"] = current_date
+        info_dict["vol_banked"] = None
+        info_dict["conc_banked"] = database_parser.get_conc_banked(sample_data)
+        info_dict["tech_hub"] = "2 - Cardiff"
 
         # Parse data from Excel report generated- per sample
         report_parser = ParseReport(worksheet_id)

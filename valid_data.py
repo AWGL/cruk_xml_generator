@@ -9,6 +9,18 @@ ch_dict = {"Birmingham": "1 - Birmingham", "Cardiff":"2 - Cardiff", "Cambridge":
                     "Oxford":"15 – Oxford", "Sheffield":"16 – Sheffield", "Southampton":"17 – Southampton",
                     "UCL":"18 - UCL", "Liverpool":"7 - Manchester"} #TODO FINAL VALUE IS TMP WAITING FOR WHAT IS LIVERPOOL CH
 
+st_dict = {"blood":"1 - Blood", "tissue-resection":"3 - Tissue- Resection",
+           "tissue-bronchoscopicbiopsy":"8 - Tissue- Bronchoscopic biopsy",
+           "tissue-ctguidedbiopsy":"9 - Tissue- CT guided biopsy",
+            "tissue-surgicalbiopsy":"10 - Tissue- Surgical biopsy",
+            "tissue-otherbiopsy":"11 - Tissue- Other biopsy",
+            "cytologycellblock-ebus/eusfna":"12 - Cytology cell block- EBUS/EUS FNA",
+            "cytologycellblock-bronchoscopicwashing":"13 - Cytology cell block- Bronchoscopic washing",
+            "cytologycellblock-ctguided":"14 - Cytology cell block- CT guided",
+            "cytologycellblock-effusion":"15 - Cytology cell block- Effusion",
+            "cytologycellblock-other":"16 - Cytology cell block- Other", "extracteddna":"17 - Extracted DNA",
+            "dna":"17 - Extracted DNA"} #TODO FINAL VALUE IS TMP CHECK CORRECT
+
 def valid_clinical_hub():
     '''
     valid = ["1 - Birmingham", "2 - Cardiff", "3 - Cambridge", "4 - Edinburgh", "5 - Glasgow", "6 - Leeds",
@@ -68,11 +80,14 @@ def valid_sample_source():
     return valid
 
 def valid_sample_type():
+    '''
     valid = ["1 - Blood", "3 - Tissue- Resection", "8 - Tissue- Bronchoscopic biopsy",
                 "9 - Tissue- CT guided biopsy", "10 - Tissue- Surgical biopsy", "11 - Tissue- Other biopsy",
                 "12 - Cytology cell block- EBUS/EUS FNA", "13 - Cytology cell block- Bronchoscopic washing",
                 "14 - Cytology cell block- CT guided", "15 - Cytology cell block- Effusion",
                 "16 - Cytology cell block- Other", "17 - Extracted DNA"]
+    '''
+    valid = st_dict.values()
     return valid
 
 def valid_sample_procedure():
