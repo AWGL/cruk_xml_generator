@@ -48,12 +48,33 @@ def main():
 
         # Parse data from Excel report generated- per sample
         report_parser = ParseReport(worksheet_id)
-        report = report_parser.find_analysis_worksheet(os.path.join(path, worksheet_id, samples[0]), ".xlsx") # test for one sample initially
-        worksheet_data_frame = report_parser.load_analysis_worksheet(report)
-        #print(worksheet_data_frame)
+        spreadsheet = report_parser.find_analysis_worksheet(os.path.join(path, worksheet_id, samples[0]), ".xlsx") #TODO test for one sample initially
+        worksheet = report_parser.load_analysis_worksheet(spreadsheet)
+        worksheet_data_frame = report_parser.report_table(worksheet)
+        print(worksheet_data_frame)
+
 
         # Populate information dictionary from Excel report- per sample
+        # Check whether there is RNA data in the report or the report is DNA only
+        analysed_samples = report_parser.report_samples(worksheet)
+        #TODO IMPLEMENT THIS TO HANDLE BOTH CASES- anticipate will be identical with potential extra step for RNA
+        if 0 in analysed_samples:
+            "DNA pathway"
+        elif len(analysed_samples) == 2:
+            "RNA pathway"
+        else:
+            raise Exception(f"Could not determine if report worksheet {worksheet_id}-{sample} analysed for DNA or both \
+            DNA and RNA.")
 
+        # Loop over genes (for each sample)
+        genes = report_parser.get_genes(worksheet_data_frame)
+        for gene in genes:
+            gene_dict = {}
+            print(gene)
+            gene_dict["gene"] = gene
+            gene_dict["test_method"] = "19 - Illumina NGS TST170 Panel 43 of 170"
+
+        info_dict["genes"] = gene_dict
         # Add information dictionary to sample dictionary
         sample_dict[sample] = info_dict
     print(samples)

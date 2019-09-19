@@ -1,7 +1,5 @@
-from openpyxl import load_workbook
 import xlrd
 import pandas as pd
-from pandas import DataFrame
 
 class ParseDatabase:
 
@@ -71,7 +69,7 @@ class ParseDatabase:
         # return conc of banked nucleic acid as a series, convert to string and take value part excluding row number
         conc = " ".join(sample_df['Final FFPE conc for NGS'].to_string().split()[1:])
         # Where there is no concentration as no nucleic acid was banked, enter 0
-        if conc == "":
+        if conc == "" or conc == " ":
             conc = 0
         return conc
 
