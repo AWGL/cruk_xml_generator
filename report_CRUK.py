@@ -55,9 +55,10 @@ def main():
 
 
         # Populate information dictionary from Excel report- per sample
-        # Check whether there is RNA data in the report or the report is DNA only
         analysed_samples = report_parser.report_samples(worksheet)
         #TODO IMPLEMENT THIS TO HANDLE BOTH CASES- anticipate will be identical with potential extra step for RNA
+        # TODO NOT NEEDED FOR NOW
+        '''
         if 0 in analysed_samples:
             "DNA pathway"
         elif len(analysed_samples) == 2:
@@ -65,6 +66,7 @@ def main():
         else:
             raise Exception(f"Could not determine if report worksheet {worksheet_id}-{sample} analysed for DNA or both \
             DNA and RNA.")
+        '''
 
         # Loop over genes (for each sample)
         genes = report_parser.get_genes(worksheet_data_frame)
@@ -73,8 +75,9 @@ def main():
             print(gene)
             gene_data_dict = {}
             gene_data_dict["gene"] = report_parser.get_gene_number(gene)
-            gene_data_dict["test_method"] = "19"
-            
+            gene_data_dict["test_method"] = "19" # Hardcoded for TST170 app
+            gene_data_dict["test_scope"] = report_parser.get_test_scope(gene, worksheet_data_frame)
+
 
             gene_dict[gene] = gene_data_dict
         info_dict["genes"] = gene_dict

@@ -66,6 +66,11 @@ class ParseReport:
         gene_num = genes_dict.get(gene)
         return gene_num
 
+    def get_test_scope(self, gene, df):
+        test_scope = df.loc[gene] #TODO get out scope from this object
+        print(test_scope)
+        return test_scope
+
     def parse_report_data(self):
         #This might be better in writeout
         return None
