@@ -61,6 +61,11 @@ class ParseReport:
         genes = df['GENE']
         return genes
 
+    def get_gene_number(self, gene):
+        from valid_data import genes_dict
+        gene_num = genes_dict.get(gene)
+        return gene_num
+
     def parse_report_data(self):
         #This might be better in writeout
         return None

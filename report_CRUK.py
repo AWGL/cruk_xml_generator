@@ -68,12 +68,15 @@ def main():
 
         # Loop over genes (for each sample)
         genes = report_parser.get_genes(worksheet_data_frame)
+        gene_dict = {}
         for gene in genes:
-            gene_dict = {}
             print(gene)
-            gene_dict["gene"] = gene
-            gene_dict["test_method"] = "19 - Illumina NGS TST170 Panel 43 of 170"
+            gene_data_dict = {}
+            gene_data_dict["gene"] = report_parser.get_gene_number(gene)
+            gene_data_dict["test_method"] = "19"
+            
 
+            gene_dict[gene] = gene_data_dict
         info_dict["genes"] = gene_dict
         # Add information dictionary to sample dictionary
         sample_dict[sample] = info_dict

@@ -2,32 +2,35 @@ import datetime
 import logging
 
 ch_dict = {"Birmingham": "1 - Birmingham", "Cardiff":"2 - Cardiff", "Cambridge":"3 - Cambridge",
-                   "Edinburgh":"4 - Edinburgh", "Glasgow":"5 - Glasgow", "Leeds":"6 - Leeds",
-                    "Manchester":"7 - Manchester", "Royal Marsden":"8 - Royal Marsden",
-                    "Barts & Brighton":"9 – Barts & Brighton", "Belfast":"10 – Belfast", "Imperial":"11 – Imperial",
-                    "KCL":"12 - KCL", "Leicester":"13 – Leicester", "Newcastle":"14 – Newcastle",
-                    "Oxford":"15 – Oxford", "Sheffield":"16 – Sheffield", "Southampton":"17 – Southampton",
-                    "UCL":"18 - UCL", "Liverpool":"7 - Manchester"} #TODO FINAL VALUE IS TMP WAITING FOR WHAT IS LIVERPOOL CH
+                "Edinburgh":"4 - Edinburgh", "Glasgow":"5 - Glasgow", "Leeds":"6 - Leeds",
+                "Manchester":"7 - Manchester", "Royal Marsden":"8 - Royal Marsden",
+                "Barts & Brighton":"9 – Barts & Brighton", "Belfast":"10 – Belfast", "Imperial":"11 – Imperial",
+                "KCL":"12 - KCL", "Leicester":"13 – Leicester", "Newcastle":"14 – Newcastle",
+                "Oxford":"15 – Oxford", "Sheffield":"16 – Sheffield", "Southampton":"17 – Southampton",
+                "UCL":"18 - UCL", "Maidstone":"19 - Maidstone", "Devon and Exeter":"20 - Devon and Exeter",
+                "Liverpool":"21 - Liverpool", "Bristol":"22 - Bristol", "Colchester":"23 - Colchester",
+                "Aberdeen":"24 - Aberdeen"}
 
-st_dict = {"blood":"1 - Blood", "tissue-resection":"3 - Tissue- Resection",
-           "tissue-bronchoscopicbiopsy":"8 - Tissue- Bronchoscopic biopsy",
-           "tissue-ctguidedbiopsy":"9 - Tissue- CT guided biopsy",
-            "tissue-surgicalbiopsy":"10 - Tissue- Surgical biopsy",
-            "tissue-otherbiopsy":"11 - Tissue- Other biopsy",
-            "cytologycellblock-ebus/eusfna":"12 - Cytology cell block- EBUS/EUS FNA",
-            "cytologycellblock-bronchoscopicwashing":"13 - Cytology cell block- Bronchoscopic washing",
-            "cytologycellblock-ctguided":"14 - Cytology cell block- CT guided",
-            "cytologycellblock-effusion":"15 - Cytology cell block- Effusion",
-            "cytologycellblock-other":"16 - Cytology cell block- Other", "extracteddna":"17 - Extracted DNA",
-            "dna":"17 - Extracted DNA"} #TODO FINAL VALUE IS TMP CHECK CORRECT
+st_dict = {"blood":"1", "tissue-resection":"3", "tissue-bronchoscopicbiopsy":"8", "tissue-ctguidedbiopsy":"9",
+            "tissue-surgicalbiopsy":"10", "tissue-otherbiopsy":"11", "cytologycellblock-ebus/eusfna":"12",
+            "cytologycellblock-bronchoscopicwashing":"13", "cytologycellblock-ctguided":"14",
+            "cytologycellblock-effusion":"15", "cytologycellblock-other":"16", "extracteddna":"17", "dna":"17"}
+
+tumour_type_dict = {} #TODO see how it comes in and create lookup for number only for outgoing xml
+valid = ["1 - Breast", "2 - Colorectal", "3 - Lung", "4 - Melanoma", "5 - Ovarian", "6 - Prostate",
+         "7 - Other"]
+
+genes_dict = {"BRAF":"1", "ALK": "4", "PIK3CA":"5", "PTEN":"6", "PTEN LOH":"7", "TP53":"8", "KIT":"9", "NRAS":"10",
+         "DDR2":"11", "TMPRSS2-ERG":"12", "EGFR":"13", "KRAS":"14", "AKT1":"15", "CCND1":"16", "CDK4":"17",
+         "CDKN2A":"18", "CDKN2B":"19", "FGFR1":"20", "FGFR2":"21", "FGFR3":"22", "HER2":"23", "JAK2":"24",
+         "KDR":"25", "MET":"26", "NF1":"27", "P16":"28", "PDL-1":"29", "RB1":"30", "RET":"31", "ROS1":"32",
+         "STAT3":"33", "STK11/LKB1":"34", "TSC1":"35", "TSC2":"36", "HRAS":"37", "CCND2":"38", "CCND3":"39",
+         "CCNE1":"40", "CDK2":"41", "NTRK1":"42", "BRCA1":"43", "BRCA2":"44", "ATM":"45", "BRIP1":"46",
+         "PALB2":"47", "RAD51C":"48", "BARD1":"49", "CDK12":"50", "CHEK1":"51", "CHEK2":"52", "FANCL":"53",
+         "PPP2R2A":"54", "RAD51B":"55", "RAD51D":"56", "RAD54L":"57", "ARID1A":"58"}
+
 
 def valid_clinical_hub():
-    '''
-    valid = ["1 - Birmingham", "2 - Cardiff", "3 - Cambridge", "4 - Edinburgh", "5 - Glasgow", "6 - Leeds",
-                "7 - Manchester", "8 - Royal Marsden", "9 – Barts & Brighton", "10 – Belfast", "11 – Imperial",
-                "12 - KCL", "13 – Leicester", "14 – Newcastle", "15 – Oxford", "16 – Sheffield", "17 – Southampton",
-                "18 - UCL"]
-    '''
     valid = ch_dict.values()
     return valid
 
@@ -80,13 +83,6 @@ def valid_sample_source():
     return valid
 
 def valid_sample_type():
-    '''
-    valid = ["1 - Blood", "3 - Tissue- Resection", "8 - Tissue- Bronchoscopic biopsy",
-                "9 - Tissue- CT guided biopsy", "10 - Tissue- Surgical biopsy", "11 - Tissue- Other biopsy",
-                "12 - Cytology cell block- EBUS/EUS FNA", "13 - Cytology cell block- Bronchoscopic washing",
-                "14 - Cytology cell block- CT guided", "15 - Cytology cell block- Effusion",
-                "16 - Cytology cell block- Other", "17 - Extracted DNA"]
-    '''
     valid = st_dict.values()
     return valid
 
@@ -113,8 +109,7 @@ def valid_date(the_date):
     return True
 
 def valid_tumour_type():
-    valid = ["1 - Breast", "2 - Colorectal", "3 - Lung", "4 - Melanoma", "5 - Ovarian", "6 - Prostate",
-                "7 - Other"]
+    valid = tumour_type_dict.values()
     return valid
 
 def valid_pathology_t_cat(sample_date):
@@ -184,14 +179,7 @@ def valid_tech_hub():
     return valid
 
 def valid_gene():
-    valid = ["1 - BRAF", "4 - ALK", "5 - PIK3CA", "6 - PTEN", "7 - PTEN LOH", "8 - TP53", "9 - KIT", "10 - NRAS",
-                 "11 - DDR2", "12 - TMPRSS2-ERG", "13 - EGFR", "14 - KRAS", "15 - AKT1", "16 - CCND1", "17 - CDK4",
-                 "18 - CDKN2A", "19 - CDKN2B", "20 - FGFR1", "21 - FGFR2", "22 - FGFR3", "23 - HER2", "24 - JAK2",
-                 "25 - KDR", "26 - MET", "27 - NF1", "28 - P16", "29 - PDL-1", "30 - RB1", "31 - RET", "32 - ROS1",
-                 "33 - STAT3", "34 - STK11/LKB1", "35 - TSC1", "36 - TSC2", "37 - HRAS", "38 - CCND2", "39 - CCND3",
-                 "40 - CCNE1", "41 - CDK2", "42 - NTRK1", "43 - BRCA1", "44 - BRCA2", "45 - ATM", "46 - BRIP1",
-                 "47 - PALB2", "48 - RAD51C", "49 - BARD1", "50 - CDK12", "51 - CHEK1", "52 - CHEK2", "53 - FANCL",
-                  "54 - PPP2R2A", "55 - RAD51B", "56 - RAD51D", "57 - RAD54L", "58 - ARID1A"]
+    valid = genes_dict.values()
     return valid
 
 def valid_method():
