@@ -30,10 +30,10 @@ genes_dict = {"BRAF":"1", "ALK": "4", "PIK3CA":"5", "PTEN":"6", "PTEN LOH":"7", 
          "DDR2":"11", "TMPRSS2-ERG":"12", "EGFR":"13", "KRAS":"14", "AKT1":"15", "CCND1":"16", "CDK4":"17",
          "CDKN2A":"18", "CDKN2B":"19", "FGFR1":"20", "FGFR2":"21", "FGFR3":"22", "HER2":"23", "JAK2":"24",
          "KDR":"25", "MET":"26", "NF1":"27", "P16":"28", "PDL-1":"29", "RB1":"30", "RET":"31", "ROS1":"32",
-         "STAT3":"33", "STK11/LKB1":"34", "TSC1":"35", "TSC2":"36", "HRAS":"37", "CCND2":"38", "CCND3":"39",
-         "CCNE1":"40", "CDK2":"41", "NTRK1":"42", "BRCA1":"43", "BRCA2":"44", "ATM":"45", "BRIP1":"46",
-         "PALB2":"47", "RAD51C":"48", "BARD1":"49", "CDK12":"50", "CHEK1":"51", "CHEK2":"52", "FANCL":"53",
-         "PPP2R2A":"54", "RAD51B":"55", "RAD51D":"56", "RAD54L":"57", "ARID1A":"58"}
+         "STAT3":"33", "STK11/LKB1":"34", "STK11":"34", "LKB1":"34", "TSC1":"35", "TSC2":"36", "HRAS":"37",
+         "CCND2":"38", "CCND3":"39", "CCNE1":"40", "CDK2":"41", "NTRK1":"42", "BRCA1":"43", "BRCA2":"44",
+         "ATM":"45", "BRIP1":"46", "PALB2":"47", "RAD51C":"48", "BARD1":"49", "CDK12":"50", "CHEK1":"51",
+         "CHEK2":"52", "FANCL":"53", "PPP2R2A":"54", "RAD51B":"55", "RAD51D":"56", "RAD54L":"57", "ARID1A":"58"}
 
 test_status_dict = {"Success":"1", "Partial Fail": "2", "Complete Fail":"3", "Not tested":"4"}
 

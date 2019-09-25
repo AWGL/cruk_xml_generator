@@ -112,23 +112,25 @@ def main():
     #print(samples)
     #print(sample_dict)
 
-
-
-
-
-    '''
-    write_xml = GenerateXml(information_dictionary)
-    print(write_xml.data_import())  # TODO Use this imported data to populate xml
-    parsed_data = None  # TODO create dictionary of required data parsed from data sources
-    write_xml.load_existing_xml(
-        os.path.join("/Users/sararey/Documents/cruk_reporting/", "20190730 RVFAR-W014779Y-H19G5842 A1.xml"))
-    tree = write_xml.generate_xml(parsed_data)
-    write_xml.load_existing_xml(os.path.join(write_xml.output_path, write_xml.output_file_name))
-    '''
-    # Test validity
-    #check_validity = IsValid(tree)
-    #check_validity.itera() TODO Decide on best solution for this later
-
+    # Create write out once per sample
+    for sample in samples:
+        write_xml = GenerateXml(sample_dict.get(sample))
+        parsed_data = None  # TODO create dictionary of required data parsed from data sources
+        write_xml.load_existing_xml(
+            os.path.join("/Users/sararey/Documents/cruk_reporting/", "20190730 RVFAR-W014779Y-H19G5842 A1.xml"))
+        tree = write_xml.generate_xml()
+        print(sample_dict.get(sample).get('cruk_sample_id'))
+        formatted_date = datetime.today().strftime('%Y%m%d')
+        output_xml = f"{formatted_date} {sample_dict.get(sample).get('cruk_sample_id')}.xml"
+        write_xml.write_xml(os.path.join(write_xml.output_path, output_xml), tree)
+        write_xml.load_existing_xml(os.path.join(write_xml.output_path, output_xml))
+        '''
+        # Test validity
+        #check_validity = IsValid(tree)
+        #check_validity.itera() TODO Decide on best solution for this later
+        '''
+        # TODO ONE SAMPLE ONLY FOR TESTING DUE TO AVAILABILITY OF DATA
+        break
 
 
 

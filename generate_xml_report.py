@@ -1,20 +1,16 @@
 import os
 from lxml import etree as ET
-from import_genes_numbers import ImportGenesNumbers
 
-genes_numbers = {"stuff":1, "test":2} #TODO Replace this: it is only for testing- complete this with gets from data objects
 
 #TODO check validation with lxml
 
 class GenerateXml:
 
     def __init__(self, info_dict):
+        self.version = "3.8"
         self.input_path = "/Users/sararey/Documents/cruk_reporting/" #temp path for testing"
-        self.input_file_name = "gene_numbers.csv"  # temp for testing
         self.output_path = "/Users/sararey/Documents/cruk_reporting/xml_report"  # temp path for testing"
-        self.output_file_name = "test.xml"  # should be in the format date_hospitalorgcode_patientid_sampleid
         self.info_dict = info_dict
-        self.edited_tree = None
 
 
     def load_existing_xml(self, xml_file):
@@ -32,79 +28,77 @@ class GenerateXml:
         #print(ET.tostring(root, encoding="UTF-8"))
 
 
-    def data_import(self):
-        import_file = os.path.join(self.input_path, self.input_file_name)
-        imported_data = ImportGenesNumbers(import_file)
-        genes_numbers = imported_data.load_csv()
-        return genes_numbers
-
-
-    def generate_xml(self, info_dict):
-        # for testing
-        clinical_hub_name = "2 - Cardiff"
-        tech_hub_name = "2 - Cardiff"
-
-        # Code
+    def generate_xml(self):
         NS_XSI = "{http://www.w3.org/2001/XMLSchema-instance}"
         root = ET.Element("smpSample")
         root.set(NS_XSI + "noNamespaceSchemaLocation",
-                'http://extranet.cancerresearchuk.org/stratmed/Shared%20Documents/smSampleXSDSchema%20V2.3.xsd')
+                'http://extranet.cancerresearchuk.org/stratmed/Shared%20Documents/smSampleXSDSchema%20V2.3.xsd') #TODO Check this link correct
 
-        clinical_hub = ET.SubElement(root, "smClinicalHub", name=clinical_hub_name)
+        ET.SubElement(root, "smVersion", smVersion=self.version)
+        clinical_hub = ET.SubElement(root, "smClinicalHub", name=self.info_dict.get('clinical_hub'))
         patient = ET.SubElement(clinical_hub, "patient")
-        ET.SubElement(patient, "organisationCode")
-        ET.SubElement(patient, "localPatientIdentifier")
-        ET.SubElement(patient, "localPatientIdentifier2")
-
+        org_code = ET.SubElement(patient, "organisationCode")
+        org_code.text = self.info_dict.get('org_code')
+        loc_pat_id = ET.SubElement(patient, "localPatientIdentifier")
+        loc_pat_id.text = self.info_dict.get('local_patient_id')
+        loc_pat_id_2 = ET.SubElement(patient, "localPatientIdentifier2")
+        loc_pat_id_2.text = self.info_dict.get('local_patient_id_2')
         sample = ET.SubElement(root, "sample")
         clin_hub_elems = ET.SubElement(sample, "clinicalHubElements")
-        ET.SubElement(clin_hub_elems, "sourceSampleIdentifier")
-        ET.SubElement(clin_hub_elems, "typeOfSample")
+        source_id = ET.SubElement(clin_hub_elems, "sourceSampleIdentifier")
+        source_id.text = self.info_dict.get('source_id')
+        sample_type = ET.SubElement(clin_hub_elems, "typeOfSample")
+        sample_type.text = self.info_dict.get('sample_type')
         morph_snomed =  ET.SubElement(clin_hub_elems, "morphologySnomed")
-        morph_snomed.text = ET.CDATA("NA")
-        ET.SubElement(clin_hub_elems, "tumourType")
-        ET.SubElement(clin_hub_elems, "dateSampleSent")
+        morph_snomed.text = ET.CDATA(self.info_dict.get('morphology_snomed'))
+        tum_type = ET.SubElement(clin_hub_elems, "tumourType")
+        tum_type.text = self.info_dict.get('tumour_type')
+        sample_sent_date = ET.SubElement(clin_hub_elems, "dateSampleSent")
+        sample_sent_date.text = self.info_dict.get('date_sample_sent')
         tech_hub_elems = ET.SubElement(sample, "technologyHubElements")
         ET.SubElement(tech_hub_elems, "dateSampleReceived")
-        ET.SubElement(tech_hub_elems, "labSampleIdentifier")
-        ET.SubElement(tech_hub_elems, "reportReleaseDate")
+        lab_id = ET.SubElement(tech_hub_elems, "labSampleIdentifier")
+        lab_id.text = self.info_dict.get('lab_id')
+        release_date = ET.SubElement(tech_hub_elems, "reportReleaseDate")
+        release_date.text = self.info_dict.get('release_date')
         banked_vol = ET.SubElement(tech_hub_elems, "volumeBankedNucleicAcid")
-        banked_vol.text = ET.CDATA("0")
+        banked_vol.text = ET.CDATA(self.info_dict.get('vol_banked'))
         conc_banked = ET.SubElement(tech_hub_elems, "concentrationBankedNucleicAcid")
-        conc_banked.text = ET.CDATA("0")
+        conc_banked.text = ET.CDATA(self.info_dict.get('conc_banked'))
         banked_loc = ET.SubElement(tech_hub_elems, "concentrationBankedNucleicAcid")
-        banked_loc.text = ET.CDATA("location")
+        banked_loc.text = ET.CDATA(self.info_dict.get('banked_loc'))
         banked_id = ET.SubElement(tech_hub_elems, "bankedNucleicAcididentifier")
-        banked_id.text = ET.CDATA("LabNo")
-
-        tech_hub = ET.SubElement(root, "smTechnologyHub", name=tech_hub_name)
+        banked_id.text = ET.CDATA(self.info_dict.get('banked_id'))
+        tech_hub = ET.SubElement(root, "smTechnologyHub", name=self.info_dict.get('tech_hub'))
         test_res = ET.SubElement(tech_hub, "testResults")
         # the below for all genes
-        for g in genes_numbers.keys():
+        genes = self.info_dict.get("genes")
+        for g, g_data in genes.items():
             test = ET.SubElement(test_res, "test")
-            ET.SubElement(test, "gene")
+            gene = ET.SubElement(test, "gene")
+            gene.text = g_data.get('gene')
             test_method = ET.SubElement(test, "methodOfTest")
-            test_method.text = ET.CDATA("Num")
+            test_method.text = ET.CDATA(g_data.get('test_method'))
             test_scope = ET.SubElement(test, "scopeOfTest")
-            test_scope.text = ET.CDATA("Exon")
-            ET.SubElement(test, "dateTestResultsReleased")
+            test_scope.text = ET.CDATA(g_data.get('test_scope'))
+            release_test_date = ET.SubElement(test, "dateTestResultsReleased")
+            release_test_date.text = g_data.get('test_results_date')
             test_result = ET.SubElement(test, "testResult")
-            test_result.text = ET.CDATA("No variant detected")
+            test_result.text = ET.CDATA(g_data.get('test_results'))
             test_report = ET.SubElement(test, "testReport")
-            test_report.text = ET.CDATA("High confidence")
-            ET.SubElement(test, "testStatus")
+            test_report.text = ET.CDATA(g_data.get('test_report'))
+            test_status = ET.SubElement(test, "testStatus")
+            test_status.text = g_data.get('test_status')
             comments = ET.SubElement(test, "comments")
-            comments.text = ET.CDATA("These results are intended for research purposes only.")
+            comments.text = ET.CDATA(g_data.get('comments'))
+        edited_tree = ET.ElementTree(root)
+        return edited_tree
 
-        self.edited_tree = ET.ElementTree(root)
-        return self.edited_tree
 
+    def write_xml(self, output_file_name, element_tree):
+        output_xml = os.path.join(self.output_path, output_file_name)
+        element_tree.write(output_xml, pretty_print=True)
 
-    def write_xml(self, element_tree = None):
-        # If no element tree parameter is specified, write out the element associated with this class
-        if element_tree == None:
-            element_tree = self.edited_tree
-            raise Exception(f"No element tree to write out") #TODO fix this bit
-        output_xml = os.path.join(self.output_path, self.output_file_name)
-        element_tree.write(output_xml)
+    def validate_xml(self):
+        return None
 
