@@ -16,9 +16,9 @@ st_dict = {"blood":"1", "tissue-resection":"3", "tissue-bronchoscopicbiopsy":"8"
             "cytologycellblock-bronchoscopicwashing":"13", "cytologycellblock-ctguided":"14",
             "cytologycellblock-effusion":"15", "cytologycellblock-other":"16", "extracteddna":"17", "dna":"17"}
 
-tumour_type_dict = {} #TODO see how it comes in and create lookup for number only for outgoing xml
-valid = ["1 - Breast", "2 - Colorectal", "3 - Lung", "4 - Melanoma", "5 - Ovarian", "6 - Prostate",
-         "7 - Other"]
+tumour_type_dict = {"Breast":"1", "Colorectal":"2", "Lung":"3", "Melanoma":"4", "Ovarian":"5", "Prostate":"6"} #TODO confirm how it comes in and create lookup for number only for outgoing xml
+tumour_valid = ["1 - Breast", "2 - Colorectal", "3 - Lung", "4 - Melanoma", "5 - Ovarian", "6 - Prostate",
+         "7 - Other"] #TODO delete this once answered the above
 
 genes_dict = {"BRAF":"1", "ALK": "4", "PIK3CA":"5", "PTEN":"6", "PTEN LOH":"7", "TP53":"8", "KIT":"9", "NRAS":"10",
          "DDR2":"11", "TMPRSS2-ERG":"12", "EGFR":"13", "KRAS":"14", "AKT1":"15", "CCND1":"16", "CDK4":"17",
@@ -28,6 +28,8 @@ genes_dict = {"BRAF":"1", "ALK": "4", "PIK3CA":"5", "PTEN":"6", "PTEN LOH":"7", 
          "CCNE1":"40", "CDK2":"41", "NTRK1":"42", "BRCA1":"43", "BRCA2":"44", "ATM":"45", "BRIP1":"46",
          "PALB2":"47", "RAD51C":"48", "BARD1":"49", "CDK12":"50", "CHEK1":"51", "CHEK2":"52", "FANCL":"53",
          "PPP2R2A":"54", "RAD51B":"55", "RAD51D":"56", "RAD54L":"57", "ARID1A":"58"}
+
+test_status_dict = {"Success":"1", "Partial Fail": "2", "Complete Fail":"3", "Not tested":"4"}
 
 
 def valid_clinical_hub():
@@ -183,15 +185,19 @@ def valid_gene():
     return valid
 
 def valid_method():
+    '''
     valid = ["1 - FISH", "2 - MICROSAT", "3 - RQ - PCR", "4 - SEQUENCING", "5 - DIRECT SEQUENCING",
                  "6 - PYROSEQUENCING", "7 - HRM-HIGH RESOLUTION MELT", "8 - ARMS", "9 - CE - SSCA", "10 - COBAS 4800",
                  "11 - SNAPSHOT", "12 - RT - PCR", "13 - FRAGMENT LENGTH", "14 - Other", "15 - Illumina NGS panel 1",
                  "16 - Illumina NGS panel 2", "17 - Illumina NGS panel 3", "18 - Illumina NGS panel 4",
                  "19 - Illumina NGS TST170 Panel 43 of 170", "20 - Illumina NGS TST170 Panel"]
+    '''
+    valid = ["1","2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
+             "20"]
     return valid
 
 def valid_test_status():
-    valid = ["1 -  Success", "2 - Partial Fail", "3 - Complete Fail", "4 - Not Tested"]
+    valid = test_status_dict.values()
     return valid
 
 

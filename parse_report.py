@@ -66,12 +66,40 @@ class ParseReport:
         gene_num = genes_dict.get(gene)
         return gene_num
 
-    def get_test_scope(self, gene, df):
-        test_scope = df.loc[gene] #TODO get out scope from this object
-        print(test_scope)
+    def get_gene_data(self, gene, df):
+        gene_data = df.loc[gene]
+        return gene_data
+
+    def get_test_scope(self, gene_data):
+        test_scope = gene_data.get("SCOPE")
         return test_scope
 
-    def parse_report_data(self):
+    def get_test_result(self, gene_data):
+        test_result = gene_data.get("RESULT")
+        return test_result
+
+    def get_test_report(self, gene_data):
+        test_report = gene_data.get("REPORT")
+        return test_report
+
+    def get_test_status(self, gene_data):
+        from valid_data import test_status_dict
+        test_status = None
+        gene_status = gene_data.get("STATUS")
+        if gene_status == "Success":
+            test_status = test_status_dict.get("Success")
+        if gene_status == "Failure":
+            test_status = test_status_dict.get("Complete Fail") #TODO awaiting response re difference between 2 and 3
+        return test_status
+
+    def get_comments(self, gene_data):
+        if gene_data.get("COMMENTS") is None or gene_data.get("COMMENTS").isspace():
+            comments = "These results are intended for research purposes."
+        else:
+            comments = f"These results are intended for research purposes. {gene_data.get('COMMENTS')}."
+        return comments
+
+    def parse_report_data(self): #TODO ??
         #This might be better in writeout
         return None
 

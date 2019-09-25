@@ -29,7 +29,7 @@ def main():
     for sample in samples:
         # Create dictionary of information
         info_dict = {}
-        # Extract sample data from dataframe once
+        # Extract sample data from dataframe once #TODO update to match new database
         sample_data = database_parser.get_sample(samples_dataframe, sample)
         info_dict["clinical_hub"] = database_parser.get_clinical_hub(sample_data)
         info_dict["org_code"] = None
@@ -44,6 +44,8 @@ def main():
         info_dict["release_date"] = current_date
         info_dict["vol_banked"] = None
         info_dict["conc_banked"] = database_parser.get_conc_banked(sample_data)
+        info_dict["banked_loc"] = "Rm2.14 DNA bank_4oC" # Hardcoded
+        info_dict["banked_id"] = database_parser.get_lab_id(sample_data)
         info_dict["tech_hub"] = "2 - Cardiff"
 
         # Parse data from Excel report generated- per sample
@@ -51,8 +53,15 @@ def main():
         spreadsheet = report_parser.find_analysis_worksheet(os.path.join(path, worksheet_id, samples[0]), ".xlsx") #TODO test for one sample initially
         worksheet = report_parser.load_analysis_worksheet(spreadsheet)
         worksheet_data_frame = report_parser.report_table(worksheet)
-        print(worksheet_data_frame)
 
+        #TODO Obtain the reporter and authoriser details from the report
+        #TODO temp variables for writing out pdf
+        info_dict["reported_by_1"] = "sr"
+        info_dict["date_reported_1"] = "09/10/2019"
+        info_dict["reported_by_2"] = "smr"
+        info_dict["date_reported_2"] = "10/10/2019"
+        info_dict["authorised by"] = "smrw"
+        info_dict["date_authorised"] = "11/10/2019"
 
         # Populate information dictionary from Excel report- per sample
         analysed_samples = report_parser.report_samples(worksheet)
@@ -72,13 +81,16 @@ def main():
         genes = report_parser.get_genes(worksheet_data_frame)
         gene_dict = {}
         for gene in genes:
-            print(gene)
             gene_data_dict = {}
             gene_data_dict["gene"] = report_parser.get_gene_number(gene)
-            gene_data_dict["test_method"] = "19" # Hardcoded for TST170 app
-            gene_data_dict["test_scope"] = report_parser.get_test_scope(gene, worksheet_data_frame)
-
-
+            gene_data_dict["test_method"] = "19" # Note Hardcoded for TST170 interim informatics solution
+            gene_data = report_parser.get_gene_data(gene, worksheet_data_frame)
+            gene_data_dict["test_scope"] = report_parser.get_test_scope(gene_data)
+            gene_data_dict["test_results_date"] = current_date
+            gene_data_dict["test_results"] = report_parser.get_test_result(gene_data)
+            gene_data_dict["test_report"] = report_parser.get_test_report(gene_data)
+            gene_data_dict["test_status"] = report_parser.get_test_status(gene_data) #TODO confirm difference between 2 and 3
+            gene_data_dict["comments"] = report_parser.get_comments(gene_data)
             gene_dict[gene] = gene_data_dict
         info_dict["genes"] = gene_dict
         # Add information dictionary to sample dictionary
