@@ -33,7 +33,7 @@ class ParseReport:
         # First entry is DNA sample, second is RNA sample. Naming pattern is projectid-sampleid.
         if not worksheet_sample == report_samples[1].split("-")[-1]:
             raise Exception(f"Wrong report. File for DNA sample name {worksheet_sample}, but report tab for \
-                DNA sample {report_samples}")
+                DNA sample {report_samples[1]}")
         return wb
 
     def report_table(self, wb):
@@ -89,7 +89,7 @@ class ParseReport:
         if gene_status == "Success":
             test_status = test_status_dict.get("Success")
         if gene_status == "Failure":
-            test_status = test_status_dict.get("Complete Fail") #TODO awaiting response re difference between 2 and 3
+            test_status = test_status_dict.get("Complete Fail")
         return test_status
 
     def get_comments(self, gene_data):

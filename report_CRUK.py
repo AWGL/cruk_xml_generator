@@ -7,8 +7,9 @@ from generate_xml_report import GenerateXml
 from is_valid import IsValid
 
 path = "/Users/sararey/Documents/cruk_reporting" #temp path for testing
-db_name = "LUNG sample tracking_Nextera.xls" #temp for testing
-worksheet_id = "19-5037" #temp for testing- obtain from ?- entry by scientist?
+#db_name = "LUNG sample tracking_Nextera.xls" #temp for testing
+db_name = "New database.xlsx"
+worksheet_id = "19-9999" #temp for testing- obtain from ?- entry by scientist?
 
 
 def main():
@@ -22,35 +23,43 @@ def main():
 
     # Dataframe extract from sample tracking spreadsheet containing data for samples of interest only
     database_parser = ParseDatabase(os.path.join(path, db_name))
-    dataframe = database_parser.open_database_as_dataframe()
-    samples_dataframe = database_parser.create_dataframe_of_samples(dataframe, samples)
+    all_dataframe = database_parser.open_database_as_dataframe("New database incoming")
+    # Dataframe extract from sample tracking spreadsheet- sequenced samples only
+    sequencing_dataframe = database_parser.open_database_as_dataframe("New database workflow")
 
     # Populate information dictionary from sample tracking spreadsheet- per sample
     for sample in samples:
         # Create dictionary of information
         info_dict = {}
-        # Extract sample data from dataframe once #TODO update to match new database
-        sample_data = database_parser.get_sample(samples_dataframe, sample)
+        # Extract sample data from dataframe once
+        sample_data = database_parser.get_sample(all_dataframe, sample)
+        sample_sequencing_data = database_parser.get_sample(sequencing_dataframe, sample)
+        # If sample is not in the Excel database, do not continue as data for this sample will be missing
+        if sample_data.empty:
+            raise Exception(f"Sample {sample} not found in database {db_name}. Required data will be missing from xml.")
+        info_dict["cruk_sample_id"] = database_parser.get_cruk_sample_id(sample_data)
         info_dict["clinical_hub"] = database_parser.get_clinical_hub(sample_data)
-        info_dict["org_code"] = None
+        info_dict["org_code"] = database_parser.get_org_code(sample_data)
         info_dict["local_patient_id"] = database_parser.get_patient_id(sample_data)
+        info_dict["local_patient_id_2"] = database_parser.get_patient_id_2(sample_data)
         info_dict["source_id"] = database_parser.get_source_sample_id(sample_data)
         info_dict["sample_type"] = database_parser.get_sample_type(sample_data)
-        info_dict["tumour_type"] = None
-        info_dict["morphology_snomed"] = None
-        info_dict["date_sample_sent"] = None
+        info_dict["tumour_type"] = database_parser.get_tumour_type(sample_data)
+        info_dict["morphology_snomed"] = "N/A" #TODO- see email for confirmation from other THs
+        info_dict["date_sample_sent"] = database_parser.get_date_sample_received(sample_data)
         info_dict["date_sample_received"] = database_parser.get_date_sample_received(sample_data)
         info_dict["lab_id"] = database_parser.get_lab_id(sample_data)
-        info_dict["release_date"] = current_date
-        info_dict["vol_banked"] = None
-        info_dict["conc_banked"] = database_parser.get_conc_banked(sample_data)
+        info_dict["release_date"] = database_parser.get_report_release_date(sample_sequencing_data)
+        info_dict["vol_banked"] = database_parser.get_vol_banked_dna(sample_sequencing_data) #Note that this is DNA only
+        info_dict["conc_banked"] = database_parser.get_conc_banked_dna(sample_data) #Note that this is DNA only
         info_dict["banked_loc"] = "Rm2.14 DNA bank_4oC" # Hardcoded
         info_dict["banked_id"] = database_parser.get_lab_id(sample_data)
         info_dict["tech_hub"] = "2 - Cardiff"
 
         # Parse data from Excel report generated- per sample
         report_parser = ParseReport(worksheet_id)
-        spreadsheet = report_parser.find_analysis_worksheet(os.path.join(path, worksheet_id, samples[0]), ".xlsx") #TODO test for one sample initially
+        #TODO Add exception handling for a missing Excel file
+        spreadsheet = report_parser.find_analysis_worksheet(os.path.join(path, worksheet_id, sample), ".xlsx")
         worksheet = report_parser.load_analysis_worksheet(spreadsheet)
         worksheet_data_frame = report_parser.report_table(worksheet)
 
@@ -95,8 +104,13 @@ def main():
         info_dict["genes"] = gene_dict
         # Add information dictionary to sample dictionary
         sample_dict[sample] = info_dict
-    print(samples)
-    print(sample_dict)
+        # TODO ONE SAMPLE ONLY FOR TESTING DUE TO AVAILABILITY OF DATA
+        print(sample_dict)
+        break
+
+    #TODO next, work at this level
+    #print(samples)
+    #print(sample_dict)
 
 
 

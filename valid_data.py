@@ -9,16 +9,22 @@ ch_dict = {"Birmingham": "1 - Birmingham", "Cardiff":"2 - Cardiff", "Cambridge":
                 "Oxford":"15 – Oxford", "Sheffield":"16 – Sheffield", "Southampton":"17 – Southampton",
                 "UCL":"18 - UCL", "Maidstone":"19 - Maidstone", "Devon and Exeter":"20 - Devon and Exeter",
                 "Liverpool":"21 - Liverpool", "Bristol":"22 - Bristol", "Colchester":"23 - Colchester",
-                "Aberdeen":"24 - Aberdeen"}
+                "Aberdeen":"24 - Aberdeen", "1 - Birmingham": "1 - Birmingham", "2 - Cardiff":"2 - Cardiff",
+                "3 - Cambridge":"3 - Cambridge", "4 - Edinburgh":"4 - Edinburgh", "5 - Glasgow":"5 - Glasgow",
+                "6 - Leeds":"6 - Leeds", "7 - Manchester":"7 - Manchester", "8 - Royal Marsden":"8 - Royal Marsden",
+                "9 - Barts & Brighton":"9 – Barts & Brighton", "10 - Belfast":"10 – Belfast",
+                "11 - Imperial":"11 – Imperial", "12 - KCL":"12 - KCL", "13 - Leicester":"13 – Leicester",
+                "14 - Newcastle":"14 – Newcastle", "15 - Oxford":"15 – Oxford", "16 - Sheffield":"16 – Sheffield",
+                "17 - Southampton":"17 – Southampton", "18 - UCL":"18 - UCL", "19 - Maidstone":"19 - Maidstone",
+                "20 - Devon and Exeter":"20 - Devon and Exeter", "21 - Liverpool":"21 - Liverpool",
+                "22 - Bristol":"22 - Bristol", "23 - Colchester":"23 - Colchester", "24 - Aberdeen":"24 - Aberdeen"}
 
 st_dict = {"blood":"1", "tissue-resection":"3", "tissue-bronchoscopicbiopsy":"8", "tissue-ctguidedbiopsy":"9",
             "tissue-surgicalbiopsy":"10", "tissue-otherbiopsy":"11", "cytologycellblock-ebus/eusfna":"12",
             "cytologycellblock-bronchoscopicwashing":"13", "cytologycellblock-ctguided":"14",
             "cytologycellblock-effusion":"15", "cytologycellblock-other":"16", "extracteddna":"17", "dna":"17"}
 
-tumour_type_dict = {"Breast":"1", "Colorectal":"2", "Lung":"3", "Melanoma":"4", "Ovarian":"5", "Prostate":"6"} #TODO confirm how it comes in and create lookup for number only for outgoing xml
-tumour_valid = ["1 - Breast", "2 - Colorectal", "3 - Lung", "4 - Melanoma", "5 - Ovarian", "6 - Prostate",
-         "7 - Other"] #TODO delete this once answered the above
+tumour_type_dict = {"Breast":"1", "Colorectal":"2", "Lung":"3", "Melanoma":"4", "Ovarian":"5", "Prostate":"6"}
 
 genes_dict = {"BRAF":"1", "ALK": "4", "PIK3CA":"5", "PTEN":"6", "PTEN LOH":"7", "TP53":"8", "KIT":"9", "NRAS":"10",
          "DDR2":"11", "TMPRSS2-ERG":"12", "EGFR":"13", "KRAS":"14", "AKT1":"15", "CCND1":"16", "CDK4":"17",
