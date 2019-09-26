@@ -190,5 +190,9 @@ def main():
     print(check_validity.validate_xml_format())
     print(check_validity.validate_xml_schema())
 
+    # Generate pdf report
+    import generate_report
+    print(generate_report)
+
 if __name__ == '__main__':
         main()
