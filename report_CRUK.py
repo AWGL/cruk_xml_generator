@@ -74,19 +74,6 @@ def main():
         info_dict["date_authorised"] = "11/10/2019"
 
         # Populate information dictionary from Excel report- per sample
-        analysed_samples = report_parser.report_samples(worksheet)
-        #TODO IMPLEMENT THIS TO HANDLE BOTH CASES- anticipate will be identical with potential extra step for RNA
-        # TODO NOT NEEDED FOR NOW
-        '''
-        if 0 in analysed_samples:
-            "DNA pathway"
-        elif len(analysed_samples) == 2:
-            "RNA pathway"
-        else:
-            raise Exception(f"Could not determine if report worksheet {worksheet_id}-{sample} analysed for DNA or both \
-            DNA and RNA.")
-        '''
-
         # Loop over genes (for each sample)
         genes = report_parser.get_genes(worksheet_data_frame)
         gene_dict = {}
@@ -99,7 +86,7 @@ def main():
             gene_data_dict["test_results_date"] = current_date
             gene_data_dict["test_results"] = report_parser.get_test_result(gene_data)
             gene_data_dict["test_report"] = report_parser.get_test_report(gene_data)
-            gene_data_dict["test_status"] = report_parser.get_test_status(gene_data) #TODO confirm difference between 2 and 3
+            gene_data_dict["test_status"] = report_parser.get_test_status(gene_data)
             gene_data_dict["comments"] = report_parser.get_comments(gene_data)
             gene_dict[gene] = gene_data_dict
         info_dict["genes"] = gene_dict

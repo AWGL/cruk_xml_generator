@@ -1,9 +1,6 @@
 import os
 from lxml import etree as ET
 
-
-#TODO check validation with lxml
-
 class GenerateXml:
 
     def __init__(self, info_dict):
