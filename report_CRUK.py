@@ -11,6 +11,7 @@ path = "/Users/sararey/Documents/cruk_reporting" #temp path for testing
 db_name = "New database.xlsx"
 worksheet_id = "19-9999" #temp for testing- obtain from ?- entry by scientist?
 xsd = "/Users/sararey/Documents/cruk_reporting/info/SMP2XSD (Results) v3.8.xsd"
+test_method = "19"
 
 
 def data_always_required(database_parser, sample):
@@ -81,7 +82,7 @@ def passed_data(database_parser, sample, info_dict):
     for gene in genes:
         gene_data_dict = {}
         gene_data_dict["gene"] = report_parser.get_gene_number(gene)
-        gene_data_dict["test_method"] = "19"  # Note Hardcoded for TST170 interim informatics solution
+        gene_data_dict["test_method"] = test_method  # Note Hardcoded for TST170 interim informatics solution
         gene_data = report_parser.get_gene_data(gene, worksheet_data_frame)
         gene_data_dict["test_scope"] = report_parser.get_test_scope(gene_data)
         gene_data_dict["test_results_date"] = datetime.today().strftime('%Y-%m-%d')
@@ -100,15 +101,16 @@ def qc_fail_data(info_dict):
     '''
     from valid_data import test_status_dict
     from valid_data import gene_scope_dict
+    from valid_data import genes_dict
     tested = "Not tested"
     info_dict["vol_banked"] = "0.0"
     info_dict["release_date"] = datetime.today().strftime('%Y-%m-%d')
     gene_dict = {}
-    for gene in genes:
+    for gene in gene_scope_dict.keys():
         gene_data_dict = {}
-        gene_data_dict["gene"] = report_parser.get_gene_number(gene)
-        gene_data_dict["test_method"] = "19"  # Note Hardcoded for TST170 interim informatics solution
-        gene_data_dict["test_scope"] = report_parser.get_test_scope(gene_data)
+        gene_data_dict["gene"] = genes_dict.get(gene)
+        gene_data_dict["test_method"] = test_method # Note Hardcoded for TST170 interim informatics solution
+        gene_data_dict["test_scope"] = gene_scope_dict.get(gene)
         gene_data_dict["test_results_date"] = datetime.today().strftime('%Y-%m-%d')
         gene_data_dict["test_results"] = tested
         gene_data_dict["test_report"] = "Failed QC step- insufficient sample. Repeat sample requested if available."
@@ -126,15 +128,16 @@ def removed_from_trial_data(info_dict):
     '''
     from valid_data import test_status_dict
     from valid_data import gene_scope_dict
+    from valid_data import genes_dict
     tested = "Not tested"
     info_dict["vol_banked"] = "0.0"
     info_dict["release_date"] = datetime.today().strftime('%Y-%m-%d')
     gene_dict = {}
-    for gene in genes:
+    for gene in gene_scope_dict.keys():
         gene_data_dict = {}
-        gene_data_dict["gene"] = report_parser.get_gene_number(gene)
-        gene_data_dict["test_method"] = "19"  # Note Hardcoded for TST170 interim informatics solution
-        gene_data_dict["test_scope"] = report_parser.get_test_scope(gene_data)
+        gene_data_dict["gene"] = genes_dict.get(gene)
+        gene_data_dict["test_method"] = test_method  # Note Hardcoded for TST170 interim informatics solution
+        gene_data_dict["test_scope"] = gene_scope_dict.get(gene)
         gene_data_dict["test_results_date"] = datetime.today().strftime('%Y-%m-%d')
         gene_data_dict["test_results"] = tested
         gene_data_dict["test_report"] = "Withdrawn at request of clinical hub."
@@ -147,7 +150,7 @@ def removed_from_trial_data(info_dict):
 
 def main():
     # TODO determine how to tell if passed or failed sample
-    status = "passed"
+    status = "withdrawn"
 
     #TODO Temp variable
     # Identify samples with data generated on this worksheet id- relies on directories created one for each sample
