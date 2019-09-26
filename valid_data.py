@@ -25,10 +25,10 @@ st_dict = {"blood":"1", "tissue-resection":"3", "tissue-bronchoscopicbiopsy":"8"
             "cytologycellblock-effusion":"15", "cytologycellblock-other":"16", "extracteddna":"17", "dna":"17"}
 
 tumour_type_dict = {"Breast":"1", "Colorectal":"2", "Lung":"3", "Melanoma":"4", "Ovarian":"5", "Prostate":"6"}
-
+#TODO Double-check ERBB2
 genes_dict = {"BRAF":"1", "ALK": "4", "PIK3CA":"5", "PTEN":"6", "PTEN LOH":"7", "TP53":"8", "KIT":"9", "NRAS":"10",
          "DDR2":"11", "TMPRSS2-ERG":"12", "EGFR":"13", "KRAS":"14", "AKT1":"15", "CCND1":"16", "CDK4":"17",
-         "CDKN2A":"18", "CDKN2B":"19", "FGFR1":"20", "FGFR2":"21", "FGFR3":"22", "HER2":"23", "JAK2":"24",
+         "CDKN2A":"18", "CDKN2B":"19", "FGFR1":"20", "FGFR2":"21", "FGFR3":"22", "HER2":"23", "ERBB2":"23", "JAK2":"24",
          "KDR":"25", "MET":"26", "NF1":"27", "P16":"28", "PDL-1":"29", "RB1":"30", "RET":"31", "ROS1":"32",
          "STAT3":"33", "STK11/LKB1":"34", "STK11":"34", "LKB1":"34", "TSC1":"35", "TSC2":"36", "HRAS":"37",
          "CCND2":"38", "CCND3":"39", "CCNE1":"40", "CDK2":"41", "NTRK1":"42", "BRCA1":"43", "BRCA2":"44",
@@ -205,7 +205,6 @@ def valid_method():
 def valid_test_status():
     valid = test_status_dict.values()
     return valid
-
 
 
 

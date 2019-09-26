@@ -99,7 +99,3 @@ class ParseReport:
             comments = f"These results are intended for research purposes. {gene_data.get('COMMENTS')}."
         return comments
 
-    def parse_report_data(self): #TODO ??
-        #This might be better in writeout
-        return None
-
