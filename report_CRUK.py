@@ -152,6 +152,8 @@ def removed_from_trial_data(info_dict):
 def main():
     # TODO determine how to tell if passed or failed sample
     status = "withdrawn"
+    status = "passed"
+    status = "failed"
 
     #TODO Temp variable
     # Identify samples with data generated on this worksheet id- relies on directories created one for each sample

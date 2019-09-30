@@ -1,9 +1,9 @@
-import reportlab
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
+from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from reportlab.platypus import Paragraph, Table, TableStyle
 
 class GenerateReport:
 
@@ -25,8 +25,20 @@ class GenerateReport:
         #Create table of data for table format
         print(self.sample_dict.get('genes'))
         #TODO Abstract this out later?
-        table_data = [['Gene number', 'Gene name', 'Method of test', 'Scope of test', 'Test result', 'Test report',
-                       'Test status', 'Comments']]
+        # Create styles
+        style_header = getSampleStyleSheet()["BodyText"]
+        style_header.fontName = 'Helvetica'
+        style_header.fontSize = 6
+        style_header.textColor = colors.white
+        style_header.listAttrs()
+        style_body = getSampleStyleSheet()["BodyText"]
+        style_body.fontName = 'Helvetica'
+        style_body.fontSize = 5
+        style_normal = getSampleStyleSheet()["Normal"]
+        table_data = [[Paragraph('Gene number', style_header), Paragraph('Gene name', style_header),
+                       Paragraph('Method of test', style_header), Paragraph('Scope of test', style_header),
+                       Paragraph('Test result', style_header), Paragraph('Test report', style_header),
+                       Paragraph('Test status', style_header), Paragraph('Comments', style_header)]]
         for k, v in self.sample_dict.get('genes').items():
             line_table = []
             line_table.append(v.get('gene'))
@@ -38,12 +50,18 @@ class GenerateReport:
             line_table.append(v.get('test_status'))
             line_table.append(v.get('comments'))
             table_data.append(line_table)
-        table = Table(table_data)
-        table.setStyle(TableStyle([('BACKGROUND', (1, 1),(-2, -2), colors.green),
+
+        #TODO flowables.append(PageBreak()) [from reportlab.platypus import PageBreak]
+        table = Table(table_data, colWidths=[1.2*cm, 2*cm, cm, 3*cm, 2*cm, 4*cm, cm, 4*cm])
+        table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                                   ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+                                   ('FONTNAME', (0, 0), (-1, -1), "Helvetica"),
                                    ('FONTSIZE', (0, 0), (-1, -1), 5),
-                                   ('TEXTCOLOR', (0, 0), (-1, 0), colors.red),
                                    ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
-                                   ('BOX', (0, 0), (-1, -1), 0.25, colors.black)]))
+                                   ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
+                                   ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.lightgrey, colors.white])]))
+
+        #table._argW[4]=5*cm
         table.wrapOn(template, (width-5*cm), (height-5*cm))
         table.drawOn(template, 2*cm, 0*cm)
         template.showPage()
