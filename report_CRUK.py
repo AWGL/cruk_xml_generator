@@ -4,6 +4,7 @@ from reporter import locate_samples
 from parse_report import ParseReport
 from parse_database import ParseDatabase
 from generate_xml_report import GenerateXml
+from generate_report import GenerateReport
 from is_valid import IsValid
 
 path = "/Users/sararey/Documents/cruk_reporting" #temp path for testing
@@ -177,7 +178,7 @@ def main():
     sample_dict[sample] = info_dict
     print(sample_dict)
 
-    # Create write out
+    # Create and write out to xml
     write_xml = GenerateXml(sample_dict.get(sample))
     tree = write_xml.generate_xml()
     formatted_date = datetime.today().strftime('%Y%m%d')
@@ -190,9 +191,10 @@ def main():
     print(check_validity.validate_xml_format())
     print(check_validity.validate_xml_schema())
 
-    # Generate pdf report
-    import generate_report
-    print(generate_report)
+    # Generate pdf report of required data
+    output_pdf = f"{formatted_date} {sample_dict.get(sample).get('cruk_sample_id')}.pdf"
+    write_report = GenerateReport(os.path.join(write_xml.output_path, output_pdf), sample_dict.get(sample))
+    write_report.pdf_writer()
 
 if __name__ == '__main__':
         main()
