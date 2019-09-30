@@ -73,7 +73,7 @@ def passed_data(database_parser, sample, info_dict):
     info_dict["date_reported_1"] = "09/10/2019"
     info_dict["reported_by_2"] = "smr"
     info_dict["date_reported_2"] = "10/10/2019"
-    info_dict["authorised by"] = "smrw"
+    info_dict["authorised_by"] = "smrw"
     info_dict["date_authorised"] = "11/10/2019"
 
     # Populate information dictionary from Excel report- per sample
