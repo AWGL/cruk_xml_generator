@@ -153,7 +153,7 @@ def main():
     # TODO determine how to tell if passed or failed sample
     status = "withdrawn"
     status = "passed"
-    status = "failed"
+    #status = "failed"
 
     #TODO Temp variable
     # Identify samples with data generated on this worksheet id- relies on directories created one for each sample
@@ -195,7 +195,8 @@ def main():
 
     # Generate pdf report of required data
     output_pdf = f"{formatted_date} {sample_dict.get(sample).get('cruk_sample_id')}.pdf"
-    write_report = GenerateReport(os.path.join(write_xml.output_path, output_pdf), sample_dict.get(sample))
+    write_report = GenerateReport(os.path.join(write_xml.output_path, output_pdf), sample_dict.get(sample),
+                                  status)
     write_report.pdf_writer()
 
 if __name__ == '__main__':
