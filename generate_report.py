@@ -10,13 +10,15 @@ from itertools import islice
 class GenerateReport:
 
     def __init__(self, file_name, sample_dict, report_status=None):
-        self.col_widths_dict = {"success": [1.2*cm, 1.2*cm, 1.2*cm, 2.3*cm, 2.8*cm, 1.9*cm, cm, 5*cm],
-                                "failed": [1.2*cm, 1.2*cm, 1.2*cm, 2.3*cm, 1.5*cm, 3.5*cm, cm, 4.6*cm],
-                                "withdrawn": [1.2*cm, 1.2*cm, 1.2*cm, 2.3*cm, 1.5*cm, 3.5*cm, cm, 4.6*cm]}
+        self.col_widths_dict = {"sequenced": [cm, 1.25 * cm, 1.2 * cm, 2.3 * cm, 3.25 * cm, 1.9 * cm, cm, 5.1 * cm],
+                                "failed": [1.2 * cm, 1.25 * cm, 1.2 * cm, 2.3 * cm, 1.5 * cm, 3.5 * cm, cm, 5.05 * cm],
+                                "withdrawn": [1.2 * cm, 1.25 * cm, 1.2 * cm, 2.3 * cm, 1.5 * cm, 3.5 * cm, cm,
+                                              5.05 * cm]}
         self.file_name = file_name
         self.sample_dict = sample_dict
-        #column widths- if not found set to default columns widths for sequenced sample
-        self.col_widths = self.col_widths_dict.get(report_status, self.col_widths_dict.get("success"))
+        self.report_status = report_status
+        # Set column widths
+        self.col_widths = self.col_widths_dict.get(self.report_status)
 
     def get_gene_table_data(self, table_dict, style):
         table_data = []
@@ -46,11 +48,18 @@ class GenerateReport:
     def pdf_writer(self):
         template = canvas.Canvas(self.file_name, pagesize=A4, bottomup=1)
         width, height = A4
+        # Draw headers on template
+        template.setFont("Helvetica", 8)
+        template.drawString(2 * cm, height-(1.5 * cm), f"Clinical Hub: {self.sample_dict.get('clinical_hub')}")
+        template.drawString(8.6 * cm, height - (1.5 * cm), f"{self.sample_dict.get('cruk_sample_id')}")
+        template.drawString(16.5 * cm, height - (1.5 * cm), f"Lab ID: {self.sample_dict.get('lab_id')}")
+        # Draw title on template
         template.setFont("Helvetica", 20)
-        template.drawString(2*cm, height-(2.5*cm), "Title")
-        template.setFont("Helvetica", 12)
-        template.drawString(2*cm, height-(3.3*cm), f"Date sample sent: {self.sample_dict.get('date_sample_sent')}")
-        template.drawString(11*cm, height-(3.3*cm),
+        template.drawString(2 * cm, height-(2.7 * cm), "Illumina NGS TST170 Panel 43 of 170")
+        # Draw dates on template
+        template.setFont("Helvetica", 10)
+        template.drawString(2 * cm, height-(3.5 * cm), f"Date sample sent: {self.sample_dict.get('date_sample_sent')}")
+        template.drawString(8.5 * cm, height-(3.5 * cm),
                             f"Date sample received: {self.sample_dict.get('date_sample_received')}")
 
         # Create table of data for table format
@@ -63,7 +72,7 @@ class GenerateReport:
         style_body.fontSize = 5
         style_body.textColor = colors.black
         # Generate headers for gene and gene data tables
-        headers = [Paragraph('Gene number', style_header), Paragraph('Gene name', style_header),
+        headers = [Paragraph('Gene num', style_header), Paragraph('Gene name', style_header),
                        Paragraph('Test method', style_header), Paragraph('Scope of test', style_header),
                        Paragraph('Test result', style_header), Paragraph('Test report', style_header),
                        Paragraph('Test status', style_header), Paragraph('Comments', style_header)]
@@ -71,7 +80,7 @@ class GenerateReport:
         # Create data for first table of genes and associated data (22 genes fit on first page)
         first_table = list(islice(self.sample_dict.get('genes').items(), 22))
         table_data = self.get_gene_table_data(first_table, style_body)
-        # Count number of failed samples- all failed samples are stored as a 3 in the second from last column
+        # Count number of failed genes- all failed samples are stored as a 3 in the second from last column
         num_fails = len([count[-2].text for count in table_data if count[-2].text == "3"])
         # Add headers to table (beginning)
         table_data.insert(0, headers)
@@ -79,9 +88,9 @@ class GenerateReport:
         table = self.create_gene_table(table_data)
         # Draw table on to template
         table.wrapOn(template, width, height)
-        table.drawOn(template, 2*cm, 1.5*cm)
+        table.drawOn(template, 2 * cm, 1.5 * cm)
         template.setFont("Helvetica", 8)
-        template.drawString(width-(4*cm), cm, "Page 1 of 2")
+        template.drawString(width-(3.5 * cm), cm, "Page 1 of 2")
         template.showPage()
 
         # Split table over multiple pages
@@ -89,7 +98,7 @@ class GenerateReport:
         second_table = list(islice(self.sample_dict.get('genes').items(),
                                    22, len(self.sample_dict.get('genes').items())))
         table_data = self.get_gene_table_data(second_table, style_body)
-        # Count number of failed samples- all failed samples are stored as a 3 in the second from last column
+        # Count number of failed genes- all failed samples are stored as a 3 in the second from last column
         num_fails += len([count[-2].text for count in table_data if count[-2].text == "3"])
         # Add headers to table (beginning)
         table_data.insert(0, headers)
@@ -97,27 +106,38 @@ class GenerateReport:
         table = self.create_gene_table(table_data)
         # Draw table on to template
         table.wrapOn(template, width, height)
-        table.drawOn(template, 2*cm, 4.2*cm)
+        table.drawOn(template, 2 * cm, 4.2 * cm)
 
         # Create data for table of people checking this report
-        table_data = [["", "", "Date"],
-                      ["Checker 1", self.sample_dict.get('reported_by_1'), self.sample_dict.get('date_reported_1')],
-                      ["Checker 2", self.sample_dict.get('reported_by_2'), self.sample_dict.get('date_reported_2')],
-                      ["Authorised", self.sample_dict.get('authorised_by'), self.sample_dict.get('date_authorised')]]
-        table = Table(table_data)
-        table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-                                   ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-                                   ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
-                                   ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
-                                   ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white])]))
-        # Draw table on to template
-        table.wrapOn(template, width, height)
-        table.drawOn(template, 2*cm, 1.4*cm)
+        # For sequenced samples
+        if self.report_status == "sequenced":
+            table_data = [["", "", "Date"],
+                        ["Checker 1", self.sample_dict.get('reported_by_1'), self.sample_dict.get('date_reported_1')],
+                        ["Checker 2", self.sample_dict.get('reported_by_2'), self.sample_dict.get('date_reported_2')],
+                        ["Authorised", self.sample_dict.get('authorised_by'), self.sample_dict.get('date_authorised')]]
+            table = Table(table_data, colWidths=[2.5 * cm, 2 * cm, 2.5 * cm])
+            table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                                        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+                                        ('FONTSIZE', (0, 0), (-1, -1), 8),
+                                        ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
+                                        ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
+                                        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white])]))
+            # Draw table on to template
+            table.wrapOn(template, width, height)
+            table.drawOn(template, 2*cm, 1.4*cm)
 
-        # Number of failed genes for this sample
-        template.drawString(8 * cm, 3.5 * cm, f"Gene fails: {num_fails}")
-        template.setFont("Helvetica", 8)
-        template.drawString(width-(4*cm), cm, "Page 2 of 2")
+            # Number of failed genes for this sample
+            template.drawString(11 * cm, 3.5 * cm, f"Gene fails: {num_fails}")
+            template.setFont("Helvetica", 8)
+
+        # For failed or withdrawn samples
+        elif self.report_status == "failed" or self.report_status == "withdrawn":
+            print("v")
+        else:
+            raise Exception("Could not determine if report is for QC fail, withdrawn or sequenced sample")
+
+        # For all samples
+        template.drawString(width-(3.5 * cm), cm, "Page 2 of 2")
         template.showPage()
         template.save()
         return (f"PDF report {self.file_name} generated")

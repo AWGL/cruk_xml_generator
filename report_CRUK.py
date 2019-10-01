@@ -20,7 +20,6 @@ def data_always_required(database_parser, sample):
     Data required for every sample regardless of overall pass/fail status
     :return: dictionary of data extracted from the Excel spreadsheet populated by data from the incoming XML
     '''
-
     info_dict = {}
     # Dataframe extract from sample tracking spreadsheet containing data for sample of interest only
     all_dataframe = database_parser.open_database_as_dataframe("New database incoming")
@@ -151,8 +150,8 @@ def removed_from_trial_data(info_dict):
 def main():
     # TODO determine how to tell if passed or failed sample?- Question pending with Mo
     status = "withdrawn"
-    status = "passed"
-    status = "failed"
+    status = "sequenced"
+    #status = "failed"
 
     #TODO Temp variable
     # Identify samples with data generated on this worksheet id- relies on directories created one for each sample
@@ -167,7 +166,7 @@ def main():
     database_parser = ParseDatabase(os.path.join(path, db_name))
     info_dict = data_always_required(database_parser, sample)
 
-    if status == "passed":
+    if status == "sequenced":
         info_dict = passed_data(database_parser, sample, info_dict)
     elif status == "failed":
         info_dict = qc_fail_data(info_dict)
