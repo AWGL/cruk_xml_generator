@@ -5,11 +5,10 @@ from pandas import DataFrame
 from itertools import islice
 
 
-class ParseReport:
+class ParseReport: #TODO Chnage this class once clear if s=doing smaple by sample or not (static methods- @staticmethod)
 
     def __init__(self, worksheet_id):
         self.worksheet_id = worksheet_id
-
 
     def find_analysis_worksheet(self, path_to_analysis, ext):
         sample_name = os.path.basename(path_to_analysis)
@@ -45,7 +44,7 @@ class ParseReport:
         idx = [r[4] for r in data]
         data_subset = (islice(r, 4, None) for r in data)
         report_df = DataFrame(data_subset, index=idx, columns=cols)
-        return (report_df)
+        return report_df
 
     def report_samples(self, wb):
         report_tab = wb["Report"]

@@ -1,5 +1,5 @@
 from lxml import etree as ET
-import logging
+
 
 class IsValid(object):
 
@@ -15,7 +15,6 @@ class IsValid(object):
         except OSError as err:
             raise Exception(f"The file {self.check_xml} could not be loaded, error {err}")
         return f"XML file {self.check_xml} in valid format"
-
 
     def validate_xml_schema(self):
         try:

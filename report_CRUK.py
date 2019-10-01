@@ -38,7 +38,7 @@ def data_always_required(database_parser, sample):
     info_dict["source_id"] = database_parser.get_source_sample_id(sample_data)
     info_dict["sample_type"] = database_parser.get_sample_type(sample_data)
     info_dict["tumour_type"] = database_parser.get_tumour_type(sample_data)
-    info_dict["morphology_snomed"] = "N/A"  # TODO- see email for confirmation from other THs
+    info_dict["morphology_snomed"] = "N/A"  # TODO- see email for confirmation from other THs- wait for final version of DB
     info_dict["date_sample_sent"] = database_parser.get_date_sample_received(sample_data)
     info_dict["date_sample_received"] = database_parser.get_date_sample_received(sample_data)
     info_dict["lab_id"] = database_parser.get_lab_id(sample_data)
@@ -122,7 +122,6 @@ def qc_fail_data(info_dict):
     info_dict["genes"] = gene_dict
     return info_dict
 
-
 def removed_from_trial_data(info_dict):
     '''
     Data for samples which were removed from the trial
@@ -149,12 +148,11 @@ def removed_from_trial_data(info_dict):
     info_dict["genes"] = gene_dict
     return info_dict
 
-
 def main():
-    # TODO determine how to tell if passed or failed sample
+    # TODO determine how to tell if passed or failed sample?- Question pending with Mo
     status = "withdrawn"
     status = "passed"
-    #status = "failed"
+    status = "failed"
 
     #TODO Temp variable
     # Identify samples with data generated on this worksheet id- relies on directories created one for each sample

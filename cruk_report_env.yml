@@ -25,6 +25,7 @@ dependencies:
   - mkl_random=1.0.2=py37h27c97d8_0
   - openpyxl=2.6.2
   - pandas=0.25.0
+  - pyinstaller=3.5
   - python=3.7.3
   - python-dateutil=2.8.0
   - pytz=2019.1=py_0
