@@ -5,7 +5,7 @@ from pandas import DataFrame
 from itertools import islice
 
 
-class ParseReport: #TODO Chnage this class once clear if s=doing smaple by sample or not (static methods- @staticmethod)
+class ParseReport: #TODO Change this class once clear if s=doing sample by sample or not (static methods- @staticmethod)
 
     def __init__(self, worksheet_id):
         self.worksheet_id = worksheet_id
@@ -45,6 +45,20 @@ class ParseReport: #TODO Chnage this class once clear if s=doing smaple by sampl
         data_subset = (islice(r, 4, None) for r in data)
         report_df = DataFrame(data_subset, index=idx, columns=cols)
         return report_df
+
+    def checker_table(self, wb):
+        checker_tab = wb["Patient Summary"]
+        data = checker_tab.values
+        patient_df = DataFrame(data)
+        return patient_df
+
+    def get_first_checker(self, df):
+        first_checker = df.iloc[3][5]
+        return first_checker
+
+    def get_second_checker(self, df):
+        second_checker = df.iloc[4][5]
+        return second_checker
 
     def report_samples(self, wb):
         report_tab = wb["Report"]

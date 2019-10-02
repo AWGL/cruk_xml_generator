@@ -50,8 +50,9 @@ class ParseDatabase:
 
     def get_patient_id_2(self, df):
         # return second patient identifier as a series, convert to string and take value part excluding row number
-        #TODO Change this to correct key- sait for final version of DB
-        pat_id_2 = " ".join(df['not present in current converter but in incoming xml when used (on form)'].to_string().split()[1:])
+        #TODO Change this to correct key- wait for final version of DB
+        pat_id_2 = " ".join(df['not present in current converter but in incoming xml when used (on form)']
+                            .to_string().split()[1:])
         return pat_id_2
 
     def get_source_sample_id(self, df):

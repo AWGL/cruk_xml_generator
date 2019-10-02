@@ -45,6 +45,11 @@ def data_always_required(database_parser, sample):
     info_dict["banked_loc"] = "Rm2.14 DNA bank_4oC" # Hardcoded
     info_dict["banked_id"] = database_parser.get_lab_id(sample_data)
     info_dict["tech_hub"] = "2 - Cardiff"
+
+    # TODO Obtain the authoriser details from the front end
+    # TODO temp variables for writing out pdf
+    info_dict["authorised_by"] = "smrw"
+    info_dict["date_authorised"] = "11/10/2019"
     return info_dict
 
 def passed_data(database_parser, sample, info_dict):
@@ -65,16 +70,22 @@ def passed_data(database_parser, sample, info_dict):
     # TODO Add exception handling for a missing Excel file
     spreadsheet = report_parser.find_analysis_worksheet(os.path.join(path, worksheet_id, sample), ".xlsx")
     worksheet = report_parser.load_analysis_worksheet(spreadsheet)
+    # Extract data from report tab of Excel results
     worksheet_data_frame = report_parser.report_table(worksheet)
-
-    # TODO Obtain the reporter and authoriser details from the report
-    # TODO temp variables for writing out pdf
-    info_dict["reported_by_1"] = "sr"
-    info_dict["date_reported_1"] = "09/10/2019"
-    info_dict["reported_by_2"] = "smr"
-    info_dict["date_reported_2"] = "10/10/2019"
-    info_dict["authorised_by"] = "smrw"
-    info_dict["date_authorised"] = "11/10/2019"
+    # Extract data from report tab of Excel results
+    patient_data_frame = report_parser.checker_table(worksheet)
+    # Obtain the reporter and authoriser details from the report
+    checker_1_field = report_parser.get_first_checker(patient_data_frame)
+    checker_2_field = report_parser.get_second_checker(patient_data_frame)
+    # Details are initials <space> date, split into initials and date for inputting into pdf report
+    checker_1 = checker_1_field.split()[0]
+    checker_1_date = checker_1_field.split()[1]
+    checker_2 = checker_2_field.split()[0]
+    checker_2_date = checker_2_field.split()[1]
+    info_dict["reported_by_1"] = checker_1
+    info_dict["date_reported_1"] = checker_1_date
+    info_dict["reported_by_2"] = checker_2
+    info_dict["date_reported_2"] = checker_2_date
 
     # Populate information dictionary from Excel report- per sample
     # Loop over genes (for each sample)
@@ -148,12 +159,12 @@ def removed_from_trial_data(info_dict):
     return info_dict
 
 def main():
-    # TODO determine how to tell if passed or failed sample?- Question pending with Mo
+    # TODO determine how to tell if passed or failed sample?- Obtain from front end
     status = "withdrawn"
     status = "sequenced"
     #status = "failed"
 
-    #TODO Temp variable
+    #TODO Temp variable- obtain required sample from front end
     # Identify samples with data generated on this worksheet id- relies on directories created one for each sample
     samples = locate_samples(os.path.join(path, worksheet_id))
     sample = samples[0]
