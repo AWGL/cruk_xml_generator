@@ -132,7 +132,19 @@ class GenerateReport:
 
         # For failed or withdrawn samples
         elif self.report_status == "failed" or self.report_status == "withdrawn":
-            print("v")
+            table_data = [["", "", "Date"],
+                          ["Authorised", self.sample_dict.get('authorised_by'),
+                           self.sample_dict.get('date_authorised')]]
+            table = Table(table_data, colWidths=[2.5 * cm, 2 * cm, 2.5 * cm])
+            table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                                       ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+                                       ('FONTSIZE', (0, 0), (-1, -1), 8),
+                                       ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
+                                       ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
+                                       ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white])]))
+            # Draw table on to template
+            table.wrapOn(template, width, height)
+            table.drawOn(template, 2 * cm, 2.5 * cm)
         else:
             raise Exception("Could not determine if report is for QC fail, withdrawn or sequenced sample")
 
@@ -142,11 +154,3 @@ class GenerateReport:
         template.save()
         return (f"PDF report {self.file_name} generated")
 
-        '''
-        template.drawString(2*cm, 2*cm,f"Checker 1 {self.sample_dict.get('reported_by_1')}")
-        template.drawString(2.5*cm, 2*cm, self.sample_dict.get('date_reported_1'))
-        template.drawString(3.5*cm, 2*cm, self.sample_dict.get('reported_by_2'))
-        template.drawString(4*cm, 2*cm, self.sample_dict.get('date_reported_2'))
-        template.drawString(5*cm, 2*cm, self.sample_dict.get('authorised_by'))
-        template.drawString(5.5*cm, 2*cm, self.sample_dict.get('date_authorised'))
-        '''
