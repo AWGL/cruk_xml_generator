@@ -67,8 +67,9 @@ def passed_data(database_parser, sample, info_dict):
 
     # Parse data from Excel report generated- per sample
     report_parser = ParseReport(worksheet_id)
-    # TODO Add exception handling for a missing Excel file
     spreadsheet = report_parser.find_analysis_worksheet(os.path.join(path, worksheet_id, sample), ".xlsx")
+    if not spreadsheet:
+        raise Exception(f"Results spreadsheet for sample {sample} could not be located.")
     worksheet = report_parser.load_analysis_worksheet(spreadsheet)
     # Extract data from report tab of Excel results
     worksheet_data_frame = report_parser.report_table(worksheet)
