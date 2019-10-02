@@ -24,7 +24,7 @@ class GenerateXml:
         org_code.text = self.info_dict.get('org_code')
         loc_pat_id = ET.SubElement(patient, "localPatientIdentifier")
         loc_pat_id.text = self.info_dict.get('local_patient_id')
-        #loc_pat_id_2 = ET.SubElement(patient, "localPatientIdentifier2")
+        #loc_pat_id_2 = ET.SubElement(patient, "localPatientIdentifier2") # TODO Awaiting clarity from Mo
         #loc_pat_id_2.text = self.info_dict.get('local_patient_id_2')
         sample = ET.SubElement(root, "sample")
         # Clinical hub elements
@@ -70,9 +70,10 @@ class GenerateXml:
             release_test_date = ET.SubElement(test, "dateTestResultsReleased")
             release_test_date.text = g_data.get('test_results_date')
             test_result = ET.SubElement(test, "testResult")
-            current_test_results = "c.fenwifnei & c.gdyuewbh & CNV in"#g_data.get('test_results')
-            print(";".join(current_test_results.split("&")))
-            test_result.text = ET.CDATA(g_data.get('test_results'))
+            # Remove & delimiter used between genes and replace with ; required by XML schema
+            current_test_results = g_data.get('test_results')
+            current_test_results = ";".join([x.strip() for x in (current_test_results.split("&"))])
+            test_result.text = ET.CDATA(current_test_results)
             test_report = ET.SubElement(test, "testReport")
             test_report.text = ET.CDATA(g_data.get('test_report'))
             test_status = ET.SubElement(test, "testStatus")

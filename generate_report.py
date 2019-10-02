@@ -132,7 +132,7 @@ class GenerateReport:
 
             # Number of failed genes for this sample
             template.setFont("Helvetica", 10)
-            template.drawString(11 * cm, 3.5 * cm, f"Gene fails: {num_fails}")
+            template.drawString(11.4 * cm, 3.5 * cm, f"Gene fails: {num_fails}")
 
         # For failed or withdrawn samples
         elif self.report_status == "failed" or self.report_status == "withdrawn":
@@ -151,5 +151,5 @@ class GenerateReport:
         template.drawString(width-(3.5 * cm), cm, "Page 2 of 2")
         template.showPage()
         template.save()
-        return (f"PDF report {self.file_name} generated")
+        return f"PDF report {self.file_name} generated"
 
