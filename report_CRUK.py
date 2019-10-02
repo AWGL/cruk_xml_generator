@@ -185,7 +185,6 @@ def main():
     elif status == "withdrawn":
         info_dict = removed_from_trial_data(info_dict)
 
-
     # Add information dictionary to sample dictionary
     sample_dict[sample] = info_dict
     print(sample_dict)
