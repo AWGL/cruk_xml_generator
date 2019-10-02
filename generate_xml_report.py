@@ -17,7 +17,7 @@ class GenerateXml:
     def generate_xml(self):
         NS_XSI = {"xsi": "http://www.w3.org/2001/XMLSchema-instance"}
         root = ET.Element("smpSample", nsmap=NS_XSI)
-        #root.set("smVersion", self.version) #TODO add back in re:email from Tara
+        root.set("smVersion", self.version)
         clinical_hub = ET.SubElement(root, "smClinicalHub", name=self.info_dict.get('clinical_hub'))
         patient = ET.SubElement(clinical_hub, "patient")
         org_code = ET.SubElement(patient, "organisationCode")
