@@ -9,7 +9,7 @@ from is_valid import IsValid
 
 path = "/Users/sararey/Documents/cruk_reporting" #temp path for testing
 #db_name = "LUNG sample tracking_Nextera.xls" #temp for testing
-db_name = "New database.xlsx"
+db_name = "SMP2v3 workflow tracker.xlsx"
 worksheet_id = "19-9999" #temp for testing- obtain from ?- entry by scientist?
 xsd = "/Users/sararey/Documents/cruk_reporting/info/SMP2XSD (Results) v3.8.xsd"
 test_method = "19"
@@ -62,7 +62,7 @@ def passed_data(database_parser, sample, info_dict):
     sequencing_dataframe = database_parser.open_database_as_dataframe("New database workflow")
     # Extract sample data from dataframe once
     sample_sequencing_data = database_parser.get_sample(sequencing_dataframe, sample)
-    info_dict["vol_banked"] = database_parser.get_vol_banked_dna(sample_sequencing_data)  # Note that this is DNA only
+    info_dict["vol_banked"] = "0" #TODO temp variable #database_parser.get_vol_banked_dna(sample_sequencing_data)  # Note that this is DNA only
     info_dict["release_date"] = database_parser.get_report_release_date(sample_sequencing_data)
 
     # Parse data from Excel report generated- per sample
@@ -116,7 +116,7 @@ def qc_fail_data(info_dict):
     from valid_data import gene_scope_dict
     from valid_data import genes_dict
     tested = "Not tested"
-    info_dict["vol_banked"] = "0.0"
+    info_dict["vol_banked"] = "0"
     info_dict["release_date"] = datetime.today().strftime('%Y-%m-%d')
     gene_dict = {}
     for gene in gene_scope_dict.keys():
@@ -142,7 +142,7 @@ def removed_from_trial_data(info_dict):
     from valid_data import gene_scope_dict
     from valid_data import genes_dict
     tested = "Not tested"
-    info_dict["vol_banked"] = "0.0"
+    info_dict["vol_banked"] = "0"
     info_dict["release_date"] = datetime.today().strftime('%Y-%m-%d')
     gene_dict = {}
     for gene in gene_scope_dict.keys():

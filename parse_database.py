@@ -12,7 +12,7 @@ class ParseDatabase:
         db = db_wb.sheet_by_name(worksheet)
         return db
 
-    def open_database_as_dataframe(self, sheet, header=1): # Column headers are 2nd row. Data starts after this.
+    def open_database_as_dataframe(self, sheet, header=0): # Column headers are 1st row. Data starts after this.
         db_df = pd.read_excel(self.database_name, sheet_name=sheet, header=header)
         return db_df
 
@@ -99,7 +99,11 @@ class ParseDatabase:
 
     def get_report_release_date(self, df):
         # return date (without time) received as a series, convert to string and take value part excluding row number
-        release_date = df['Date result returned'].dt.date.to_string()
+        try:
+            #release_date = df['Date result returned'].dt.date.to_string() #old header
+            release_date = df['date reported'].dt.date.to_string()
+        except:
+            raise Exception(f"No date reported found in Excel database or date reported in incorrect format")
         # split date to remove row number
         release_date = " ".join(release_date.split()[1:])
         return release_date
@@ -109,7 +113,7 @@ class ParseDatabase:
         vol = " ".join(df['Banked DNA Volume (µL)'].to_string().split()[1:])
         # Where there is no concentration as no nucleic acid was banked, enter 0
         if vol == "" or vol == " ":
-            vol = 0
+            vol = "0"
         return vol
 
     def get_conc_banked_dna(self, df):
@@ -117,7 +121,7 @@ class ParseDatabase:
         conc = " ".join(df['Final FFPE conc for NGS - DNA'].to_string().split()[1:])
         # Where there is no concentration as no nucleic acid was banked, enter 0
         if conc == "" or conc == " ":
-            conc = 0
+            conc = "0"
         return conc
 
     def get_vol_banked_rna(self, df):
@@ -125,7 +129,7 @@ class ParseDatabase:
         vol = " ".join(df['Banked RNA Volume (µL)'].to_string().split()[1:])
         # Where there is no concentration as no nucleic acid was banked, enter 0
         if vol == "" or vol == " ":
-            vol = 0
+            vol = "0"
         return vol
 
     def get_conc_banked_rna(self, df):
@@ -133,7 +137,7 @@ class ParseDatabase:
         conc = " ".join(df['Final FFPE conc for NGS - RNA'].to_string().split()[1:])
         # Where there is no concentration as no nucleic acid was banked, enter 0
         if conc == "" or conc == " ":
-            conc = 0
+            conc = "0"
         return conc
 
 
