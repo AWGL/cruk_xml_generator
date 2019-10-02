@@ -15,10 +15,9 @@ class GenerateXml:
         return root
 
     def generate_xml(self):
-        NS_XSI = "{http://www.w3.org/2001/XMLSchema-instance}"
-        root = ET.Element("smpSample") #, smVersion=self.version)
-        root.set(NS_XSI + "noNamespaceSchemaLocation",
-                'http://extranet.cancerresearchuk.org/stratmed/Shared%20Documents/smSampleXSDSchema%20V2.3.xsd') #TODO Check this link correct
+        NS_XSI = {"xsi": "http://www.w3.org/2001/XMLSchema-instance"}
+        root = ET.Element("smpSample", nsmap=NS_XSI)
+        #root.set("smVersion", self.version) #TODO add back in re:email from Tara
         clinical_hub = ET.SubElement(root, "smClinicalHub", name=self.info_dict.get('clinical_hub'))
         patient = ET.SubElement(clinical_hub, "patient")
         org_code = ET.SubElement(patient, "organisationCode")
@@ -71,6 +70,8 @@ class GenerateXml:
             release_test_date = ET.SubElement(test, "dateTestResultsReleased")
             release_test_date.text = g_data.get('test_results_date')
             test_result = ET.SubElement(test, "testResult")
+            current_test_results = "c.fenwifnei & c.gdyuewbh & CNV in"#g_data.get('test_results')
+            print(";".join(current_test_results.split("&")))
             test_result.text = ET.CDATA(g_data.get('test_results'))
             test_report = ET.SubElement(test, "testReport")
             test_report.text = ET.CDATA(g_data.get('test_report'))
@@ -83,6 +84,6 @@ class GenerateXml:
 
     def write_xml(self, output_file_name, element_tree):
         output_xml = os.path.join(self.output_path, output_file_name)
-        element_tree.write(output_xml, pretty_print=True)
+        element_tree.write(output_xml, encoding="UTF-8", xml_declaration=True, pretty_print=True)
 
 

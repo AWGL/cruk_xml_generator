@@ -151,7 +151,7 @@ def main():
     # TODO determine how to tell if passed or failed sample?- Question pending with Mo
     status = "withdrawn"
     status = "sequenced"
-    status = "failed"
+    #status = "failed"
 
     #TODO Temp variable
     # Identify samples with data generated on this worksheet id- relies on directories created one for each sample

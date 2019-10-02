@@ -45,6 +45,16 @@ class GenerateReport:
                                    ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.lightgrey, colors.white])]))
         return table
 
+    def create_sig_box_table(self, table_data):
+        table = Table(table_data, colWidths=[2.5 * cm, 2 * cm, 2.5 * cm])
+        table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                                   ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+                                   ('FONTSIZE', (0, 0), (-1, -1), 8),
+                                   ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
+                                   ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
+                                   ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white])]))
+        return table
+
     def pdf_writer(self):
         template = canvas.Canvas(self.file_name, pagesize=A4, bottomup=1)
         width, height = A4
@@ -115,33 +125,21 @@ class GenerateReport:
                         ["Checker 1", self.sample_dict.get('reported_by_1'), self.sample_dict.get('date_reported_1')],
                         ["Checker 2", self.sample_dict.get('reported_by_2'), self.sample_dict.get('date_reported_2')],
                         ["Authorised", self.sample_dict.get('authorised_by'), self.sample_dict.get('date_authorised')]]
-            table = Table(table_data, colWidths=[2.5 * cm, 2 * cm, 2.5 * cm])
-            table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-                                        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-                                        ('FONTSIZE', (0, 0), (-1, -1), 8),
-                                        ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
-                                        ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
-                                        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white])]))
+            table = self.create_sig_box_table(table_data)
             # Draw table on to template
             table.wrapOn(template, width, height)
             table.drawOn(template, 2*cm, 1.4*cm)
 
             # Number of failed genes for this sample
+            template.setFont("Helvetica", 10)
             template.drawString(11 * cm, 3.5 * cm, f"Gene fails: {num_fails}")
-            template.setFont("Helvetica", 8)
 
         # For failed or withdrawn samples
         elif self.report_status == "failed" or self.report_status == "withdrawn":
             table_data = [["", "", "Date"],
                           ["Authorised", self.sample_dict.get('authorised_by'),
                            self.sample_dict.get('date_authorised')]]
-            table = Table(table_data, colWidths=[2.5 * cm, 2 * cm, 2.5 * cm])
-            table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-                                       ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-                                       ('FONTSIZE', (0, 0), (-1, -1), 8),
-                                       ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
-                                       ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
-                                       ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white])]))
+            table = self.create_sig_box_table(table_data)
             # Draw table on to template
             table.wrapOn(template, width, height)
             table.drawOn(template, 2 * cm, 2.5 * cm)
@@ -149,6 +147,7 @@ class GenerateReport:
             raise Exception("Could not determine if report is for QC fail, withdrawn or sequenced sample")
 
         # For all samples
+        template.setFont("Helvetica", 8)
         template.drawString(width-(3.5 * cm), cm, "Page 2 of 2")
         template.showPage()
         template.save()
