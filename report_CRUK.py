@@ -208,9 +208,6 @@ def main():
                             f"should start with two numbers then a dash e.g. 19-XXXX")
     authoriser = input("Enter Authoriser initials: ")
 
-    #TODO Temp variable for TESTING- obtain required sample from front end
-    sample = "19M13875"
-
     # Create dictionary to hold information extracted from sources
     sample_dict = {}
 
