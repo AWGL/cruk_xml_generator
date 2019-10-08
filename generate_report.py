@@ -10,9 +10,9 @@ from itertools import islice
 class GenerateReport:
 
     def __init__(self, file_name, sample_dict, report_status=None):
-        self.col_widths_dict = {"sequenced": [cm, 1.25 * cm, 1.2 * cm, 2.3 * cm, 3.25 * cm, 1.9 * cm, cm, 5.1 * cm],
-                                "failed": [1.2 * cm, 1.25 * cm, 1.2 * cm, 2.3 * cm, 1.5 * cm, 3.5 * cm, cm, 5.05 * cm],
-                                "withdrawn": [1.2 * cm, 1.25 * cm, 1.2 * cm, 2.3 * cm, 1.5 * cm, 3.5 * cm, cm,
+        self.col_widths_dict = {"s": [cm, 1.25 * cm, 1.2 * cm, 2.3 * cm, 3.25 * cm, 1.9 * cm, cm, 5.1 * cm],
+                                "f": [1.2 * cm, 1.25 * cm, 1.2 * cm, 2.3 * cm, 1.5 * cm, 3.5 * cm, cm, 5.05 * cm],
+                                "w": [1.2 * cm, 1.25 * cm, 1.2 * cm, 2.3 * cm, 1.5 * cm, 3.5 * cm, cm,
                                               5.05 * cm]}
         self.file_name = file_name
         self.sample_dict = sample_dict
@@ -20,7 +20,8 @@ class GenerateReport:
         # Set column widths
         self.col_widths = self.col_widths_dict.get(self.report_status)
 
-    def get_gene_table_data(self, table_dict, style):
+    @staticmethod
+    def get_gene_table_data(table_dict, style):
         table_data = []
         for k, v in table_dict:
             line_table = []
@@ -45,7 +46,8 @@ class GenerateReport:
                                    ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.lightgrey, colors.white])]))
         return table
 
-    def create_sig_box_table(self, table_data):
+    @staticmethod
+    def create_sig_box_table(table_data):
         table = Table(table_data, colWidths=[2.5 * cm, 2 * cm, 2.5 * cm])
         table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
                                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
@@ -120,7 +122,7 @@ class GenerateReport:
 
         # Create data for table of people checking this report
         # For sequenced samples
-        if self.report_status == "sequenced":
+        if self.report_status == "s":
             table_data = [["", "", "Date"],
                         ["Checker 1", self.sample_dict.get('reported_by_1'), self.sample_dict.get('date_reported_1')],
                         ["Checker 2", self.sample_dict.get('reported_by_2'), self.sample_dict.get('date_reported_2')],
@@ -135,7 +137,7 @@ class GenerateReport:
             template.drawString(11.4 * cm, 3.5 * cm, f"Gene fails: {num_fails}")
 
         # For failed or withdrawn samples
-        elif self.report_status == "failed" or self.report_status == "withdrawn":
+        elif self.report_status == "f" or self.report_status == "w":
             table_data = [["", "", "Date"],
                           ["Authorised", self.sample_dict.get('authorised_by'),
                            self.sample_dict.get('date_authorised')]]

@@ -1,15 +1,14 @@
-import os
 from lxml import etree as ET
+
 
 class GenerateXml:
 
-    def __init__(self, info_dict):
-        self.version = "3.8"
-        self.input_path = "/Users/sararey/Documents/cruk_reporting/" # temp path for testing"
-        self.output_path = "/Users/sararey/Documents/cruk_reporting/xml_report"  # temp path for testing"
+    def __init__(self, info_dict, version):
+        self.version = version
         self.info_dict = info_dict
 
-    def load_existing_xml(self, xml_file):
+    @staticmethod
+    def load_existing_xml(xml_file):
         tree = ET.parse(xml_file)
         root= tree.getroot()
         return root
@@ -24,7 +23,7 @@ class GenerateXml:
         org_code.text = self.info_dict.get('org_code')
         loc_pat_id = ET.SubElement(patient, "localPatientIdentifier")
         loc_pat_id.text = self.info_dict.get('local_patient_id')
-        #loc_pat_id_2 = ET.SubElement(patient, "localPatientIdentifier2") # TODO Awaiting clarity from Mo
+        #loc_pat_id_2 = ET.SubElement(patient, "localPatientIdentifier2") # TODO Not in current schema
         #loc_pat_id_2.text = self.info_dict.get('local_patient_id_2')
         sample = ET.SubElement(root, "sample")
         # Clinical hub elements
@@ -83,8 +82,9 @@ class GenerateXml:
         edited_tree = ET.ElementTree(root)
         return edited_tree
 
-    def write_xml(self, output_file_name, element_tree):
-        output_xml = os.path.join(self.output_path, output_file_name)
-        element_tree.write(output_xml, encoding="UTF-8", xml_declaration=True, pretty_print=True)
+    @staticmethod
+    def write_xml(output, element_tree):
+        element_tree.write(output, encoding="UTF-8", xml_declaration=True, pretty_print=True)
+        return f"XML file {output} generated"
 
 

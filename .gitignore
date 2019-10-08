@@ -4,3 +4,4 @@ valid_data.py
 build
 dist
 report_CRUK.spec
+config.py
