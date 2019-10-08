@@ -13,6 +13,8 @@ db_name = "SMP2v3 workflow tracker.xlsx"
 worksheet_id = "19-9999" #temp for testing- obtain from ?- entry by scientist?
 xsd = "/Users/sararey/Documents/cruk_reporting/info/SMP2XSD (Results) v3.8.xsd"
 test_method = "19"
+# List of fields that do not require data for the xml and can contain no data
+can_be_null = ["local_patient_id_2", "comments"]
 
 
 def data_always_required(database_parser, sample):
@@ -159,11 +161,32 @@ def removed_from_trial_data(info_dict):
     info_dict["genes"] = gene_dict
     return info_dict
 
+def check_xml_data(sample_data):
+    # Sample level
+    for k, v in sample_data.items():
+        try:
+            if k not in can_be_null and (v == "NaN" or len(v) == 0 or v.isspace()):
+                raise Exception(f"Required data for {k} is {v} and so is missing for sample "
+                                f"{sample_data.get('lab_id')}")
+        except AttributeError:
+            # Ignore that there is no isspace method for the dictionary and catch empty dictionary
+            if not v:
+                raise Exception(f"Required data for {k} is {v} (empty) and so is missing for sample "
+                                f"{sample_data.get('lab_id')}")
+            pass
+    # Gene level
+    for k2, v2 in sample_data.get("genes").items():
+        for k3, v3 in v2.items():
+            if k3 not in can_be_null and (v3 == "NaN" or len(v3) == 0 or v3.isspace()):
+                raise Exception(f"Required data for {k3} is set to '{v3}' in gene {k2} and so is missing for "
+                                f"sample {sample_data.get('lab_id')}")
+    return "All required data for XML present"
+
 def main():
     # TODO determine how to tell if passed or failed sample?- Obtain from front end
     status = "withdrawn"
     status = "sequenced"
-    #status = "failed"
+    status = "failed"
 
     #TODO Temp variable- obtain required sample from front end
     # Identify samples with data generated on this worksheet id- relies on directories created one for each sample
@@ -187,7 +210,10 @@ def main():
 
     # Add information dictionary to sample dictionary
     sample_dict[sample] = info_dict
-    print(sample_dict)
+    print(sample_dict.get(sample))
+
+    # Check all required fields populated for xml (data missing from pdf report, e.g. checker, can be seen)
+    print(check_xml_data(sample_dict.get(sample)))
 
     # Create and write out to xml
     write_xml = GenerateXml(sample_dict.get(sample))
