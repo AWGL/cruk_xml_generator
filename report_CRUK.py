@@ -8,9 +8,8 @@ from generate_xml_report import GenerateXml
 from generate_report import GenerateReport
 from is_valid import IsValid
 
-#File paths and version
+#Common file paths and version
 from config import xml_version
-from config import results_path
 from config import db_path
 from config import db_name
 from config import xsd
@@ -19,7 +18,6 @@ from config import pdf_location
 
 # Global variables
 from config import test_method
-# List of fields that do not require data for the xml and can contain no data
 from config import can_be_null
 from config import allowed_authorisers
 from config import sample_status
@@ -71,6 +69,10 @@ def passed_data(database_parser, worksheet_id, sample, info_dict):
     info_dict["release_date"] = database_parser.get_report_release_date(sample_sequencing_data)
 
     # Parse data from Excel report generated- per sample
+    # Obtain year part of worksheet and use to generate path to results file
+    from config import results_path
+    year = f"20{worksheet_id.split('-')[0]} Nextera Results"
+    results_path = os.path.join(results_path, year)
     spreadsheet = parse_report.find_analysis_worksheet(os.path.join(results_path, worksheet_id, sample), ".xlsx")
     if not spreadsheet:
         raise FileNotFoundError(f"Results spreadsheet for sample {sample} could not be located. Check that Excel file"
@@ -261,9 +263,13 @@ def main():
 
     # Error will be thrown prior to this if xml is not valid
     # TODO manual check of XML or pdf wanted before copy file?
-    # Move pdf
+    # Move pdf and remove from output path if already there
+    if os.path.exists(os.path.join(pdf_location, output_pdf)):
+        os.remove(os.path.join(pdf_location, output_pdf))
     shutil.move(os.path.join(os.getcwd(), output_pdf), pdf_location)
-    # Move xml
+    # Move xml and remove from output path if already there
+    if os.path.exists(os.path.join(xml_location, clinical_hub, output_xml)):
+        os.remove(os.path.join(xml_location, clinical_hub, output_xml))
     shutil.move(os.path.join(os.getcwd(), output_xml), os.path.join(xml_location, clinical_hub))
 
 
