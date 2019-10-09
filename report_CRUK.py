@@ -55,6 +55,7 @@ def data_always_required(database_parser, sample):
     info_dict["tech_hub"] = "2 - Cardiff"
     return info_dict
 
+
 def passed_data(database_parser, worksheet_id, sample, info_dict):
     '''
     Data which can be extracted only for samples which were sequenced and analysed
@@ -114,6 +115,7 @@ def passed_data(database_parser, worksheet_id, sample, info_dict):
     info_dict["genes"] = gene_dict
     return info_dict
 
+
 def qc_fail_data(info_dict):
     '''
     Data for samples which failed QC prior to sequencing
@@ -140,6 +142,7 @@ def qc_fail_data(info_dict):
     info_dict["genes"] = gene_dict
     return info_dict
 
+
 def removed_from_trial_data(info_dict):
     '''
     Data for samples which were removed from the trial
@@ -165,6 +168,7 @@ def removed_from_trial_data(info_dict):
         gene_dict[gene] = gene_data_dict
     info_dict["genes"] = gene_dict
     return info_dict
+
 
 def check_xml_data(sample_data):
     '''

@@ -10,7 +10,7 @@ class GenerateXml:
     @staticmethod
     def load_existing_xml(xml_file):
         tree = ET.parse(xml_file)
-        root= tree.getroot()
+        root = tree.getroot()
         return root
 
     def generate_xml(self):
