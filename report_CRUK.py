@@ -208,11 +208,11 @@ def main():
     # No worksheet for withdrawn and failed samples, only for samples which were put through sequencing
     worksheet = "N/A"
     if status == "s":
-        worksheet = input("Enter worksheet: ")
+        worksheet = input("Enter Worksheet: ")
         if len(worksheet.strip()) == 0 or not re.match("\d\d-", worksheet):
             raise Exception(f"Worksheet id incorrectly entered. Worksheet id was entered as {worksheet}. Worksheets"
                             f"should start with two numbers then a dash e.g. 19-XXXX")
-    authoriser = input("Enter Authoriser initials: ")
+    authoriser = input("Enter Authoriser Initials: ")
 
     # Create dictionary to hold information extracted from sources
     sample_dict = {}
