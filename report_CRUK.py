@@ -1,6 +1,9 @@
 import os
+import logging
 import re
 import shutil
+import tkinter as tk
+from tkinter import ttk
 from datetime import datetime
 import parse_report
 from parse_database import ParseDatabase
@@ -198,6 +201,12 @@ def check_xml_data(sample_data):
 
 
 def main():
+    # Create logger
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+
+
+
     '''
     # Enter input and check it for sanity where possible
     status = input("Enter Status: options are w (withdrawn), f (failed) or s (sequenced):  ")
@@ -302,6 +311,26 @@ def main():
                 "Please check if XML file is already open. If it is open, please close it and run the software again")
         os.remove(os.path.join(xml_location, clinical_hub, output_xml))
     shutil.move(os.path.join(os.getcwd(), output_xml), os.path.join(xml_location, clinical_hub))
+
+    popup = tk.Tk()
+    popup.wm_title("CRUK Generator")
+    label = ttk.Label(popup, text="XML and PDF generated successfully", font=("Verdana", 10))
+    label.pack(side="top", fill="x", pady=10)
+    button = ttk.Button(popup, text="OK", command=popup.destroy)
+    button.pack()
+    popup.eval('tk::PlaceWindow %s center' % popup.winfo_pathname(popup.winfo_id()))
+
+    handler = logging.StreamHandler()
+    logger.addHandler(handler)
+    gui_handler = popup.textctrl # need more code to flush this
+    logger.addHandler(gui_handler)
+    logger.setLevel(logging.INFO) #TODO remove this duplication
+
+    logger.info("Logggggg")
+
+
+    popup.mainloop()
+
 
 
 if __name__ == '__main__':
