@@ -314,7 +314,11 @@ def main():
 
     popup = tk.Tk()
     popup.wm_title("CRUK Generator")
+    popup_text = tk.Text(popup, state="disabled")
+    print(popup_text)
     label = ttk.Label(popup, text="XML and PDF generated successfully", font=("Verdana", 10))
+    lable = ttk.Label(popup, text=popup_text, font=("Verdana", 10)) #TODO tmp
+    lable.pack(side="left", fill=None, pady=10) #TODO tmp
     label.pack(side="top", fill="x", pady=10)
     button = ttk.Button(popup, text="OK", command=popup.destroy)
     button.pack()
@@ -322,16 +326,26 @@ def main():
 
     handler = logging.StreamHandler()
     logger.addHandler(handler)
-    gui_handler = popup.textctrl # need more code to flush this
+    gui_handler = MyHandlerText(tk.Text(popup, state="disabled")) # need more code to flush this- set this to the Text attribute of the tk object
     logger.addHandler(gui_handler)
     logger.setLevel(logging.INFO) #TODO remove this duplication
 
     logger.info("Logggggg")
 
-
     popup.mainloop()
 
 
+class MyHandlerText(logging.StreamHandler):
+    def __init__(self, textctrl):
+        logging.StreamHandler.__init__(self) # initialize parent
+        self.textctrl = textctrl
+
+    def emit(self, record):
+        msg = self.format(record)
+        self.textctrl.config(state="normal")
+        self.textctrl.insert("end", msg + "\n")
+        self.flush()
+        self.textctrl.config(state="disabled")
 
 if __name__ == '__main__':
     main()
