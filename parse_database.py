@@ -50,9 +50,7 @@ class ParseDatabase:
 
     def get_patient_id_2(self, df):
         # return second patient identifier as a series, convert to string and take value part excluding row number
-        #TODO Change this to correct key- wait for final version of DB
-        pat_id_2 = " ".join(df['not present in current converter but in incoming xml when used (on form)']
-                            .to_string().split()[1:])
+        pat_id_2 = " ".join(df['Local patient ID 2'].to_string().split()[1:])
         return pat_id_2
 
     def get_source_sample_id(self, df):
@@ -78,6 +76,12 @@ class ParseDatabase:
         tumour_type_formatted = tumour_type_dict[tumour_type]
         return tumour_type_formatted
 
+    def get_snomed(self, df):
+        snomed_code = " ".join(df['SNOMED'].to_string().split()[1:])
+        if snomed_code is None or snomed_code.isspace() or len(snomed_code) == 0 or snomed_code == "NaN":
+            snomed_code = "N/A"
+        return snomed_code
+
     def get_date_sample_sent(self, df):
         # return date (without time) received as a series, convert to string and take value part excluding row number
         sent_date = df['Date sample received'].dt.date.to_string()
@@ -95,12 +99,12 @@ class ParseDatabase:
     def get_lab_id(self, df):
         # return DNA identifier as a series, convert to string and take value part excluding row number
         lab_id = " ".join(df['Lab ID - DNA'].to_string().split()[1:])
+        lab_id = lab_id.upper() # Handle the case where M may be entered into database as lower case m
         return lab_id
 
     def get_report_release_date(self, df):
         # return date (without time) received as a series, convert to string and take value part excluding row number
         try:
-            #release_date = df['Date result returned'].dt.date.to_string() #old header
             release_date = df['date reported'].dt.date.to_string()
         except:
             raise Exception(f"No date reported found in Excel database or date reported in incorrect format")
@@ -110,46 +114,34 @@ class ParseDatabase:
 
     def get_vol_banked_dna(self, df):
         # return vol of banked nucleic acid as a series, convert to string and take value part excluding row number
-        vol = " ".join(df['Banked DNA Volume (µL)'].to_string().split()[1:])
+        vol = " ".join(df['DNA Volume (µL)'].to_string().split()[1:])
         # Where there is no concentration as no nucleic acid was banked, enter 0
-        if vol == "" or vol == " ":
+        if vol == "" or vol == " " or vol == "NaN":
             vol = "0"
         return vol
 
     def get_conc_banked_dna(self, df):
         # return conc of banked nucleic acid as a series, convert to string and take value part excluding row number
-        conc = " ".join(df['Final FFPE conc for NGS - DNA'].to_string().split()[1:])
+        conc = " ".join(df['Final FFPE DNA conc for NGS'].to_string().split()[1:])
         # Where there is no concentration as no nucleic acid was banked, enter 0
-        if conc == "" or conc == " ":
+        if conc == "" or conc == " " or conc == "NaN":
             conc = "0"
         return conc
 
     def get_vol_banked_rna(self, df):
         # return vol of banked nucleic acid as a series, convert to string and take value part excluding row number
-        vol = " ".join(df['Banked RNA Volume (µL)'].to_string().split()[1:])
+        vol = " ".join(df['RNA Volume (µL)'].to_string().split()[1:])
         # Where there is no concentration as no nucleic acid was banked, enter 0
-        if vol == "" or vol == " ":
+        if vol == "" or vol == " " or vol == "NaN":
             vol = "0"
         return vol
 
     def get_conc_banked_rna(self, df):
         # return conc of banked nucleic acid as a series, convert to string and take value part excluding row number
-        conc = " ".join(df['Final FFPE conc for NGS - RNA'].to_string().split()[1:])
+        conc = " ".join(df['Final FFPE RNA conc for NGS'].to_string().split()[1:])
         # Where there is no concentration as no nucleic acid was banked, enter 0
-        if conc == "" or conc == " ":
+        if conc == "" or conc == " " or conc == "NaN":
             conc = "0"
         return conc
 
-
-
-
-    # Legacy functions
-    def index_samples_df(self, df):
-        return df.set_index('FFPE DNA Number')
-
-    def get_sample_data_old(self, db, sample):
-        for row_index, dna_id in enumerate(db.col_values(colx=3)):
-            if dna_id == sample:
-                print(row_index)
-        return None
 

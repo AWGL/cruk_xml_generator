@@ -26,12 +26,12 @@ def load_analysis_worksheet(worksheet):
     # Ensure that the formulae in the Excel spreadsheet have been evaluated by checking that the sample identifiers
     # are not all None
     if not any(report_samples):
-        raise Exception(f"Formulae have not been evaluated. Open and save worksheet in Excel.")
+        raise Exception(f" Excel formulae have not been evaluated. Open and save worksheet in Excel.")
     # Check the sample numbers match on outside and inside of report file
     # First entry is DNA sample, second is RNA sample. Naming pattern is projectid-sampleid.
     if not worksheet_sample == report_samples[1].split("-")[-1]:
-        raise Exception(f"Wrong report. File for DNA sample name {worksheet_sample}, but report tab for \
-            DNA sample {report_samples[1]}")
+        raise Exception(f"Wrong report. File for DNA sample name {worksheet_sample}, but report tab for "
+                        f"DNA sample {report_samples[1]}")
     return wb
 
 
@@ -118,7 +118,8 @@ def get_test_status(gene_data):
 
 
 def get_comments(gene_data):
-    if gene_data.get("COMMENTS") is None or gene_data.get("COMMENTS").isspace() or len(gene_data.get("COMMENTS") == 0):
+    comment = gene_data.get("COMMENTS")
+    if comment is None or comment.isspace() or len(comment) == 0 or comment == "NaN":
         comments = "These results are intended for research purposes."
     else:
         comments = f"These results are intended for research purposes. {gene_data.get('COMMENTS')}."
