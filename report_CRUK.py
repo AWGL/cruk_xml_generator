@@ -225,6 +225,7 @@ def main():
     #TODO temp variables
     status = "f"
     sample = "19M13875"
+    worksheet = "19-9999"
     authoriser = "mjm"
 
     # Obtain data that is available for every sample regardless of workflow status
@@ -257,31 +258,48 @@ def main():
     # Obtain clinical hub name in format for output XML TODO check how these are entered and names of directories correspond
     clinical_hub = info_dict.get('clinical_hub').split("-")[1].strip()
 
+    # Generate name for output xml
+    formatted_date = datetime.today().strftime('%Y%m%d')
+    output_xml = f"{formatted_date} {sample_dict.get(sample).get('cruk_sample_id')}.xml"
+    # Check if troubleshooting xml file exists and is already open
+    if os.path.exists(os.path.join(os.getcwd(), output_xml)):
+        if not os.access(os.path.join(os.getcwd(), output_xml), os.W_OK):
+            raise Exception(
+                "Please check if XML file is already open. If it is open, please close it and run the software again")
     # Create and write out to xml
     write_xml = GenerateXml(sample_dict.get(sample), xml_version)
     tree = write_xml.generate_xml()
-    formatted_date = datetime.today().strftime('%Y%m%d')
-    output_xml = f"{formatted_date} {sample_dict.get(sample).get('cruk_sample_id')}.xml"
     write_xml.write_xml(os.path.join(os.getcwd(), output_xml), tree)
-    #write_xml.load_existing_xml(os.path.join(os.getcwd(), output_xml))
 
-    # Generate pdf report of required data
+    # Generate name for output pdf
     output_pdf = f"{formatted_date} {sample_dict.get(sample).get('cruk_sample_id')}.pdf"
+    # Check if troubleshooting pdf file exists and is already open
+    if os.path.exists(os.path.join(os.getcwd(), output_pdf)):
+        if not os.access(os.path.join(os.getcwd(), output_pdf), os.W_OK):
+            raise Exception(
+                "Please check if XML file is already open. If it is open, please close it and run the software again")
+    # Generate pdf report of required data
     write_report = GenerateReport(os.path.join(os.getcwd(), output_pdf), sample_dict.get(sample), status)
     print(write_report.pdf_writer())
 
-    # Test validity
+    # Test validity- will throw error if xml is not valid
     check_validity = IsValid(os.path.join(os.getcwd(), output_xml), xsd)
     print(check_validity.validate_xml_format())
     print(check_validity.validate_xml_schema())
 
-    # Error will be thrown prior to this if xml is not valid
-    # Move pdf and remove from output path if already there
+    # Check existence of final output file and whether it can be written to
+    # Remove pdf from output path if already there and move pdf
     if os.path.exists(os.path.join(pdf_location, output_pdf)):
+        if not os.access(os.path.join(pdf_location, output_pdf), os.W_OK):
+            raise Exception(
+                "Please check if PDF file is already open. If it is open, please close it and run the software again")
         os.remove(os.path.join(pdf_location, output_pdf))
     shutil.move(os.path.join(os.getcwd(), output_pdf), pdf_location)
-    # Move xml and remove from output path if already there
+    # Remove xml from output path if already there and move xml
     if os.path.exists(os.path.join(xml_location, clinical_hub, output_xml)):
+        if not os.access(os.path.join(xml_location, clinical_hub, output_xml), os.W_OK):
+            raise Exception(
+                "Please check if XML file is already open. If it is open, please close it and run the software again")
         os.remove(os.path.join(xml_location, clinical_hub, output_xml))
     shutil.move(os.path.join(os.getcwd(), output_xml), os.path.join(xml_location, clinical_hub))
 

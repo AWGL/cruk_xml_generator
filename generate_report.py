@@ -152,6 +152,7 @@ class GenerateReport:
         template.setFont("Helvetica", 8)
         template.drawString(width-(3.5 * cm), cm, "Page 2 of 2")
         template.showPage()
+        # Saves and closes
         template.save()
         return f"PDF report {self.file_name} generated"
 
