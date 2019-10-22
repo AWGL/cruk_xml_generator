@@ -205,6 +205,8 @@ def main():
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
 
+    module_logger = logging.getLogger(__name__)
+
 
 
     '''
@@ -312,7 +314,13 @@ def main():
         os.remove(os.path.join(xml_location, clinical_hub, output_xml))
     shutil.move(os.path.join(os.getcwd(), output_xml), os.path.join(xml_location, clinical_hub))
 
-    popup = tk.Tk()
+    #popup = tk.Tk()
+    from message_box import MessageBox
+    my_message = MessageBox(None)
+    my_message.wm_title("CRUK Generator")
+
+
+    '''
     popup.wm_title("CRUK Generator")
     popup_text = tk.Text(popup, state="disabled")
     print(popup_text)
@@ -323,16 +331,16 @@ def main():
     button = ttk.Button(popup, text="OK", command=popup.destroy)
     button.pack()
     popup.eval('tk::PlaceWindow %s center' % popup.winfo_pathname(popup.winfo_id()))
+    '''
+    #handler = logging.StreamHandler()
+    #logger.addHandler(handler)
+    gui_handler = MyHandlerText(my_message.popup_text) # need more code to flush this- set this to the Text attribute of the tk object
+    module_logger.addHandler(gui_handler)
+    module_logger.setLevel(logging.INFO)
 
-    handler = logging.StreamHandler()
-    logger.addHandler(handler)
-    gui_handler = MyHandlerText(tk.Text(popup, state="disabled")) # need more code to flush this- set this to the Text attribute of the tk object
-    logger.addHandler(gui_handler)
-    logger.setLevel(logging.INFO) #TODO remove this duplication
+    module_logger.info("Logggggg")
 
-    logger.info("Logggggg")
-
-    popup.mainloop()
+    my_message.mainloop()
 
 
 class MyHandlerText(logging.StreamHandler):
