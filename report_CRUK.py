@@ -313,13 +313,13 @@ def main():
                 "Please check if XML file is already open. If it is open, please close it and run the software again")
         os.remove(os.path.join(xml_location, clinical_hub, output_xml))
     shutil.move(os.path.join(os.getcwd(), output_xml), os.path.join(xml_location, clinical_hub))
-
+    '''
     #popup = tk.Tk()
     from message_box import MessageBox
     my_message = MessageBox(None)
     my_message.wm_title("CRUK Generator")
 
-
+    '''
     '''
     popup.wm_title("CRUK Generator")
     popup_text = tk.Text(popup, state="disabled")
@@ -331,6 +331,7 @@ def main():
     button = ttk.Button(popup, text="OK", command=popup.destroy)
     button.pack()
     popup.eval('tk::PlaceWindow %s center' % popup.winfo_pathname(popup.winfo_id()))
+    '''
     '''
     #handler = logging.StreamHandler()
     #logger.addHandler(handler)
@@ -354,7 +355,7 @@ class MyHandlerText(logging.StreamHandler):
         self.textctrl.insert("end", msg + "\n")
         self.flush()
         self.textctrl.config(state="disabled")
-
+    '''
 if __name__ == '__main__':
     main()
 
