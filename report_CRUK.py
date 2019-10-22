@@ -290,9 +290,12 @@ def main():
             raise Exception(
                 "Please check if XML file is already open. If it is open, please close it and run the software again")
     # Generate pdf report of required data
-    write_report = GenerateReport(os.path.join(os.getcwd(), output_pdf), sample_dict.get(sample), status)
-    print(write_report.pdf_writer())
+    #write_report = GenerateReport(os.path.join(os.getcwd(), output_pdf), sample_dict.get(sample), status)
+    #print(write_report.pdf_writer())
+    write_report = GenerateReport(sample_dict.get(sample))
+    write_report.generate_pdf()
 
+    '''
     # Test validity- will throw error if xml is not valid
     check_validity = IsValid(os.path.join(os.getcwd(), output_xml), xsd)
     print(check_validity.validate_xml_format())
@@ -313,6 +316,7 @@ def main():
                 "Please check if XML file is already open. If it is open, please close it and run the software again")
         os.remove(os.path.join(xml_location, clinical_hub, output_xml))
     shutil.move(os.path.join(os.getcwd(), output_xml), os.path.join(xml_location, clinical_hub))
+    '''
     '''
     #popup = tk.Tk()
     from message_box import MessageBox

@@ -1,12 +1,94 @@
 from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4
+from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib.units import cm
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from reportlab.platypus import Paragraph, Table, TableStyle
 from itertools import islice
 
+from reportlab.platypus import SimpleDocTemplate
 
+
+class GenerateReport:
+    def __init__(self, sample_dict):
+        self.sample_dict = sample_dict
+        self.pagesize = "A4"
+
+    def _headers(self, my_canvas, my_doc):
+        my_canvas.saveState()
+        styles = getSampleStyleSheet()
+        header_style = styles['Normal']
+
+        header1 = Paragraph(f"Clinical Hub: {self.sample_dict.get('clinical_hub')} ", header_style)
+        header2 = Paragraph(f"{self.sample_dict.get('cruk_sample_id')} ", header_style)
+        header3 = Paragraph(f"Lab ID: {self.sample_dict.get('lab_id')} ", header_style)
+        w1, h1 = header1.wrap(my_doc.width, my_doc.topMargin)
+        w2, h2 = header2.wrap(my_doc.width, my_doc.topMargin)
+        w3, h3 = header3.wrap(my_doc.width, my_doc.topMargin)
+        header1.drawOn(my_canvas, my_doc.leftMargin, my_doc.height + my_doc.topMargin - h1 + 1.4 * cm)
+        header2.drawOn(my_canvas, my_doc.leftMargin + 9.7 * cm, my_doc.height + my_doc.topMargin - h2 + 1.4 * cm)
+        header2.drawOn(my_canvas, my_doc.leftMargin + 19.7 * cm, my_doc.height + my_doc.topMargin - h3 + 1.4 * cm)
+
+        my_canvas.restoreState()
+
+    @staticmethod
+    def _footer(my_canvas, my_doc):
+        return None
+
+
+    def first_page(self):
+        return None
+
+
+    def generate_pdf(self):
+
+        doc = SimpleDocTemplate("testout.pdf", rightMargin=72, leftMargin=72, topMargin=72, bottomMargin=72,
+                                pagesize=landscape(A4))
+        Title = "U"
+
+        style_tabl_title = getSampleStyleSheet()["BodyText"]
+        style_tabl_title.fontName = 'Helvetica'
+        style_tabl_title.fontSize = 8
+        style_tabl_title.textColor = colors.white
+        style = getSampleStyleSheet()["BodyText"]
+        style.fontName = 'Helvetica'
+        style.fontSize = 6
+        style.textColor = colors.black
+
+        # Elements
+        elements = []
+
+        # Headers
+        tabl_headers = [Paragraph('Gene num', style_tabl_title), Paragraph('Gene name', style_tabl_title),
+                        Paragraph('Scope of test', style_tabl_title),
+                        Paragraph('Test result', style_tabl_title), Paragraph('Test report', style_tabl_title),
+                        Paragraph('Test status', style_tabl_title), Paragraph('Comments', style_tabl_title)]
+
+        # Data
+        data = []
+        for k, v in self.sample_dict.get('genes').items():
+            line_table = []
+            line_table.append(Paragraph(v.get('gene'), style))
+            line_table.append(Paragraph(k, style))
+            line_table.append(Paragraph(v.get('test_scope').split(":")[1], style))
+            line_table.append(Paragraph(v.get('test_results'), style))
+            line_table.append(Paragraph(v.get('test_report'), style))
+            test_status = v.get('test_status')
+            line_table.append(Paragraph(test_status, style))
+            line_table.append(Paragraph(v.get('comments'), style))
+            data.append(line_table)
+
+        data.insert(0, tabl_headers)
+        table = Table(data)
+        table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+                                    ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
+                                    ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
+                                    ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.lightgrey, colors.white])]))
+        elements.append(table)
+        doc.build(elements, onFirstPage=self._headers, onLaterPages=self._headers)
+
+'''
 class GenerateReport:
 
     def __init__(self, file_name, sample_dict, report_status=None):
@@ -156,3 +238,4 @@ class GenerateReport:
         template.save()
         return f"PDF report {self.file_name} generated"
 
+'''
