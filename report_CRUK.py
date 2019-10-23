@@ -25,6 +25,15 @@ from config import allowed_authorisers
 from config import sample_status
 
 
+
+def error_condition(imported_logger, error_text, error_type):
+    imported_logger.module_logger.error(error_text)
+    # Display informative message to the front end
+    imported_logger.my_message.mainloop()
+    # Terminate code and write traceback to log file for troubleshooting
+    raise error_type(error_text)
+
+
 def data_always_required(database_parser, sample):
     '''
     Data required for every sample regardless of overall pass/fail status
@@ -197,11 +206,10 @@ def check_xml_data(sample_data):
 
 def main():
 
-    # Create pop-up box
-    from message_box import MessageBox, MyHandlerText
-    my_message = MessageBox(None)
-    my_message.wm_title("CRUK Generator")
+    ml = ModuleLogger()
+    module_logger = ml.module_logger
 
+    '''
     # Create logger- called the name of this class
     module_logger = logging.getLogger(__name__)
     module_logger.setLevel(logging.DEBUG)
@@ -215,6 +223,7 @@ def main():
     stdout_handler = logging.StreamHandler(sys.stdout)
     stdout_handler.setLevel(logging.DEBUG)
     module_logger.addHandler(stdout_handler)
+    '''
 
     '''
     # Enter input and check it for sanity where possible
@@ -249,9 +258,6 @@ def main():
 
     module_logger.info(f"Generating XML and PDF report for sample {sample}")
 
-    #TODO Testing
-    
-
     # Obtain data that is available for every sample regardless of workflow status
     # Populate information dictionary from sample tracking spreadsheet
     database_parser = ParseDatabase(os.path.join(db_path, db_name))
@@ -267,9 +273,9 @@ def main():
 
     # Add authoriser details to information dictionary- pre-check are in list of allowed authorisers
     if authoriser not in allowed_authorisers:
-        raise PermissionError(f"Authoriser {authoriser} is not a permitted authoriser for CRUK. Please try again or "
+        error_condition(ml, f"Authoriser {authoriser} is not a permitted authoriser for CRUK. Please try again or "
                                 f"see the bioinformatics team to arrange to have your initials added to the list of "
-                                f"CRUK authorisers in this software.")
+                                f"CRUK authorisers in this software.", PermissionError)
     info_dict["authorised_by"] = authoriser
     info_dict["date_authorised"] = datetime.today().strftime('%d/%m/%Y')
 
@@ -304,12 +310,12 @@ def main():
             raise Exception(
                 "Please check if XML file is already open. If it is open, please close it and run the software again")
     # Generate pdf report of required data
-    write_report = GenerateReport(os.path.join(os.getcwd(), output_pdf), sample_dict.get(sample), status)
+    write_report = GenerateReport(os.path.join(os.getcwd(), output_pdf), sample_dict.get(sample), ml, status)
     module_logger.info(write_report.generate_pdf())
     module_logger.debug(f"PDF report {output_pdf} located at {os.getcwd()} generated")
 
     # Test validity- will throw error if xml is not valid
-    check_validity = IsValid(os.path.join(os.getcwd(), output_xml), xsd)
+    check_validity = IsValid(os.path.join(os.getcwd(), output_xml), xsd, ml)
     module_logger.info(check_validity.validate_xml_format())
     module_logger.info(check_validity.validate_xml_schema())
     module_logger.debug(f"XML file {output_xml} validated against schema {xsd}")
@@ -337,7 +343,28 @@ def main():
     module_logger.info(f"XML file copied to directory for sending to CRUK")
 
     # Start popup
-    my_message.mainloop()
+    ml.my_message.mainloop()
+
+class ModuleLogger:
+
+    def __init__(self):
+        # Create pop-up box
+        from message_box import MessageBox, MyHandlerText
+        self.my_message = MessageBox(None)
+        self.my_message.wm_title("CRUK Generator")
+        self.module_logger = logging.getLogger(__name__)
+        self.module_logger.setLevel(logging.DEBUG)
+
+        # Create handler to route messages to popup
+        gui_handler = MyHandlerText(self.my_message.popup_text)
+        gui_handler.setLevel(logging.INFO)
+        self.module_logger.addHandler(gui_handler)
+
+        # Create handler to route debug messages to file TODO write to file
+        stdout_handler = logging.StreamHandler(sys.stdout)
+        stdout_handler.setLevel(logging.DEBUG)
+        self.module_logger.addHandler(stdout_handler)
+
 
 
 if __name__ == '__main__':

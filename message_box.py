@@ -7,9 +7,9 @@ class MessageBox(tk.Tk):
     def __init__(self, box):
         tk.Tk.__init__(self, box)
         self.box = box
-        #self.geometry("800x500")
         self.grid()
-        self.eval('tk::PlaceWindow %s center' % self.winfo_pathname(self.winfo_id())) # Places popup in middle of screen
+        # Places popup in middle of screen
+        self.eval('tk::PlaceWindow %s center' % self.winfo_pathname(self.winfo_id()))
         self.mybutton = tk.Button(self, text="OK")
         self.mybutton.grid(column=0, row=1, sticky='EW')
         self.mybutton.bind("<ButtonRelease-1>", self.button_callback)
