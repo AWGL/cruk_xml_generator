@@ -2,7 +2,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib.units import cm
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.enums import TA_LEFT
 from reportlab.lib import colors
 from reportlab.platypus import Paragraph, Preformatted, Spacer, Table, TableStyle
 
@@ -11,9 +11,10 @@ from reportlab.platypus import SimpleDocTemplate
 
 class GenerateReport:
 
-    def __init__(self, sample_dict, status):
+    def __init__(self, file_name, sample_dict, status=None):
         self.sample_dict = sample_dict
         self.pagesize = A4
+        self.file_name = file_name
         self.status = status
         self.col_widths_dict = {"s": [1.2 * cm, 1.6 * cm, 2.1 * cm, 6.5 * cm, 5.5 * cm, 1.2 * cm, 6 * cm],
                                 "f": [1.2 * cm, 1.6 * cm, 3 * cm, 2.5 * cm, 7.2 * cm, 1.2 * cm, 7.5 * cm],
@@ -64,13 +65,13 @@ class GenerateReport:
 
     def generate_pdf(self):
 
-        doc = SimpleDocTemplate("testout.pdf", rightMargin=72, leftMargin=72, topMargin=60, bottomMargin=60,
+        doc = SimpleDocTemplate(self.file_name, rightMargin=72, leftMargin=72, topMargin=60, bottomMargin=60,
                                 pagesize=landscape(self.pagesize))
 
         styles = getSampleStyleSheet()
         style_tabl_title = ParagraphStyle('tabletitle', parent=styles["BodyText"], fontSize=8, textColor=colors.white)
         style_tabl = ParagraphStyle('tablebody', parent=styles["BodyText"], fontSize=7, textColor=colors.black)
-        title_style = ParagraphStyle('title', parent=styles['Normal'], fontSize=16, leading=8, alignment=TA_CENTER)
+        title_style = ParagraphStyle('title', parent=styles['Normal'], fontSize=16, leading=8, alignment=TA_LEFT)
 
         # Elements
         elements = []
@@ -113,6 +114,7 @@ class GenerateReport:
 
         # Checker data
         # For sequenced samples
+        num_fails = 0
         if self.status == "s":
             sig_table_data = [["", "", "Date"], ["Checker 1", self.sample_dict.get('reported_by_1'),
                                              self.sample_dict.get('date_reported_1')],
@@ -120,6 +122,10 @@ class GenerateReport:
                            self.sample_dict.get('date_reported_2')],
                           ["Authorised", self.sample_dict.get('authorised_by'),
                            self.sample_dict.get('date_authorised')]]
+            # Count number of failed genes
+            num_fails += len([count[-2].text for count in table_data if count[-2].text == "3"])
+            elements.append(Paragraph(f"Number of failed genes: {num_fails}", styles['Normal']))
+            elements.append(Spacer(1, 10))
 
         # For failed or withdrawn samples
         elif self.status == "f" or self.status == "w":
@@ -141,6 +147,7 @@ class GenerateReport:
         elements.append(sig_table)
 
         doc.build(elements, onFirstPage=self._headers, onLaterPages=self._headers, canvasmaker=BespokeCanvasTemplate)
+        return f"PDF report {self.file_name} generated"
 
 
 class BespokeCanvasTemplate(canvas.Canvas):

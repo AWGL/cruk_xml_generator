@@ -62,7 +62,7 @@ def data_always_required(database_parser, sample):
     info_dict["banked_loc"] = "Rm2.14 DNA bank_4oC" # Hardcoded
     info_dict["banked_id"] = database_parser.get_lab_id(sample_data)
     info_dict["tech_hub"] = "2 - Cardiff"
-    info_dict["release_date"] = datetime.today().strftime('%d/%m/%Y')
+    info_dict["release_date"] = datetime.today().strftime('%Y-%m-%d')
     return info_dict
 
 
@@ -129,8 +129,6 @@ def qc_fail_data(info_dict):
     from valid_data import gene_scope_dict
     from valid_data import genes_dict
     tested = "Not tested"
-    info_dict["vol_banked"] = "0"
-    info_dict["release_date"] = datetime.today().strftime('%Y-%m-%d')
     gene_dict = {}
     for gene in gene_scope_dict.keys():
         gene_data_dict = {}
@@ -156,8 +154,6 @@ def removed_from_trial_data(info_dict):
     from valid_data import gene_scope_dict
     from valid_data import genes_dict
     tested = "Not tested"
-    info_dict["vol_banked"] = "0"
-    info_dict["release_date"] = datetime.today().strftime('%Y-%m-%d')
     gene_dict = {}
     for gene in gene_scope_dict.keys():
         gene_data_dict = {}
@@ -234,7 +230,7 @@ def main():
     sample_dict = {}
 
     #TODO temp variables
-    status = "f"
+    status = "s"
     sample = "19M13875"
     worksheet = "19-9999"
     authoriser = "mjm"
@@ -290,12 +286,9 @@ def main():
             raise Exception(
                 "Please check if XML file is already open. If it is open, please close it and run the software again")
     # Generate pdf report of required data
-    #write_report = GenerateReport(os.path.join(os.getcwd(), output_pdf), sample_dict.get(sample), status)
-    #print(write_report.pdf_writer())
-    write_report = GenerateReport(sample_dict.get(sample), status)
-    write_report.generate_pdf()
+    write_report = GenerateReport(os.path.join(os.getcwd(), output_pdf), sample_dict.get(sample), status)
+    print(write_report.generate_pdf())
 
-    '''
     # Test validity- will throw error if xml is not valid
     check_validity = IsValid(os.path.join(os.getcwd(), output_xml), xsd)
     print(check_validity.validate_xml_format())
@@ -316,7 +309,7 @@ def main():
                 "Please check if XML file is already open. If it is open, please close it and run the software again")
         os.remove(os.path.join(xml_location, clinical_hub, output_xml))
     shutil.move(os.path.join(os.getcwd(), output_xml), os.path.join(xml_location, clinical_hub))
-    '''
+
     '''
     #popup = tk.Tk()
     from message_box import MessageBox
