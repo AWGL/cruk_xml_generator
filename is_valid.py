@@ -4,12 +4,9 @@ from os import path as op
 
 class IsValid(object):
 
-    def __init__(self, check_xml, xsd, ml):
+    def __init__(self, check_xml, xsd):
         self.xsd = xsd
         self.check_xml = check_xml
-        self.ml = ml
-        self.log = ml.module_logger
-        self.popup = ml.my_message
 
     def validate_xml_format(self):
         try:
