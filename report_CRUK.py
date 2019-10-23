@@ -292,7 +292,7 @@ def main():
     # Generate pdf report of required data
     #write_report = GenerateReport(os.path.join(os.getcwd(), output_pdf), sample_dict.get(sample), status)
     #print(write_report.pdf_writer())
-    write_report = GenerateReport(sample_dict.get(sample))
+    write_report = GenerateReport(sample_dict.get(sample), status)
     write_report.generate_pdf()
 
     '''
