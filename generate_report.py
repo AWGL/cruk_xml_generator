@@ -10,6 +10,7 @@ from reportlab.platypus import SimpleDocTemplate
 
 
 class GenerateReport:
+
     def __init__(self, sample_dict):
         self.sample_dict = sample_dict
         self.pagesize = "A4"
@@ -25,9 +26,9 @@ class GenerateReport:
         w1, h1 = header1.wrap(my_doc.width, my_doc.topMargin)
         w2, h2 = header2.wrap(my_doc.width, my_doc.topMargin)
         w3, h3 = header3.wrap(my_doc.width, my_doc.topMargin)
-        header1.drawOn(my_canvas, my_doc.leftMargin, my_doc.height + my_doc.topMargin - h1 + 1.4 * cm)
-        header2.drawOn(my_canvas, my_doc.leftMargin + 9.7 * cm, my_doc.height + my_doc.topMargin - h2 + 1.4 * cm)
-        header2.drawOn(my_canvas, my_doc.leftMargin + 19.7 * cm, my_doc.height + my_doc.topMargin - h3 + 1.4 * cm)
+        header1.drawOn(my_canvas, my_doc.leftMargin, my_doc.height + my_doc.topMargin - h1 + 1.2 * cm)
+        header2.drawOn(my_canvas, my_doc.leftMargin + 9.7 * cm, my_doc.height + my_doc.topMargin - h2 + 1.2 * cm)
+        header3.drawOn(my_canvas, my_doc.leftMargin + 21.5 * cm, my_doc.height + my_doc.topMargin - h3 + 1.2 * cm)
 
         my_canvas.restoreState()
 
@@ -35,10 +36,8 @@ class GenerateReport:
     def _footer(my_canvas, my_doc):
         return None
 
-
     def first_page(self):
         return None
-
 
     def generate_pdf(self):
 
@@ -86,7 +85,39 @@ class GenerateReport:
                                     ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
                                     ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.lightgrey, colors.white])]))
         elements.append(table)
-        doc.build(elements, onFirstPage=self._headers, onLaterPages=self._headers)
+        doc.build(elements, onFirstPage=self._headers, onLaterPages=self._headers, canvasmaker=BespokeCanvasTemplate)
+
+
+class BespokeCanvasTemplate(canvas.Canvas):
+    '''
+    Create bespoke build of canvas to allow for objects to appear on every page
+    Allows insertion of a footer that will also count the total number of pages in the document
+    '''
+
+    def __init__(self, *args, **kwargs):
+        canvas.Canvas.__init__(self, *args, **kwargs)
+        self._saved_page_states = []
+
+    def showPage(self):
+        self._saved_page_states.append(dict(self.__dict__))
+        self._startPage()
+
+    def save(self):
+        """add page info to each page (page x of y)"""
+        num_pages = len(self._saved_page_states)
+        for state in self._saved_page_states:
+            self.__dict__.update(state)
+            self.draw_page_number(num_pages)
+            canvas.Canvas.showPage(self)
+        canvas.Canvas.save(self)
+
+    def draw_page_number(self, page_count):
+        # Change the position of this to wherever you want the page number to be
+        self.drawRightString(27 * cm, 1.9 * cm, f"Page {self._pageNumber} of {page_count}")
+
+
+
+
 
 '''
 class GenerateReport:
