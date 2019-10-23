@@ -1,5 +1,5 @@
 from lxml import etree as ET
-
+from os import path as op
 
 class GenerateXml:
 
@@ -85,6 +85,7 @@ class GenerateXml:
     @staticmethod
     def write_xml(output, element_tree):
         element_tree.write(output, encoding="UTF-8", xml_declaration=True, pretty_print=True)
-        return f"XML file {output} generated"
+        file_name = op.basename(output)
+        return f"XML file {file_name} generated"
 
 

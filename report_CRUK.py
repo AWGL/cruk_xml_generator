@@ -2,8 +2,7 @@ import os
 import logging
 import re
 import shutil
-import tkinter as tk
-from tkinter import ttk
+import sys
 from datetime import datetime
 import parse_report
 from parse_database import ParseDatabase
@@ -197,13 +196,25 @@ def check_xml_data(sample_data):
 
 
 def main():
-    # Create logger
-    logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
 
+    # Create pop-up box
+    from message_box import MessageBox, MyHandlerText
+    my_message = MessageBox(None)
+    my_message.wm_title("CRUK Generator")
+
+    # Create logger- called the name of this class
     module_logger = logging.getLogger(__name__)
+    module_logger.setLevel(logging.DEBUG)
 
+    # Create handler to route messages to popup
+    gui_handler = MyHandlerText(my_message.popup_text)
+    gui_handler.setLevel(logging.INFO)
+    module_logger.addHandler(gui_handler)
 
+    # Create handler to route debug messages to file TODO write to file
+    stdout_handler = logging.StreamHandler(sys.stdout)
+    stdout_handler.setLevel(logging.DEBUG)
+    module_logger.addHandler(stdout_handler)
 
     '''
     # Enter input and check it for sanity where possible
@@ -226,6 +237,7 @@ def main():
     authoriser = input("Enter Authoriser Initials: ")
     authoriser = authoriser.strip() # Remove any trailing spaces
     '''
+
     # Create dictionary to hold information extracted from sources
     sample_dict = {}
 
@@ -234,6 +246,11 @@ def main():
     sample = "19M13875"
     worksheet = "19-9999"
     authoriser = "mjm"
+
+    module_logger.info(f"Generating XML and PDF report for sample {sample}")
+
+    #TODO Testing
+    
 
     # Obtain data that is available for every sample regardless of workflow status
     # Populate information dictionary from sample tracking spreadsheet
@@ -260,7 +277,7 @@ def main():
     sample_dict[sample] = info_dict
 
     # Check all required fields populated for xml (data missing from pdf report, e.g. checker, can be seen)
-    print(check_xml_data(sample_dict.get(sample)))
+    module_logger.info(check_xml_data(sample_dict.get(sample)))
 
     # Obtain clinical hub name in format for output XML TODO check how these are entered and names of directories correspond
     clinical_hub = info_dict.get('clinical_hub').split("-")[1].strip()
@@ -276,7 +293,8 @@ def main():
     # Create and write out to xml
     write_xml = GenerateXml(sample_dict.get(sample), xml_version)
     tree = write_xml.generate_xml()
-    write_xml.write_xml(os.path.join(os.getcwd(), output_xml), tree)
+    module_logger.info(write_xml.write_xml(os.path.join(os.getcwd(), output_xml), tree))
+    module_logger.debug(f"XML file {output_xml} located at {os.getcwd()} generated")
 
     # Generate name for output pdf
     output_pdf = f"{formatted_date} {sample_dict.get(sample).get('cruk_sample_id')}.pdf"
@@ -287,12 +305,14 @@ def main():
                 "Please check if XML file is already open. If it is open, please close it and run the software again")
     # Generate pdf report of required data
     write_report = GenerateReport(os.path.join(os.getcwd(), output_pdf), sample_dict.get(sample), status)
-    print(write_report.generate_pdf())
+    module_logger.info(write_report.generate_pdf())
+    module_logger.debug(f"PDF report {output_pdf} located at {os.getcwd()} generated")
 
     # Test validity- will throw error if xml is not valid
     check_validity = IsValid(os.path.join(os.getcwd(), output_xml), xsd)
-    print(check_validity.validate_xml_format())
-    print(check_validity.validate_xml_schema())
+    module_logger.info(check_validity.validate_xml_format())
+    module_logger.info(check_validity.validate_xml_schema())
+    module_logger.debug(f"XML file {output_xml} validated against schema {xsd}")
 
     # Check existence of final output file and whether it can be written to
     # Remove pdf from output path if already there and move pdf
@@ -306,53 +326,20 @@ def main():
     if os.path.exists(os.path.join(xml_location, clinical_hub, output_xml)):
         if not os.access(os.path.join(xml_location, clinical_hub, output_xml), os.W_OK):
             raise Exception(
-                "Please check if XML file is already open. If it is open, please close it and run the software again")
+                module_logger.error( #TODO handling errors in most useful way (e.g. Exceptions)
+                    "Please check if XML file is already open. If it is open, please close it and run the "
+                    "software again"))
         os.remove(os.path.join(xml_location, clinical_hub, output_xml))
     shutil.move(os.path.join(os.getcwd(), output_xml), os.path.join(xml_location, clinical_hub))
 
-    '''
-    #popup = tk.Tk()
-    from message_box import MessageBox
-    my_message = MessageBox(None)
-    my_message.wm_title("CRUK Generator")
+    # TODO Check files have copied correctly
 
-    '''
-    '''
-    popup.wm_title("CRUK Generator")
-    popup_text = tk.Text(popup, state="disabled")
-    print(popup_text)
-    label = ttk.Label(popup, text="XML and PDF generated successfully", font=("Verdana", 10))
-    lable = ttk.Label(popup, text=popup_text, font=("Verdana", 10)) #TODO tmp
-    lable.pack(side="left", fill=None, pady=10) #TODO tmp
-    label.pack(side="top", fill="x", pady=10)
-    button = ttk.Button(popup, text="OK", command=popup.destroy)
-    button.pack()
-    popup.eval('tk::PlaceWindow %s center' % popup.winfo_pathname(popup.winfo_id()))
-    '''
-    '''
-    #handler = logging.StreamHandler()
-    #logger.addHandler(handler)
-    gui_handler = MyHandlerText(my_message.popup_text) # need more code to flush this- set this to the Text attribute of the tk object
-    module_logger.addHandler(gui_handler)
-    module_logger.setLevel(logging.INFO)
+    module_logger.info(f"XML file copied to directory for sending to CRUK")
 
-    module_logger.info("Logggggg")
-
+    # Start popup
     my_message.mainloop()
 
 
-class MyHandlerText(logging.StreamHandler):
-    def __init__(self, textctrl):
-        logging.StreamHandler.__init__(self) # initialize parent
-        self.textctrl = textctrl
-
-    def emit(self, record):
-        msg = self.format(record)
-        self.textctrl.config(state="normal")
-        self.textctrl.insert("end", msg + "\n")
-        self.flush()
-        self.textctrl.config(state="disabled")
-    '''
 if __name__ == '__main__':
     main()
 

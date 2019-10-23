@@ -1,4 +1,5 @@
 from lxml import etree as ET
+from os import path as op
 
 
 class IsValid(object):
@@ -14,7 +15,8 @@ class IsValid(object):
             raise Exception(f"The xml is incorrectly formatted, error: {e}")
         except OSError as err:
             raise Exception(f"The file {self.check_xml} could not be loaded, error {err}")
-        return f"XML file {self.check_xml} in valid format"
+        file_name = op.basename(self.check_xml)
+        return f"XML file {file_name} in valid XML format"
 
     def validate_xml_schema(self):
         try:
@@ -27,7 +29,9 @@ class IsValid(object):
         except OSError as err:
             raise Exception(f"The file {self.check_xml} could not be loaded, error {err}")
         xml_validation_schema.assertValid(loaded_check_xml)
-        return f"XML file {self.check_xml} successfully validated against CRUK schema {self.xsd}"
+        file_name = op.basename(self.check_xml)
+        xsd_name = op.basename(self.xsd)
+        return f"XML file {file_name} validated against schema"
 
 
 
