@@ -222,33 +222,26 @@ class ReportCruk:
 
     def report_cruk(self):
 
-        '''
         # Enter input and check it for sanity where possible
         self.status = input("Enter Status: options are w (withdrawn), f (failed) or s (sequenced):  ")
         self.status = self.status.lower().strip()
-        if status not in sample_status:
-            raise ValueError(f"Invalid status for generating this report. Options are w, f or s. {status} was entered.")
+        if self.status not in sample_status:
+            raise ValueError(f"Invalid status for generating this report. Options are w, f or s. "
+                             f"{self.status} was entered.")
         self.sample = input("Enter Sample: ")
         self.sample = self.sample.upper().strip() # Handle where sample number is entered with a lower case M and trailing spaces
-        if len(sample.strip()) == 0:
-            raise ValueError(f"Sample id incorrectly entered. Sample id was entered as {sample}")
+        if len(self.sample.strip()) == 0:
+            raise ValueError(f"Sample id incorrectly entered. Sample id was entered as {self.sample}")
         # No worksheet for withdrawn and failed samples, only for samples which were put through sequencing
         self.worksheet = "N/A"
-        if status == "s":
+        if self.status == "s":
             self.worksheet = input("Enter Worksheet: ")
             self.worksheet = self.worksheet.strip() # Remove any trailing spaces
-            if len(worksheet) == 0 or not re.match("\d\d-", worksheet):
-                raise ValueError(f"Worksheet id incorrectly entered. Worksheet id was entered as {worksheet}. Worksheets "
-                                f"should start with two numbers then a dash e.g. 19-XXXX")
+            if len(self.worksheet) == 0 or not re.match("\d\d-", self.worksheet):
+                raise ValueError(f"Worksheet id incorrectly entered. Worksheet id was entered as "
+                                 f"{self.worksheet}. Worksheets should start with two numbers then a dash e.g. 19-XXXX")
         self.authoriser = input("Enter Authoriser Initials: ")
         self.authoriser = self.authoriser.strip() # Remove any trailing spaces
-        '''
-
-        #TODO temp variables
-        self.status = "s"
-        self.sample = "19M13875"
-        self.worksheet = "19-9999"
-        self.authoriser = "mjm"
 
         # Pre-check authoriser is in list of allowed authorisers
         if self.authoriser not in allowed_authorisers:
