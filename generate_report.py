@@ -11,7 +11,7 @@ from os import path as op
 
 class GenerateReport:
 
-    def __init__(self, file_name, sample_dict, ml, status=None):
+    def __init__(self, file_name, sample_dict, status=None):
         self.sample_dict = sample_dict
         self.pagesize = A4
         self.file_name = file_name
@@ -19,9 +19,6 @@ class GenerateReport:
         self.col_widths_dict = {"s": [1.2 * cm, 1.6 * cm, 2.1 * cm, 6.5 * cm, 5.5 * cm, 1.2 * cm, 6 * cm],
                                 "f": [1.2 * cm, 1.6 * cm, 3 * cm, 2.5 * cm, 7.2 * cm, 1.2 * cm, 7.5 * cm],
                                 "w": [1.2 * cm, 1.6 * cm, 3 * cm, 2.5 * cm, 7.2 * cm, 1.2 * cm, 7.5 * cm]}
-        self.ml = ml
-        self.log = ml.module_logger
-        self.popup = ml.my_message
 
     def _headers(self, my_canvas, my_doc):
         my_canvas.saveState()
@@ -137,8 +134,6 @@ class GenerateReport:
                            self.sample_dict.get('date_authorised')]]
 
         else:
-            self.log.error("Error at PDF generation stage. See bioinformatics team for help.")
-            self.popup.mainloop()
             raise Exception("Could not determine if report is for QC fail, withdrawn or sequenced sample")
 
         sig_table = Table(sig_table_data, colWidths=[2.5 * cm, 1.5 * cm, 2.5 * cm], hAlign='LEFT')
