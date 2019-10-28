@@ -20,8 +20,8 @@ class Dialog(tk.Toplevel):
         if not self.initial_focus:
             self.initial_focus = self
         self.protocol("WM_DELETE_WINDOW", self.cancel)
-        self.geometry("+%d+%d" % (parent.winfo_rootx() - 50,
-                                    parent.winfo_rooty() + 50))
+        self.geometry("+%d+%d" % (parent.winfo_rootx() - 200,
+                                    parent.winfo_rooty() - 50))
         self.initial_focus.focus_set()
         self.wait_window(self)
 
@@ -106,8 +106,8 @@ class MessageBox:
         self.top = tk.Toplevel(parent)
         self.top.grid()
         # Places popup roughly in middle of screen
-        self.top.geometry("+%d+%d" % (parent.winfo_rootx() - 50,
-                                  parent.winfo_rooty() + 50))
+        self.top.geometry("+%d+%d" % (parent.winfo_rootx() - 150,
+                                  parent.winfo_rooty() - 50))
         self.top.wm_title("CRUK Generator Log")
         self.mybutton = tk.Button(self.top, text="OK")
         self.mybutton.grid(column=0, row=2, sticky='EW')
