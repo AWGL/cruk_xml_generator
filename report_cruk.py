@@ -29,6 +29,10 @@ from config import sample_status
 class ReportCruk:
 
     log_file = os.path.join(os.getcwd(), "cruk_report.log")
+    
+    # Remove old log file
+    if os.path.exists(log_file):
+        os.remove(log_file)
 
     def __init__(self):
         self.info_dict = {}
@@ -357,10 +361,6 @@ class ReportCruk:
 
         # Start popup- on button click close popup
         self.root.mainloop()
-
-        # If code successful at this point delete log file
-        if os.path.exists(ReportCruk.log_file):
-            os.remove(ReportCruk.log_file)
 
 
 class ModuleLogger:
