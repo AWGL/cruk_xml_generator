@@ -1,12 +1,12 @@
 import os
 
 xml_version = "3.8"
-results_path =  # Location of analysed results
-db_path =  # Point to final location of Excel database
-db_name = # Set to final name for Excel database
-xsd =  # Set to where on shared drives this will be
-xml_location = # Set to base location on shared drives for sending xml
-pdf_location =  # Set to base location on shared drives for storing pdf
+results_path = ""  # Location of analysed results
+db_path = ""  # Point to final location of Excel database
+db_name = ""  # Set to final name for Excel database
+xsd = ""  # Set to where on shared drives this will be
+xml_location = ""  # Set to base location on shared drives for sending xml
+pdf_location = ""  # Set to base location on shared drives for storing pdf
 
 # Global variables
 test_method = "19"

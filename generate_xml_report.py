@@ -1,6 +1,7 @@
 from lxml import etree as ET
 from os import path as op
 
+
 class GenerateXml:
 
     def __init__(self, info_dict, version):

@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 import os
 import logging
 import re
@@ -45,20 +46,19 @@ class ReportCruk:
         self.root.grid()
         # Places popup roughly in middle of screen
         self.root.eval('tk::PlaceWindow %s center' % self.root.winfo_pathname(self.root.winfo_id()))
-        self.root.button = tk.Button(self.root, text='Close Program')
-        self.root.button.grid(column=0, row=2, sticky='EW')
-        self.root.button.bind("<ButtonRelease-1>", self.root_button_callback)
+        self.root.wm_title("CRUK Generator")
+        self.root.label = ttk.Label(text="Software is working. Please wait.")
+        self.root.label.grid(column=0, row=0)
 
         # Initialise an instance of the module logger
         self.ml = ModuleLogger(self.root)
         self.log = self.ml.module_logger
         self.popup = self.ml.my_message
 
-    def root_button_callback(self, event):
+    def root_button_callback(self, event=None):
         self.root.destroy()
 
     def handle_exception(self, exc_type, exc_value, exc_traceback):
-        #sys.__excepthook__(exc_type, exc_value, exc_traceback)
         # Debug is used as this type of error cannot be attempted to be passed to the popup as will happen with
         # use of critical or error level
         self.log.debug("An exception occurred", exc_info=(exc_type, exc_value, exc_traceback))

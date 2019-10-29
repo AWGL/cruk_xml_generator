@@ -103,6 +103,7 @@ class MyEntryWindow(Dialog):
 class MessageBox:
 
     def __init__(self, parent):
+        self.parent = parent
         self.top = tk.Toplevel(parent)
         self.top.grid()
         # Places popup roughly in middle of screen
@@ -115,8 +116,9 @@ class MessageBox:
         self.popup_text = tk.Text(self.top, state="disabled")
         self.popup_text.grid(column=0, row=1)
 
-    def button_callback(self, event):
+    def button_callback(self, event=None):
         self.top.destroy()
+        self.parent.destroy()
 
 
 class MyHandlerText(logging.StreamHandler):
