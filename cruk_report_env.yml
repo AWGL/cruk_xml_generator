@@ -1,9 +1,14 @@
 name: cruk_report
 channels:
   - anaconda
+  - conda-forge
   - defaults
 dependencies:
-  - et_xmlfile=1.0.1
+  - altgraph=0.16.1=py_0
+  - blas=1.0=mkl
+  - ca-certificates=2019.9.11=hecc5488_0
+  - certifi=2019.9.11=py37_0
+  - et_xmlfile=1.0.1=py37_0
   - freetype=2.9.1=hb4e5f40_0
   - icu=58.2=h4b95b61_1
   - intel-openmp=2019.4=233
@@ -20,19 +25,34 @@ dependencies:
   - libxml2=2.9.9=hf6e021a_1
   - libxslt=1.1.33=h33a18ac_0
   - lxml=4.3.4=py37hef8c89e_0
+  - macholib=1.11=py_0
   - mkl=2019.4=233
   - mkl_fft=1.0.12=py37h5e564d8_0
   - mkl_random=1.0.2=py37h27c97d8_0
-  - openpyxl=2.6.2
-  - pandas=0.25.0
-  - pyinstaller=3.5
-  - python=3.7.3
-  - python-dateutil=2.8.0
+  - ncurses=6.1=h0a44026_1
+  - numpy=1.16.4=py37hacdab7b_0
+  - numpy-base=1.16.4=py37h6575580_0
+  - olefile=0.46=py37_0
+  - openpyxl=2.6.2=py_0
+  - openssl=1.1.1c=h01d97ff_0
+  - pandas=0.25.0=py37h0a44026_0
+  - pillow=6.1.0=py37hb68e598_0
+  - pip=19.1.1=py37_0
+  - pycrypto=2.6.1=py37h01d97ff_1003
+  - pyinstaller=3.5=py37ha441bb4_0
+  - python=3.7.3=h359304d_0
+  - python-dateutil=2.8.0=py37_0
   - pytz=2019.1=py_0
   - readline=7.0=h1de35cc_5
-  - reportlab=3.5.26
+  - reportlab=3.5.26=py37hdea1bd8_0
+  - setuptools=41.0.1=py37_0
+  - six=1.12.0=py37_0
+  - sqlite=3.29.0=ha441bb4_0
   - tk=8.6.8=ha441bb4_0
-  - xlrd=1.2.0
+  - wheel=0.33.4=py37_0
+  - xlrd=1.2.0=py37_0
   - xz=5.2.4=h1de35cc_4
+  - zlib=1.2.11=h1de35cc_3
+  - zstd=1.3.7=h5bba6e5_0
 prefix: /miniconda2/envs/cruk_report
 
