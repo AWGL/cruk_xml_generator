@@ -68,8 +68,6 @@ Double click on the ```report_cruk.exe``` file.
 2. Wait for a second pop-up box with logging information to appear. This box is called ""CRUK Generator Log".
 	* If the text indicates successes, with the final entry "XML file copied to directory for sending to CRUK", click OK.
 	* If there is an error message displayed, **the software has not executed correctly**, click OK **and perform troubleshooting.**
-3. Close the software down completely by clicking on the "Close Program" button in the small pop-up window remaining.
-
 ***
 ## Troubleshooting
 A log file ```cruk_report.log``` is generated at each execution of the software to aid troubleshooting
