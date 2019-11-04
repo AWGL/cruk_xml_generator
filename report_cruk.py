@@ -286,10 +286,6 @@ class ReportCruk:
         elif self.status == "w":
             self.removed_from_trial_data()
 
-        # Add authoriser to dictionary
-        self.info_dict["authorised_by"] = self.authoriser
-        self.info_dict["date_authorised"] = datetime.today().strftime('%d/%m/%Y')
-
         # Check all required fields populated for xml (data missing from pdf report, e.g. checker, can be seen)
         self.log.info(self.check_xml_data())
 
@@ -302,7 +298,7 @@ class ReportCruk:
         # Check if troubleshooting xml file exists and is already open
         if os.path.exists(os.path.join(os.getcwd(), output_xml)):
             if not os.access(os.path.join(os.getcwd(), output_xml), os.W_OK):
-                raise BlockingIOError(
+                raise IOError(
                     "Please check if XML file is already open. If it is open, please close it and run the software "
                     "again")
         # Create and write out to xml
@@ -316,7 +312,7 @@ class ReportCruk:
         # Check if troubleshooting pdf file exists and is already open
         if os.path.exists(os.path.join(os.getcwd(), output_pdf)):
             if not os.access(os.path.join(os.getcwd(), output_pdf), os.W_OK):
-                raise BlockingIOError(
+                raise IOError(
                     "Please check if XML file is already open. If it is open, please close it and run the software "
                     "again")
         # Generate pdf report of required data
@@ -334,7 +330,7 @@ class ReportCruk:
         # Remove pdf from output path if already there and move pdf
         if os.path.exists(os.path.join(pdf_location, output_pdf)):
             if not os.access(os.path.join(pdf_location, output_pdf), os.W_OK):
-                raise BlockingIOError(
+                raise IOError(
                     "Please check if PDF file is already open. If it is open, please close it and run the software "
                     "again")
             os.remove(os.path.join(pdf_location, output_pdf))
@@ -342,7 +338,7 @@ class ReportCruk:
         # Remove xml from output path if already there and move xml
         if os.path.exists(os.path.join(xml_location, clinical_hub, output_xml)):
             if not os.access(os.path.join(xml_location, clinical_hub, output_xml), os.W_OK):
-                raise BlockingIOError(
+                raise IOError(
                         "Please check if XML file is already open. If it is open, please close it and run the software "
                         "again")
             os.remove(os.path.join(xml_location, clinical_hub, output_xml))
