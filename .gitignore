@@ -1,8 +1,9 @@
-.idea
-__pycache__
+.idea/
+__pycache__/
 valid_data.py
-build
-dist
+build/
+dist/
 report_CRUK.spec
 config.py
 cruk_report.log
+tests/SMP2v3 workflow tracker.xlsx
