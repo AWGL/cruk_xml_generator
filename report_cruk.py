@@ -286,9 +286,7 @@ class ReportCruk:
         elif self.status == "w":
             self.removed_from_trial_data()
 
-        # Add authoriser details to information dictionary- pre-check are in list of allowed authorisers
-        if self.authoriser not in allowed_authorisers:
-            raise PermissionError(f"Authoriser {self.authoriser} is not on the list of permitted authorisers for CRUK")
+        # Add authoriser to dictionary
         self.info_dict["authorised_by"] = self.authoriser
         self.info_dict["date_authorised"] = datetime.today().strftime('%d/%m/%Y')
 
