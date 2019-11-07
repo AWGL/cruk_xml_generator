@@ -292,8 +292,8 @@ class ReportCruk:
         # Check all required fields populated for xml (data missing from pdf report, e.g. checker, can be seen)
         self.log.info(self.check_xml_data())
 
-        # Obtain clinical hub name in format for output XML TODO check how these are entered and names of directories correspond
-        clinical_hub = self.info_dict.get('clinical_hub').split("-")[1].strip()
+        # Obtain clinical hub name in format for output XML
+        clinical_hub = self.info_dict.get('clinical_hub').strip().split(" ")[-1].strip()
 
         # Generate name for output xml
         formatted_date = datetime.today().strftime('%Y%m%d')
@@ -384,9 +384,20 @@ class ModuleLogger:
         self.module_logger.addHandler(file_handler)
 
 
+def debug(report_cruk_object, status, sample, auth, worksheet=None):
+    report_cruk_object.status = status
+    report_cruk_object.sample = sample
+    report_cruk_object.authoriser = auth
+    report_cruk_object.worksheet = worksheet
+    report_cruk_object.log = logging.getLogger()
+    return report_cruk_object
+
+
 def main():
     rc = ReportCruk()
     sys.excepthook = rc.handle_exception
+    # To allow debugging
+    #rc = debug(rc, "f", "19M17495", "mjm")
     rc.report_cruk()
 
 
