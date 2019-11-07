@@ -8,7 +8,7 @@ from itertools import islice
 def find_analysis_worksheet(path_to_analysis, ext):
     sample_name = os.path.basename(path_to_analysis)
     if not os.path.exists(path_to_analysis):
-        raise Exception(f"Path {path_to_analysis} not found. Check worksheet id is correct.")
+        raise Exception(f"Path {path_to_analysis} not found. Check worksheet id is correct")
     # Use ~ to exclude the temporary file created when an Excel file is open
     worksheet_name = glob(f"{os.path.join(path_to_analysis, '')}[!^~]*{sample_name}*{ext}")
     if len(worksheet_name) > 1:

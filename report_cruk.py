@@ -35,25 +35,27 @@ class ReportCruk:
     if os.path.exists(log_file):
         os.remove(log_file)
 
-    def __init__(self):
+    def __init__(self, skip_gui=False):
         self.info_dict = {}
         self.status = ""
         self.sample = ""
         self.worksheet = ""
         self.authoriser = ""
-        # Root tkinter object created
-        self.root = tk.Tk()
-        self.root.grid()
-        # Places popup roughly in middle of screen
-        self.root.eval('tk::PlaceWindow %s center' % self.root.winfo_pathname(self.root.winfo_id()))
-        self.root.wm_title("CRUK Generator")
-        self.root.label = ttk.Label(text="Software is working. Please wait.")
-        self.root.label.grid(column=0, row=0)
+        self.skip_gui = skip_gui
+        if not self.skip_gui:
+            # Root tkinter object created
+            self.root = tk.Tk()
+            self.root.grid()
+            # Places popup roughly in middle of screen
+            self.root.eval('tk::PlaceWindow %s center' % self.root.winfo_pathname(self.root.winfo_id()))
+            self.root.wm_title("CRUK Generator")
+            self.root.label = ttk.Label(text="Software is working. Please wait.")
+            self.root.label.grid(column=0, row=0)
 
-        # Initialise an instance of the module logger
-        self.ml = ModuleLogger(self.root)
-        self.log = self.ml.module_logger
-        self.popup = self.ml.my_message
+            # Initialise an instance of the module logger
+            self.ml = ModuleLogger(self.root)
+            self.log = self.ml.module_logger
+            self.popup = self.ml.my_message
 
     def root_button_callback(self, event=None):
         self.root.destroy()
@@ -238,37 +240,38 @@ class ReportCruk:
 
     def report_cruk(self):
         # Handle case where cancel has been pressed
-        try:
-            self.ml.data_entry.status
-            self.ml.data_entry.sample
-            self.ml.data_entry.authoriser
-        except AttributeError as err:
-            raise Exception("Data input was cancelled before all required data was entered")
+        if not self.skip_gui:
+            try:
+                self.ml.data_entry.status
+                self.ml.data_entry.sample
+                self.ml.data_entry.authoriser
+            except AttributeError as err:
+                raise Exception("Data input was cancelled before all required data was entered")
 
-        # Collect and sanitise input
-        self.status = self.ml.data_entry.status
-        self.status = self.status.lower().strip()
-        self.sample = self.ml.data_entry.sample
-        # Handle where sample number is entered with a lower case M and trailing spaces
-        self.sample = self.sample.upper().strip()
-        self.worksheet = self.ml.data_entry.worksheet
-        self.worksheet = self.worksheet.strip()  # Remove any trailing spaces
-        self.authoriser = self.ml.data_entry.authoriser
-        self.authoriser = self.authoriser.strip()  # Remove any trailing spaces
+            # Collect and sanitise input
+            self.status = self.ml.data_entry.status
+            self.status = self.status.lower().strip()
+            self.sample = self.ml.data_entry.sample
+            # Handle where sample number is entered with a lower case M and trailing spaces
+            self.sample = self.sample.upper().strip()
+            self.worksheet = self.ml.data_entry.worksheet
+            self.worksheet = self.worksheet.strip()  # Remove any trailing spaces
+            self.authoriser = self.ml.data_entry.authoriser
+            self.authoriser = self.authoriser.strip()  # Remove any trailing spaces
 
-        # Check input
+        # Check input- NOTE THAT THIS requires data to be entered another way or will fail- for testing
         if self.status not in sample_status:
             raise ValueError(f"Invalid status for generating this report. Options are w, f or s. "
                              f"{self.status} was entered")
         if len(self.sample.strip()) == 0:
             raise ValueError(f"Sample id incorrectly entered. Sample id was entered as {self.sample}")
-
         if self.status == "s" and (len(self.worksheet) == 0 or not re.match("\d\d-", self.worksheet)):
             raise ValueError(f"Worksheet id incorrectly entered. Worksheet id was entered as {self.worksheet}. "
                              f"Worksheets should start with two numbers then a dash e.g. 19-XXXX")
         # Pre-check authoriser is in list of allowed authorisers
         if self.authoriser not in allowed_authorisers:
-            raise PermissionError(f"Authoriser {self.authoriser} is not on the list of permitted authorisers for CRUK")
+            raise PermissionError(f"Authoriser {self.authoriser} is not on the list of permitted "
+                                  f"authorisers for CRUK")
 
         # Log sample that files are being generated for
         self.log.info(f"Generating XML and PDF report for sample {self.sample}")
