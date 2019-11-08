@@ -396,10 +396,10 @@ def debug(report_cruk_object, status, sample, auth, worksheet=None):
 
 
 def main():
-    rc = ReportCruk(True)
+    rc = ReportCruk()
     sys.excepthook = rc.handle_exception
     # To allow debugging
-    rc = debug(rc, "f", "19M5", "mjm")
+    #rc = debug(rc, "f", "19M5", "mjm")
     rc.report_cruk()
 
 
