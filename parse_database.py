@@ -37,8 +37,16 @@ class ParseDatabase:
     def get_clinical_hub(df):
         from valid_data import ch_dict
         # return clinical hub as a series, convert to string and take value part excluding row number
-        ch = " ".join(df['Source Clinical Hub'].to_string().split()[1:])
+        ch_orig = " ".join(df['Source Clinical Hub'].to_string().split()[1:])
+        # Handle cases where there are two different - used to separate
+        first_underscore = "–"
+        second_underscore = "-"
+        if len(ch_orig.split(first_underscore)) == 1:
+            ch = ch_orig.split(second_underscore)[0].strip()
+        else:
+            ch = ch_orig.split(first_underscore)[0].strip()
         # Don't use get as we want a key error if value is not found as is not a clinical hub
+        # Look this up to remove odd - character the Microsoft Office adds sometimes and is found in Excel database
         ch_formatted = ch_dict[ch]
         return ch_formatted
 
@@ -113,7 +121,7 @@ class ParseDatabase:
     def get_lab_id(df):
         # return DNA identifier as a series, convert to string and take value part excluding row number
         lab_id = " ".join(df['Lab ID - DNA'].to_string().split()[1:])
-        lab_id = lab_id.upper() # Handle the case where M may be entered into database as lower case m
+        lab_id = lab_id.upper()  # Handle the case where M may be entered into database as lower case m
         return lab_id
 
     @staticmethod
@@ -129,8 +137,13 @@ class ParseDatabase:
 
     @staticmethod
     def get_vol_banked_dna(df):
-        # return vol of banked nucleic acid as a series, convert to string and take value part excluding row number
-        vol = " ".join(df['DNA Volume (µL)'].to_string().split()[1:])
+        entry = df['DNA Volume (µL)']
+        # Handle case where sample is not on the KPI sheet- assume no banked volume as no other place for it
+        if entry.empty:
+            vol = "0"
+        else:
+            # return vol of banked nucleic acid as a series, convert to string and take value part excluding row number
+            vol = " ".join(entry.to_string().split()[1:])
         # Where there is no concentration as no nucleic acid was banked, enter 0
         if vol == "" or vol == " " or vol == "NaN":
             vol = "0"

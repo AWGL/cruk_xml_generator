@@ -6,20 +6,20 @@ Contains dictionaries for look-up to required output for XML
 ch_dict = {"Birmingham": "1 - Birmingham", "Cardiff": "2 - Cardiff", "Cambridge": "3 - Cambridge",
            "Edinburgh": "4 - Edinburgh", "Glasgow": "5 - Glasgow", "Leeds": "6 - Leeds",
            "Manchester": "7 - Manchester", "Royal Marsden": "8 - Royal Marsden",
-           "Barts & Brighton": "9 – Barts & Brighton", "Belfast": "10 – Belfast", "Imperial": "11 – Imperial",
-           "KCL": "12 - KCL", "Leicester": "13 – Leicester", "Newcastle": "14 – Newcastle",
-           "Oxford": "15 – Oxford", "Sheffield": "16 – Sheffield", "Southampton": "17 – Southampton",
+           "Barts & Brighton": "9 - Barts & Brighton", "Belfast": "10 - Belfast", "Imperial": "11 - Imperial",
+           "KCL": "12 - KCL", "Leicester": "13 - Leicester", "Newcastle": "14 - Newcastle",
+           "Oxford": "15 - Oxford", "Sheffield": "16 - Sheffield", "Southampton": "17 - Southampton",
            "UCL": "18 - UCL", "Maidstone": "19 - Maidstone", "Devon and Exeter": "20 - Devon and Exeter",
            "Liverpool": "21 - Liverpool", "Bristol": "22 - Bristol", "Colchester": "23 - Colchester",
-           "Aberdeen": "24 - Aberdeen", "1 - Birmingham": "1 - Birmingham", "2 - Cardiff": "2 - Cardiff",
-           "3 - Cambridge": "3 - Cambridge", "4 - Edinburgh": "4 - Edinburgh", "5 - Glasgow": "5 - Glasgow",
-           "6 - Leeds": "6 - Leeds", "7 - Manchester": "7 - Manchester", "8 - Royal Marsden": "8 - Royal Marsden",
-           "9 - Barts & Brighton": "9 – Barts & Brighton", "10 - Belfast": "10 – Belfast",
-           "11 - Imperial": "11 – Imperial", "12 - KCL": "12 - KCL", "13 - Leicester": "13 – Leicester",
-           "14 - Newcastle": "14 – Newcastle", "15 - Oxford": "15 – Oxford", "16 - Sheffield": "16 – Sheffield",
-           "17 - Southampton": "17 – Southampton", "18 - UCL": "18 - UCL", "19 - Maidstone": "19 - Maidstone",
-           "20 - Devon and Exeter": "20 - Devon and Exeter", "21 - Liverpool": "21 - Liverpool",
-           "22 - Bristol": "22 - Bristol", "23 - Colchester": "23 - Colchester", "24 - Aberdeen": "24 - Aberdeen"}
+           "Aberdeen": "24 - Aberdeen", "1": "1 - Birmingham", "2": "2 - Cardiff",
+           "3": "3 - Cambridge", "4": "4 - Edinburgh", "5": "5 - Glasgow",
+           "6": "6 - Leeds", "7": "7 - Manchester", "8": "8 - Royal Marsden",
+           "9": "9 - Barts & Brighton", "10": "10 - Belfast",
+           "11": "11 - Imperial", "12": "12 - KCL", "13": "13 - Leicester",
+           "14": "14 - Newcastle", "15": "15 - Oxford", "16": "16 - Sheffield",
+           "17": "17 - Southampton", "18": "18 - UCL", "19": "19 - Maidstone",
+           "20": "20 - Devon and Exeter", "21": "21 - Liverpool",
+           "22": "22 - Bristol", "23": "23 - Colchester", "24": "24 - Aberdeen"}
 
 st_dict = {"1-blood": "1", "3-tissue-resection": "3", "8-tissue-bronchoscopicbiopsy": "8",
            "9-tissue-ctguidedbiopsy": "9", "10-tissue-surgicalbiopsy": "10", "11-tissue-otherbiopsy": "11",
@@ -65,7 +65,15 @@ gene_scope_dict = {"AKT1": "ENST00000349310:Exons 3-15", "ALK": "ENST00000389048
                    "RAD51C": "ENST00000337432:Exons1-9", "RAD51D": "ENST00000345365:Exons1-10",
                    "RAD54L": "ENST00000371975:Exons1-18"}
 
-
+output_xml_directory_name = {"1 - Birmingham": "Birmingham", "2 - Cardiff": "Cardiff",
+           "3 - Cambridge": "Cambridge", "4 - Edinburgh": "Edinburgh", "5 - Glasgow": "Glasgow",
+           "6 - Leeds": "Leeds", "7 - Manchester": "Manchester", "8 - Royal Marsden": "Marsden",
+           "9 - Barts & Brighton": "BARTS", "10 - Belfast": "Belfast",
+           "11 - Imperial": "Imperial", "12 - KCL": "KCL", "13 - Leicester": "Leicester",
+           "14 - Newcastle": "Newcastle", "15 - Oxford": "Oxford", "16 - Sheffield": "Sheffield",
+           "17 - Southampton": "Southampton", "18 - UCL": "UCL", "19 - Maidstone": "Maidstone",
+           "20 - Devon and Exeter": "Exeter", "21 - Liverpool": "Liverpool",
+           "22 - Bristol": "Bristol", "23 - Colchester": "Colchester", "24 - Aberdeen": "Aberdeen"}
 
 
 

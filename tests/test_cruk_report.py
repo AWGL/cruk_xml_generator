@@ -24,81 +24,43 @@ class TestCrukReportInput(unittest.TestCase):
         self.sample_input(" ")
 
     # Test worksheet input
-    def test_worksheet_input_empty(self):
+    def test_passed_worksheet_input_empty(self):
         self.worksheet_input_passed("")
 
-    def test_worksheet_input_space(self):
+    def test_passed_worksheet_input_space(self):
         self.worksheet_input_passed(" ")
 
-    def test_worksheet_input_incorrect(self):
+    def test_passed_worksheet_input_incorrect(self):
         self.worksheet_input_passed("19000")
 
-    #def test_worksheet_
+    def test_worksheet_failed_input_empty(self):
+        self.worksheet_input_failed("")
+
+    def test_worksheet_failed_input_space(self):
+        self.worksheet_input_failed(" ")
+
+    def test_worksheet_failed_input_incorrect(self):
+        self.worksheet_input_failed("19000")
+
+    def test_worksheet_withdrawn_input_empty(self):
+        self.worksheet_input_withdrawn("")
+
+    def test_worksheet_withdrawn_input_space(self):
+        self.worksheet_input_withdrawn(" ")
+
+    def test_worksheet_withdrawn_input_incorrect(self):
+        self.worksheet_input_withdrawn("19000")
+
+    def test_authoriser_empty(self):
+        self.authoriser("")
+
+    def test_authoriser_space(self):
+        self.authoriser(" ")
+
+    def test_authoriser_incorrect(self):
+        self.authoriser("some")
 
 
-    '''
-    def test_empty_worksheet_input_passed_sample(self):
-        with self.assertRaises(ValueError) as e:
-            self.rc.status = "s"
-            self.rc.sample = "19M"
-            self.rc.worksheet == ""
-            self.rc.report_cruk()
-        self.assertEqual("Worksheet id incorrectly entered. Worksheet id was entered as . "
-                                "Worksheets should start with two numbers then a dash e.g. 19-XXXX",
-                            str(e.exception))
-
-    def test_empty_worksheet_input_failed_sample(self):
-        # This should throw at the authoriser check step as there is no check for empty worksheet, but authoriser
-        # is not set
-        with self.assertRaises(ValueError) as e:
-            self.rc.status = "f"
-            self.rc.sample = "19M"
-            self.rc.worksheet == ""
-            self.rc.report_cruk()
-        self.assertEqual("Authoriser  is not on the list of permitted authorisers for CRUK",
-                            str(e.exception))
-
-    def test_empty_worksheet_input_withdrawn_sample(self):
-        # This should throw at the authoriser check step as there is no check for empty worksheet, but authoriser
-        # is not set
-        with self.assertRaises(ValueError) as e:
-            self.rc.status = "w"
-            self.rc.sample = "19M"
-            self.rc.worksheet == ""
-            self.rc.report_cruk()
-        self.assertEqual("Authoriser  is not on the list of permitted authorisers for CRUK",
-                            str(e.exception))
-
-    def test_empty_authoriser_input_passed_sample(self):
-        with self.assertRaises(PermissionError) as e:
-            self.rc.status = "s"
-            self.rc.sample = "19M"
-            self.rc.worksheet = "19-"
-            self.rc.authoriser == ""
-            self.rc.report_cruk()
-        self.assertEqual("Authoriser  is not on the list of permitted authorisers for CRUK",
-                            str(e.exception))
-
-    def test_empty_authoriser_input_failed_sample(self):
-        with self.assertRaises(PermissionError) as e:
-            self.rc.status = "f"
-            self.rc.sample = "19M"
-            self.rc.worksheet = "19-"
-            self.rc.authoriser == ""
-            self.rc.report_cruk()
-        self.assertEqual("Authoriser  is not on the list of permitted authorisers for CRUK",
-                            str(e.exception))
-
-    def test_empty_authoriser_input_withdrawn_sample(self):
-        with self.assertRaises(PermissionError) as e:
-            self.rc.status = "w"
-            self.rc.sample = "19M"
-            self.rc.worksheet = "19-"
-            self.rc.authoriser == ""
-            self.rc.report_cruk()
-        self.assertEqual("Authoriser  is not on the list of permitted authorisers for CRUK",
-                            str(e.exception))
-    '''
     def status_input(self, status):
         with self.assertRaises(ValueError) as e:
             self.rc.status = status
@@ -119,17 +81,39 @@ class TestCrukReportInput(unittest.TestCase):
         with self.assertRaises(ValueError) as e:
             self.rc.status = "s"
             self.rc.sample = "19M"
-            self.rc.worksheet == worksheet
+            self.rc.worksheet = worksheet
             self.rc.report_cruk()
-        self.assertEqual("Worksheet id incorrectly entered. Worksheet id was entered as . "
+        self.assertEqual(f"Worksheet id incorrectly entered. Worksheet id was entered as {worksheet}. "
                          "Worksheets should start with two numbers then a dash e.g. 19-XXXX",
                          str(e.exception))
 
-    def worksheet_input_failed(self):
-        return None
+    def worksheet_input_failed(self, worksheet):
+        with self.assertRaises(PermissionError) as e:
+            self.rc.status = "f"
+            self.rc.sample = "19M"
+            self.rc.worksheet = worksheet
+            self.rc.report_cruk()
+        self.assertEqual("Authoriser  is not on the list of permitted authorisers for CRUK",
+                            str(e.exception))
 
-    def worksheet_input_withdrawn(self):
-        return None
+    def worksheet_input_withdrawn(self, worksheet):
+        with self.assertRaises(PermissionError) as e:
+            self.rc.status = "w"
+            self.rc.sample = "19M"
+            self.rc.worksheet = worksheet
+            self.rc.report_cruk()
+        self.assertEqual("Authoriser  is not on the list of permitted authorisers for CRUK",
+                            str(e.exception))
+
+    def authoriser(self, authoriser):
+        with self.assertRaises(PermissionError) as e:
+            self.rc.status = "s"
+            self.rc.sample = "19M"
+            self.rc.worksheet = "19-0"
+            self.rc.authoriser = authoriser
+            self.rc.report_cruk()
+        self.assertEqual(f"Authoriser {authoriser} is not on the list of permitted authorisers for CRUK",
+                            str(e.exception))
 
 
 class TestCrukReport(unittest.TestCase):

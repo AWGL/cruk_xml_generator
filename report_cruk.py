@@ -293,7 +293,9 @@ class ReportCruk:
         self.log.info(self.check_xml_data())
 
         # Obtain clinical hub name in format for output XML
-        clinical_hub = self.info_dict.get('clinical_hub').strip().split(" ")[-1].strip()
+        from valid_data import output_xml_directory_name
+        # Name of directory for output XML
+        clinical_hub = output_xml_directory_name[self.info_dict.get('clinical_hub')]
 
         # Generate name for output xml
         formatted_date = datetime.today().strftime('%Y%m%d')
@@ -394,10 +396,10 @@ def debug(report_cruk_object, status, sample, auth, worksheet=None):
 
 
 def main():
-    rc = ReportCruk()
+    rc = ReportCruk(True)
     sys.excepthook = rc.handle_exception
     # To allow debugging
-    #rc = debug(rc, "f", "19M17495", "mjm")
+    rc = debug(rc, "f", "19M5", "mjm")
     rc.report_cruk()
 
 
