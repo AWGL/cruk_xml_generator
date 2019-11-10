@@ -75,7 +75,7 @@ A log file ```cruk_report.log``` is generated at each execution of the software 
 ***
 ## Notes
 ### Current known issues
-* The test suite is incomplete
+* test suite is incomplete
 
 ### Dependency List
 In case the Conda environment build fails.
