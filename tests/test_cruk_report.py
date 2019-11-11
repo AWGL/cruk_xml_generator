@@ -60,7 +60,7 @@ class TestCrukReportInput(unittest.TestCase):
     def test_authoriser_incorrect(self):
         self.authoriser("some")
 
-
+    # Functions to call
     def status_input(self, status):
         with self.assertRaises(ValueError) as e:
             self.rc.status = status
@@ -116,6 +116,8 @@ class TestCrukReportInput(unittest.TestCase):
                             str(e.exception))
 
 
+
+
 class TestCrukReport(unittest.TestCase):
 
     def setUp(self): #-> None:
@@ -138,7 +140,7 @@ class TestCrukReport(unittest.TestCase):
         # Load in generated xml
 
 
-        return None
+        return "hello"
 
     def fail_xml_test(self):
         return None
