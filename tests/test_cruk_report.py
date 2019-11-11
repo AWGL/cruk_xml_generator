@@ -5,6 +5,7 @@ from report_cruk import *
 class TestCrukReportInput(unittest.TestCase):
     def setUp(self): #-> None:
         self.rc = ReportCruk(True)
+        self.rc.log = logging.getLogger()
 
     # Test status input
     def test_status_input_empty(self):
@@ -116,12 +117,30 @@ class TestCrukReportInput(unittest.TestCase):
                             str(e.exception))
 
 
-
-
 class TestCrukReport(unittest.TestCase):
 
     def setUp(self): #-> None:
         self.rc = ReportCruk(True)
+        self.rc.log = logging.getLogger()
+        self.rc.status = "s"
+        self.rc.worksheet = "19-9999"
+        self.rc.authoriser = "mjm"
+        from config import xml_version
+        print(xml_version)
+        from config import db_path
+        print(db_path)
+        from config import db_name
+        from config import xsd
+        from config import xml_location
+        from config import pdf_location
+
+    def test_no_clin_hub_directory(self):
+        # Test to ensure error thrown when a destination directory does not exist for this clinical hub yet
+        with self.assertRaises(FileNotFoundError) as e:
+            self.rc.sample = "19M8"
+            self.rc.report_cruk()
+        self.assertEqual(f"XML is not found in correct location for sending to CRUK. File copy "
+                                f"operation has not been successful", str(e.exception))
 
 
     # Tests for data parsed out into dictionary

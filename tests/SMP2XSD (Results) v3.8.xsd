@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="smpSample" nillable="true">
+    <xsd:complexType>
+      <xsd:sequence minOccurs="0">
+        <xsd:element name="smClinicalHub" form="unqualified" minOccurs="1" maxOccurs="1">
+          <xsd:complexType>
+            <xsd:sequence minOccurs="0">
+              <xsd:element name="patient" form="unqualified" nillable="true" minOccurs="1" maxOccurs="1">
+                <xsd:complexType>
+                  <xsd:sequence minOccurs="0">
+                    <xsd:element name="organisationCode" minOccurs="1" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:maxLength value="5"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="localPatientIdentifier" minOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:maxLength value="10"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="treatingOncologistInitials" minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:maxLength value="3"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="ageAtAttendance" type="xsd:int"  minOccurs="0" maxOccurs="1" nillable="true"/>
+                    <xsd:element name="genderCode" form="unqualified"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="0"/>
+                          <xsd:enumeration value="1"/>
+                          <xsd:enumeration value="2"/>
+                          <xsd:enumeration value="9"/>
+                          <xsd:maxLength value="1"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="ethnicCategory"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="A"/>
+                          <xsd:enumeration value="B"/>
+                          <xsd:enumeration value="C"/>
+                          <xsd:enumeration value="D"/>
+                          <xsd:enumeration value="E"/>
+                          <xsd:enumeration value="F"/>
+                          <xsd:enumeration value="G"/>
+                          <xsd:enumeration value="H"/>
+                          <xsd:enumeration value="J"/>
+                          <xsd:enumeration value="K"/>
+                          <xsd:enumeration value="L"/>
+                          <xsd:enumeration value="M"/>
+                          <xsd:enumeration value="N"/>
+                          <xsd:enumeration value="P"/>
+                          <xsd:enumeration value="R"/>
+                          <xsd:enumeration value="S"/>
+                          <xsd:enumeration value="Z"/>
+                          <xsd:enumeration value="99"/>
+                          <xsd:maxLength value="2"/>
+
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="smokingStatus"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="1"/>
+                          <xsd:enumeration value="2"/>
+                          <xsd:enumeration value="3"/>
+                          <xsd:enumeration value="4"/>
+                          <xsd:enumeration value="Z"/>
+                          <xsd:enumeration value="9"/>
+                          <xsd:maxLength value="1"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="noOfPriorLinesTherapy"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:maxLength value="5"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="cancerTreatmentModalities"  minOccurs="0" maxOccurs="1">
+                      <xsd:complexType>
+                        <xsd:sequence minOccurs="0">
+                          <xsd:element name="cancerTreatmentModality" minOccurs="0" maxOccurs="unbounded">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="01"/>
+                                <xsd:enumeration value="02"/>
+                                <xsd:enumeration value="03"/>
+                                <xsd:enumeration value="04"/>
+                                <xsd:enumeration value="05"/>
+                                <xsd:enumeration value="06"/>
+                                <xsd:enumeration value="07"/>
+                                <xsd:enumeration value="08"/>
+                                <xsd:enumeration value="09"/>
+                                <xsd:enumeration value="10"/>
+                                <xsd:enumeration value="11"/>
+                                <xsd:enumeration value="12"/>
+                                <xsd:enumeration value="13"/>
+                                <xsd:enumeration value="14"/>
+                                <xsd:enumeration value="15"/>
+                                <xsd:enumeration value="16"/>
+                                <xsd:enumeration value="17"/>
+                                <xsd:enumeration value="18"/>
+                                <xsd:enumeration value="19"/>
+                                <xsd:enumeration value="20"/>
+                                <xsd:enumeration value="21"/>
+                                <xsd:enumeration value="22"/>
+                                <xsd:enumeration value="97"/>
+                                <xsd:enumeration value="98"/>
+                                <xsd:enumeration value="99"/>
+                                <xsd:maxLength value="2"/>
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:element>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="performanceStatus"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="0"/>
+                          <xsd:enumeration value="1"/>
+                          <xsd:enumeration value="2"/>
+                          <xsd:enumeration value="3"/>
+                          <xsd:enumeration value="4"/>
+                          <xsd:enumeration value="9"/>
+                          <xsd:maxLength value="1"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string" use="required"/>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="sample" form="unqualified" nillable="true" minOccurs="1" maxOccurs="1">
+          <xsd:complexType>
+            <xsd:sequence minOccurs="0">
+              <xsd:element name="clinicalHubElements" form="unqualified" nillable="true" minOccurs="1" maxOccurs="1">
+                <xsd:complexType>
+                  <xsd:sequence minOccurs="0">
+                    <xsd:element name="sourceSampleIdentifier" form="unqualified" minOccurs="1" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:maxLength value="20"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="originOfSample"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="1"/>
+                          <xsd:enumeration value="2"/>
+                          <xsd:enumeration value="3"/>
+                          <xsd:maxLength value="1"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="typeOfSample" form="unqualified" minOccurs="1" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="1"/>
+                          <xsd:enumeration value="3"/>
+                          <xsd:enumeration value="8"/>
+                          <xsd:enumeration value="9"/>
+                          <xsd:enumeration value="10"/>
+                          <xsd:enumeration value="11"/>
+                          <xsd:enumeration value="12"/>
+                          <xsd:enumeration value="13"/>
+                          <xsd:enumeration value="14"/>
+                          <xsd:enumeration value="15"/>
+                          <xsd:enumeration value="16"/>
+                          <xsd:enumeration value="17"/>
+                          <xsd:maxLength value="2"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="procedureToObtainSample"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="1"/>
+                          <xsd:enumeration value="2"/>
+                          <xsd:enumeration value="3"/>
+                          <xsd:enumeration value="4"/>
+                          <xsd:enumeration value="5"/>
+                          <xsd:enumeration value="6"/>
+                          <xsd:enumeration value="7"/>
+                          <xsd:enumeration value="8"/>
+                          <xsd:maxLength value="1"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="typeOfBiopsy"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="0"/>
+                          <xsd:enumeration value="1"/>
+                          <xsd:enumeration value="2"/>
+                          <xsd:enumeration value="3"/>
+                          <xsd:enumeration value="4"/>
+                          <xsd:enumeration value="5"/>
+                          <xsd:enumeration value="6"/>
+                          <xsd:enumeration value="7"/>
+                          <xsd:maxLength value="1"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="dateSampleTaken" type="xsd:date" form="unqualified"  minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="morphologySnomed"  minOccurs="1" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:maxLength value="18"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="tumourType" form="unqualified" minOccurs="1" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="1"/>
+                          <xsd:enumeration value="2"/>
+                          <xsd:enumeration value="3"/>
+                          <xsd:enumeration value="4"/>
+                          <xsd:enumeration value="5"/>
+                          <xsd:enumeration value="6"/>
+                          <xsd:enumeration value="7"/>
+                          <xsd:maxLength value="1"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="pathologyTCategory"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                           <xsd:enumeration value="0"/>
+                          <xsd:enumeration value="TX"/>
+                          <xsd:enumeration value="T0"/>
+                          <xsd:enumeration value="Tis"/>
+                          <xsd:enumeration value="T1mi"/>
+                          <xsd:enumeration value="T1a"/>
+                          <xsd:enumeration value="T1b"/>
+                          <xsd:enumeration value="T1c"/>
+                          <xsd:enumeration value="T2"/>
+                          <xsd:enumeration value="T2a"/>
+                          <xsd:enumeration value="T2b"/>
+                          <xsd:enumeration value="T3"/>
+                          <xsd:enumeration value="T4"/>
+                          <xsd:enumeration value="9"/>
+                          <xsd:maxLength value="4"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="pathologyNCategory"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="0"/>
+                          <xsd:enumeration value="NX"/>
+                          <xsd:enumeration value="N0"/>
+                          <xsd:enumeration value="N1"/>
+                          <xsd:enumeration value="N2"/>
+                          <xsd:enumeration value="N3"/>
+                          <xsd:enumeration value="9"/>
+                          <xsd:maxLength value="2"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="pathologyMCategory"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="0"/>
+                          <xsd:enumeration value="M0"/>
+                          <xsd:enumeration value="M1"/>
+                          <xsd:enumeration value="M1a"/>
+                          <xsd:enumeration value="M1b"/>
+                          <xsd:enumeration value="M1c"/>
+                          <xsd:enumeration value="9"/>
+                          <xsd:maxLength value="3"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="integratedTNMStageGrouping"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:maxLength value="5"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="alkStatus"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="P"/>
+                          <xsd:enumeration value="N"/>
+                          <xsd:enumeration value="E"/>
+                          <xsd:enumeration value="X"/>
+                          <xsd:enumeration value="Z"/>
+                          <xsd:enumeration value="U"/>
+                          <xsd:maxLength value="1"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="egfrStatus"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="M"/>
+                          <xsd:enumeration value="N"/>
+                          <xsd:enumeration value="X"/>
+                          <xsd:enumeration value="F"/>
+                          <xsd:enumeration value="Z"/>
+                          <xsd:enumeration value="Y"/>
+                          <xsd:maxLength value="1"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="alkFishStatus"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="R"/>
+                          <xsd:enumeration value="N"/>
+                          <xsd:enumeration value="X"/>
+                          <xsd:enumeration value="F"/>
+                          <xsd:enumeration value="Z"/>
+                          <xsd:enumeration value="Y"/>
+                          <xsd:maxLength value="1"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="krasStatus"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:enumeration value="M"/>
+                          <xsd:enumeration value="N"/>
+                          <xsd:enumeration value="X"/>
+                          <xsd:enumeration value="F"/>
+                          <xsd:enumeration value="Z"/>
+                          <xsd:enumeration value="Y"/>
+                          <xsd:maxLength value="1"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="dateSampleSent" type="xsd:date"  minOccurs="1" maxOccurs="1"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="technologyHubElements" form="unqualified" nillable="true" minOccurs="1" maxOccurs="1">
+                <xsd:complexType>
+                  <xsd:sequence minOccurs="1">
+                    <xsd:element name="dateSampleReceived" type="xsd:date"  minOccurs="1" maxOccurs="1"/>
+                    <xsd:element name="labSampleIdentifier" type="xsd:string"  minOccurs="1" maxOccurs="1"/>
+                    <xsd:element name="reportReleaseDate" type="xsd:date"  minOccurs="1" maxOccurs="1"/>
+                    <xsd:element name="volumeBankedNucleicAcid" form="unqualified" nillable="true"  minOccurs="1" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:decimal">
+                          <xsd:fractionDigits value="4"/>
+                          <xsd:totalDigits value="7"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="concentrationBankedNucleicAcid" form="unqualified" nillable="true"  minOccurs="1" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:decimal">
+                          <xsd:totalDigits value="7"/>
+                          <xsd:fractionDigits value="4"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="bankedNucleicAcidLocation" form="unqualified" nillable="true"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:maxLength value="50"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="bankedNucleicAcidIdentifier" form="unqualified" nillable="true"  minOccurs="0" maxOccurs="1">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:maxLength value="10"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="smTechnologyHub" form="unqualified" nillable="true" minOccurs="1" maxOccurs="1">
+          <xsd:complexType>
+            <xsd:sequence minOccurs="0">
+              <xsd:element name="testResults" form="unqualified" nillable="true" minOccurs="1">
+                <xsd:complexType>
+                  <xsd:sequence minOccurs="0">
+                    <xsd:element name="test" form="unqualified" nillable="true" minOccurs="1" maxOccurs="unbounded">
+                      <xsd:complexType>
+                        <xsd:all>
+                          <xsd:element name="gene" form="unqualified" nillable="true" minOccurs="1" maxOccurs="1">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="1"/>
+                                <xsd:enumeration value="4"/>
+                                <xsd:enumeration value="5"/>
+                                <xsd:enumeration value="6"/>
+                                <xsd:enumeration value="7"/>
+                                <xsd:enumeration value="8"/>
+                                <xsd:enumeration value="9"/>
+                                <xsd:enumeration value="10"/>
+                                <xsd:enumeration value="11"/>
+                                <xsd:enumeration value="12"/>
+                                <xsd:enumeration value="13"/>
+                                <xsd:enumeration value="14"/>
+                                <xsd:enumeration value="15"/>
+                                <xsd:enumeration value="16"/>
+                                <xsd:enumeration value="17"/>
+                                <xsd:enumeration value="18"/>
+                                <xsd:enumeration value="19"/>
+                                <xsd:enumeration value="20"/>
+                                <xsd:enumeration value="21"/>
+                                <xsd:enumeration value="22"/>
+                                <xsd:enumeration value="23"/>
+                                <xsd:enumeration value="24"/>
+                                <xsd:enumeration value="25"/>
+                                <xsd:enumeration value="26"/>
+                                <xsd:enumeration value="27"/>
+                                <xsd:enumeration value="28"/>
+                                <xsd:enumeration value="29"/>
+                                <xsd:enumeration value="30"/>
+                                <xsd:enumeration value="31"/>
+                                <xsd:enumeration value="32"/>
+                                <xsd:enumeration value="33"/>
+                                <xsd:enumeration value="34"/>
+                                <xsd:enumeration value="35"/>
+                                <xsd:enumeration value="36"/>
+                                <xsd:enumeration value="37"/>
+                                <xsd:enumeration value="38"/>
+                                <xsd:enumeration value="39"/>
+                                <xsd:enumeration value="40"/>
+                                <xsd:enumeration value="41"/>
+                                <xsd:enumeration value="42"/>
+                                <xsd:enumeration value="43"/>
+                                <xsd:enumeration value="44"/>
+                                <xsd:enumeration value="45"/>
+                                <xsd:enumeration value="46"/>
+                                <xsd:enumeration value="47"/>
+                                <xsd:enumeration value="48"/>
+                                <xsd:enumeration value="49"/>
+                                <xsd:enumeration value="50"/>
+                                <xsd:enumeration value="51"/>
+                                <xsd:enumeration value="52"/>
+                                <xsd:enumeration value="53"/>
+                                <xsd:enumeration value="54"/>
+                                <xsd:enumeration value="55"/>
+                                <xsd:enumeration value="56"/>
+                                <xsd:enumeration value="57"/>
+                                <xsd:enumeration value="58"/>
+                                <xsd:maxLength value="2"/>
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:element>
+                          <xsd:element name="methodOfTest" form="unqualified" nillable="true" minOccurs="1" maxOccurs="1">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="1"/>
+                                <xsd:enumeration value="2"/>
+                                <xsd:enumeration value="3"/>
+                                <xsd:enumeration value="4"/>
+                                <xsd:enumeration value="5"/>
+                                <xsd:enumeration value="6"/>
+                                <xsd:enumeration value="7"/>
+                                <xsd:enumeration value="8"/>
+                                <xsd:enumeration value="9"/>
+                                <xsd:enumeration value="10"/>
+                                <xsd:enumeration value="11"/>
+                                <xsd:enumeration value="12"/>
+                                <xsd:enumeration value="13"/>
+                                <xsd:enumeration value="14"/>
+                                <xsd:enumeration value="15"/>
+                                <xsd:enumeration value="16"/>
+                                <xsd:enumeration value="17"/>
+                                <xsd:enumeration value="18"/>
+                                <xsd:enumeration value="19"/>
+                                <xsd:enumeration value="20"/>
+                                <xsd:maxLength value="2"/>
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:element>
+                          <xsd:element name="scopeOfTest" form="unqualified" nillable="true" minOccurs="1" maxOccurs="1">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="200"/>
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:element>
+                          <xsd:element name="dateTestResultsReleased" type="xsd:date" form="unqualified" nillable="true" minOccurs="1" maxOccurs="1"/>
+                          <xsd:element name="testStatus" form="unqualified" nillable="true" minOccurs="1" maxOccurs="1">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="1"/>
+                                <xsd:enumeration value="2"/>
+                                <xsd:enumeration value="3"/>
+                                <xsd:enumeration value="4"/>
+                                <xsd:maxLength value="1"/>
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:element>
+                          <xsd:element name="testResult" form="unqualified" nillable="true" minOccurs="1" maxOccurs="1">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="600"/>
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:element>
+                          <xsd:element name="testReport" form="unqualified" nillable="true" minOccurs="1" maxOccurs="1">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="600"/>
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:element>
+                          <xsd:element name="comments" form="unqualified" nillable="true" minOccurs="1" maxOccurs="1">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="600"/>
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:element>
+                        </xsd:all>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string" use="required" form="unqualified"/>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="smVersion">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="3.8" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
