@@ -1,0 +1,461 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<smpSample xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" smVersion="3.8">
+  <smClinicalHub name="13 - Leicester">
+    <patient>
+      <organisationCode>YY476</organisationCode>
+      <localPatientIdentifier>6</localPatientIdentifier>
+    </patient>
+  </smClinicalHub>
+  <sample>
+    <clinicalHubElements>
+      <sourceSampleIdentifier>AF</sourceSampleIdentifier>
+      <typeOfSample>8</typeOfSample>
+      <morphologySnomed><![CDATA[N/A]]></morphologySnomed>
+      <tumourType>3</tumourType>
+      <dateSampleSent>2019-10-26</dateSampleSent>
+    </clinicalHubElements>
+    <technologyHubElements>
+      <dateSampleReceived>2019-10-26</dateSampleReceived>
+      <labSampleIdentifier>19M6</labSampleIdentifier>
+      <reportReleaseDate>2019-11-11</reportReleaseDate>
+      <volumeBankedNucleicAcid><![CDATA[0]]></volumeBankedNucleicAcid>
+      <concentrationBankedNucleicAcid><![CDATA[9.73]]></concentrationBankedNucleicAcid>
+      <bankedNucleicAcidLocation><![CDATA[Rm2.14 DNA bank_4oC]]></bankedNucleicAcidLocation>
+      <bankedNucleicAcidIdentifier><![CDATA[19M6]]></bankedNucleicAcidIdentifier>
+    </technologyHubElements>
+  </sample>
+  <smTechnologyHub name="2 - Cardiff">
+    <testResults>
+      <test>
+        <gene>15</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000349310:Exons 3-15]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>4</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000389048:Exons 1-29]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>1</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000288602:Exons1-18]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>16</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000227507:Exons1-5]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>38</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000261254:Exons1-5]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>39</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000372991:Exons1-5]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>40</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000262643:Exons2-11]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[c.5435, c.430923, c.54353 A>C]]></testResult>
+        <testReport><![CDATA[Tier 5 variants everywhere]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>17</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000257904:Exons2-7]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>18</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000304494:Exons1-3]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>13</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000275493:Exons1-28]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>23</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000269571:Exons1-27]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>21</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000358487:Exons2-18]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>22</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000440486:Exons2-18]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>37</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000397596:Exons2-5]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>14</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000311936:Exons2-5]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>26</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000318493:Exons2-21]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>27</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000358273:Exons1-18,19,20,22-58]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>10</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000369535:Exons2-5]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>42</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000392302:Exons1-17]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[Placeholder]]></testResult>
+        <testReport><![CDATA[Placeholder]]></testReport>
+        <testStatus>3</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>5</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000263967:Exons2-21]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>6</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000371953:Exons1-9]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[Var1 C>G]]></testResult>
+        <testReport><![CDATA[Tier 3 PTEN variant]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>30</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000267163:Exons1-27]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>31</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000355710:Exons1-20]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>32</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000368508:Exons1-43]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>34</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000326873:Exons1-9]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>35</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000298552:Exons3-23]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>36</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000219476:Exons2-42]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>58</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000324856:Exons1-20]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>45</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000278616:Exons2-63]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>49</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000260947:Exons1-11]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>43</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000357654:Exons2-23]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>44</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000380152:Exons2-26]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[Var4 A>T]]></testResult>
+        <testReport><![CDATA[Tier 1 BRCA2 variant]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>46</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000259008:Exons2-20]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>50</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000447079:Exons1-14]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>51</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000438015:Exons2-13]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>52</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000328354:Exons2-15]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>53</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000233741:Exons1-14]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>47</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000261584:Exons1-13]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>54</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000380737:Exons1-10]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>55</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000487270:Exons2-11]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>48</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000337432:Exons1-9]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>56</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000345365:Exons1-10]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+      <test>
+        <gene>57</gene>
+        <methodOfTest><![CDATA[19]]></methodOfTest>
+        <scopeOfTest><![CDATA[ENST00000371975:Exons1-18]]></scopeOfTest>
+        <dateTestResultsReleased>2019-11-11</dateTestResultsReleased>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
+        <testStatus>1</testStatus>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
+      </test>
+    </testResults>
+  </smTechnologyHub>
+</smpSample>

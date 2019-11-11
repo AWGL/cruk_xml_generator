@@ -1,6 +1,6 @@
 import unittest
 from report_cruk import *
-from test_config import *
+from tests.test_config import *
 
 
 class TestCrukReportInput(unittest.TestCase):
@@ -126,35 +126,28 @@ class TestCrukReport(unittest.TestCase):
         self.rc.status = "s"
         self.rc.worksheet = "19-9999"
         self.rc.authoriser = "mjm"
-        from config import xml_version
         self.rc.xml_version = xml_version
-        from test_config import db_path
         self.rc.db_path = db_path
-        from test_config import db_name
         self.rc.db_name = db_name
-        from test_config import xsd
         self.rc.xsd = xsd
-        from test_config import xml_location
         self.rc.xml_location = xml_location
-        from test_config import pdf_location
         self.rc.pdf_location = pdf_location
-        from test_config import results_path
         self.rc.results_path = results_path
 
     def test_no_clin_hub_directory(self):
         # Test to ensure error thrown when a destination directory does not exist for this clinical hub yet
         with self.assertRaises(FileNotFoundError) as e:
-            self.rc.sample = "19M8"
+            self.rc.sample = "19M6"
             self.rc.report_cruk()
         self.assertEqual(f"XML is not found in correct location for sending to CRUK. File copy "
-                                f"operation has not been successful", str(e.exception))
+                         f"operation has not been successful", str(e.exception))
 
     def test_wrong_id_in_report(self):
-        with self.assertRaises(FileNotFoundError) as e:
+        with self.assertRaises(Exception) as e:
             self.rc.sample = "19M9"
             self.rc.report_cruk()
-        self.assertEqual(f"Wrong report. File for DNA sample name 19M8, but report tab for DNA sample SMP2-19M82",
-                          str(e.exception))
+        self.assertEqual(f"Wrong report. File for DNA sample name {self.rc.sample}"
+                         f", but report tab for DNA sample SMP2-19M99", str(e.exception))
 
     def test_sample_not_in_db(self):
         with self.assertRaises(Exception) as e:

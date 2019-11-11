@@ -292,9 +292,8 @@ class ReportCruk:
 
         # Obtain data that is available for every sample regardless of workflow status
         # Populate information dictionary from sample tracking spreadsheet
-        print(f"print {self.db_path}, {self.db_name}")
         database_parser = ParseDatabase(os.path.join(self.db_path, self.db_name))
-        self.info_dict = self.data_always_required(database_parser)
+        self.data_always_required(database_parser)
 
         # Gather correct information depending on option selected by user input
         if self.status == "s":
@@ -374,7 +373,7 @@ class ReportCruk:
         self.log.info(f"XML file copied to directory for sending to CRUK")
 
         # Start popup- on button click close popup
-        self.root.mainloop()
+        #self.root.mainloop() #TODO comment back in when not testing- no solution currently
 
 
 class ModuleLogger:
