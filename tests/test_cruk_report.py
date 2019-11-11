@@ -1,5 +1,6 @@
 import unittest
 from report_cruk import *
+from test_config import *
 
 
 class TestCrukReportInput(unittest.TestCase):
@@ -126,13 +127,19 @@ class TestCrukReport(unittest.TestCase):
         self.rc.worksheet = "19-9999"
         self.rc.authoriser = "mjm"
         from config import xml_version
-        print(xml_version)
-        from config import db_path
-        print(db_path)
-        from config import db_name
-        from config import xsd
-        from config import xml_location
-        from config import pdf_location
+        self.rc.xml_version = xml_version
+        from test_config import db_path
+        self.rc.db_path = db_path
+        from test_config import db_name
+        self.rc.db_name = db_name
+        from test_config import xsd
+        self.rc.xsd = xsd
+        from test_config import xml_location
+        self.rc.xml_location = xml_location
+        from test_config import pdf_location
+        self.rc.pdf_location = pdf_location
+        from test_config import results_path
+        self.rc.results_path = results_path
 
     def test_no_clin_hub_directory(self):
         # Test to ensure error thrown when a destination directory does not exist for this clinical hub yet
@@ -141,6 +148,20 @@ class TestCrukReport(unittest.TestCase):
             self.rc.report_cruk()
         self.assertEqual(f"XML is not found in correct location for sending to CRUK. File copy "
                                 f"operation has not been successful", str(e.exception))
+
+    def test_wrong_id_in_report(self):
+        with self.assertRaises(FileNotFoundError) as e:
+            self.rc.sample = "19M9"
+            self.rc.report_cruk()
+        self.assertEqual(f"Wrong report. File for DNA sample name 19M8, but report tab for DNA sample SMP2-19M82",
+                          str(e.exception))
+
+    def test_sample_not_in_db(self):
+        with self.assertRaises(Exception) as e:
+            self.rc.sample = "19M90"
+            self.rc.report_cruk()
+        self.assertEqual(f"Sample {self.rc.sample} not found in database SMP2v3 workflow tracker.xlsx. "
+                         f"Required data to generate will be missing", str(e.exception))
 
 
     # Tests for data parsed out into dictionary

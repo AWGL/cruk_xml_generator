@@ -12,14 +12,6 @@ from generate_xml_report import GenerateXml
 from generate_report import GenerateReport
 from is_valid import IsValid
 
-#Common file paths and version
-from config import xml_version
-from config import db_path
-from config import db_name
-from config import xsd
-from config import xml_location
-from config import pdf_location
-
 # Global variables
 from config import test_method
 from config import can_be_null
@@ -41,8 +33,31 @@ class ReportCruk:
         self.sample = ""
         self.worksheet = ""
         self.authoriser = ""
+        self.xml_version = ""
+        self.db_path = ""
+        self.db_name = ""
+        self.xsd = ""
+        self.xml_location = ""
+        self.pdf_location = ""
+        self.results_path = ""
         self.skip_gui = skip_gui
         if not self.skip_gui:
+            # Set variables that are not set by testing
+            # Common file paths and version
+            from config import xml_version
+            self.xml_version = xml_version
+            from config import db_path
+            self.db_path = db_path
+            from config import db_name
+            self.db_name = db_name
+            from config import xsd
+            self.xsd = xsd
+            from config import xml_location
+            self.xml_location = xml_location
+            from config import pdf_location
+            self.pdf_location = pdf_location
+            from config import results_path
+            self.results_path = results_path
             # Root tkinter object created
             self.root = tk.Tk()
             self.root.grid()
@@ -87,7 +102,7 @@ class ReportCruk:
 
         # If sample is not in the Excel database, do not continue as data for this sample will be missing
         if sample_data.empty:
-            raise Exception(f"Sample {self.sample} not found in database {db_name}. "
+            raise Exception(f"Sample {self.sample} not found in database {self.db_name}. "
                                  f"Required data to generate will be missing")
         self.info_dict["cruk_sample_id"] = database_parser.get_cruk_sample_id(sample_data)
         self.info_dict["clinical_hub"] = database_parser.get_clinical_hub(sample_data)
@@ -120,12 +135,11 @@ class ReportCruk:
 
         # Parse data from Excel report generated- per sample
         # Obtain year part of worksheet and use to generate path to results file
-        from config import results_path
         # Note that the year is not case insensitive and if the path has a different case for folder name file will
         # not be found
         year = f"20{self.worksheet.split('-')[0]}"
-        results_path = os.path.join(results_path, year)
-        spreadsheet = parse_report.find_analysis_worksheet(os.path.join(results_path, self.worksheet,
+        results_path = os.path.join(self.results_path, year)
+        spreadsheet = parse_report.find_analysis_worksheet(os.path.join(self.results_path, self.worksheet,
                                                                         self.sample), ".xlsx")
         if not spreadsheet:
             raise FileNotFoundError(f"Results spreadsheet for sample {self.sample} could not be located. "
@@ -278,8 +292,9 @@ class ReportCruk:
 
         # Obtain data that is available for every sample regardless of workflow status
         # Populate information dictionary from sample tracking spreadsheet
-        database_parser = ParseDatabase(os.path.join(db_path, db_name))
-        info_dict = self.data_always_required(database_parser)
+        print(f"print {self.db_path}, {self.db_name}")
+        database_parser = ParseDatabase(os.path.join(self.db_path, self.db_name))
+        self.info_dict = self.data_always_required(database_parser)
 
         # Gather correct information depending on option selected by user input
         if self.status == "s":
@@ -307,7 +322,7 @@ class ReportCruk:
                     "Please check if XML file is already open. If it is open, please close it and run the software "
                     "again")
         # Create and write out to xml
-        write_xml = GenerateXml(self.info_dict, xml_version)
+        write_xml = GenerateXml(self.info_dict, self.xml_version)
         tree = write_xml.generate_xml()
         self.log.info(write_xml.write_xml(os.path.join(os.getcwd(), output_xml), tree))
         self.log.debug(f"XML file {output_xml} located at {os.getcwd()} generated")
@@ -326,33 +341,33 @@ class ReportCruk:
         self.log.debug(f"PDF report {output_pdf} located at {os.getcwd()} generated")
 
         # Test validity- will throw error if xml is not valid
-        check_validity = IsValid(os.path.join(os.getcwd(), output_xml), xsd)
+        check_validity = IsValid(os.path.join(os.getcwd(), output_xml), self.xsd)
         self.log.info(check_validity.validate_xml_format())
         self.log.info(check_validity.validate_xml_schema())
-        self.log.debug(f"XML file {output_xml} validated against schema {xsd}")
+        self.log.debug(f"XML file {output_xml} validated against schema {self.xsd}")
 
         # Check existence of final output file and whether it can be written to
         # Remove pdf from output path if already there and move pdf
-        if os.path.exists(os.path.join(pdf_location, output_pdf)):
-            if not os.access(os.path.join(pdf_location, output_pdf), os.W_OK):
+        if os.path.exists(os.path.join(self.pdf_location, output_pdf)):
+            if not os.access(os.path.join(self.pdf_location, output_pdf), os.W_OK):
                 raise IOError(
                     "Please check if PDF file is already open. If it is open, please close it and run the software "
                     "again")
-            os.remove(os.path.join(pdf_location, output_pdf))
-        shutil.move(os.path.join(os.getcwd(), output_pdf), pdf_location)
+            os.remove(os.path.join(self.pdf_location, output_pdf))
+        shutil.move(os.path.join(os.getcwd(), output_pdf), self.pdf_location)
         # Remove xml from output path if already there and move xml
-        if os.path.exists(os.path.join(xml_location, clinical_hub, output_xml)):
-            if not os.access(os.path.join(xml_location, clinical_hub, output_xml), os.W_OK):
+        if os.path.exists(os.path.join(self.xml_location, clinical_hub, output_xml)):
+            if not os.access(os.path.join(self.xml_location, clinical_hub, output_xml), os.W_OK):
                 raise IOError(
                         "Please check if XML file is already open. If it is open, please close it and run the software "
                         "again")
-            os.remove(os.path.join(xml_location, clinical_hub, output_xml))
-        shutil.move(os.path.join(os.getcwd(), output_xml), os.path.join(xml_location, clinical_hub))
+            os.remove(os.path.join(self.xml_location, clinical_hub, output_xml))
+        shutil.move(os.path.join(os.getcwd(), output_xml), os.path.join(self.xml_location, clinical_hub))
 
         # Check XML file has copied correctly
         self.log.debug(f"Expected location of XML {output_xml} to send to CRUK is "
-                       f"{os.path.join(xml_location, clinical_hub)}")
-        if not os.path.exists(os.path.join(xml_location, clinical_hub, output_xml)):
+                       f"{os.path.join(self.xml_location, clinical_hub)}")
+        if not os.path.exists(os.path.join(self.xml_location, clinical_hub, output_xml)):
             raise FileNotFoundError(f"XML is not found in correct location for sending to CRUK. File copy "
                                     f"operation has not been successful")
 
