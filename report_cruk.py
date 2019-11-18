@@ -138,7 +138,7 @@ class ReportCruk:
         # Note that the year is not case insensitive and if the path has a different case for folder name file will
         # not be found
         year = f"20{self.worksheet.split('-')[0]}"
-        results_path = os.path.join(self.results_path, year)
+        self.results_path = os.path.join(self.results_path, year)
         spreadsheet = parse_report.find_analysis_worksheet(os.path.join(self.results_path, self.worksheet,
                                                                         self.sample), ".xlsx")
         if not spreadsheet:
@@ -373,7 +373,7 @@ class ReportCruk:
         self.log.info(f"XML file copied to directory for sending to CRUK")
 
         # Start popup- on button click close popup
-        #self.root.mainloop() #TODO comment back in when not testing- no solution currently
+        self.root.mainloop() #TODO comment back in when not testing- no solution currently
 
 
 class ModuleLogger:

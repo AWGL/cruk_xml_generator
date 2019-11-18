@@ -118,10 +118,10 @@ def get_test_status(gene_data):
 
 
 def get_comments(gene_data):
-    comment = gene_data.get("COMMENTS")
+    comment = gene_data.get("COMMENT")
     if comment is None or comment.isspace() or len(comment) == 0 or comment == "NaN":
         comments = "These results are intended for research purposes."
     else:
-        comments = f"These results are intended for research purposes. {gene_data.get('COMMENTS')}."
+        comments = f"These results are intended for research purposes. {comment}."
     return comments
 
