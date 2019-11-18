@@ -156,6 +156,22 @@ class TestCrukReport(unittest.TestCase):
         self.assertEqual(f"Sample {self.rc.sample} not found in database SMP2v3 workflow tracker.xlsx. "
                          f"Required data to generate will be missing", str(e.exception))
 
+    def test_sample_not_in_kpi_tab(self):
+        '''
+        test volume is correctly returned as zero for samples that do not have an entry in the kpi tab
+        '''
+        self.rc.sample = "19M7"
+        self.rc.report_cruk()
+        self.assertEqual(self.rc.info_dict.get('vol_banked'), "0")
+
+    def test_incorrect_sample_type_name(self):
+        with self.assertRaises(Exception) as e:
+            self.rc.sample = "19M5"
+            self.rc.report_cruk()
+        self.assertEqual("'9-tissue-bronchoscopicbiopsy'", str(e.exception))
+
+
+
 
     # Tests for data parsed out into dictionary
 
