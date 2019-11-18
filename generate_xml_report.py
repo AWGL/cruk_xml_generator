@@ -72,7 +72,7 @@ class GenerateXml:
             test_result = ET.SubElement(test, "testResult")
             # Remove & delimiter used between genes and replace with ; required by XML schema
             current_test_results = g_data.get('test_results')
-            current_test_results = ";".join([x.strip() for x in (current_test_results.split("&"))])
+            current_test_results = ";".join([x.strip() for x in (current_test_results.split(";"))])
             test_result.text = ET.CDATA(current_test_results)
             test_report = ET.SubElement(test, "testReport")
             test_report.text = ET.CDATA(g_data.get('test_report'))
