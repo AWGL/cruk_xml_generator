@@ -176,6 +176,11 @@ class TestCrukReport(unittest.TestCase):
             self.rc.report_cruk()
         self.assertEqual("KeyError('40')", str(e.exception))
 
+    def test_barts_conversion_working(self):
+        self.rc.sample = "19M8"
+        self.rc.report_cruk()
+        self.assertEqual("BARTS", self.rc.clinical_hub)
+
 
     # Tests for data parsed out into dictionary
 

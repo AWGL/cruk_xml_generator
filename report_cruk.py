@@ -40,6 +40,7 @@ class ReportCruk:
         self.xml_location = ""
         self.pdf_location = ""
         self.results_path = ""
+        self.clinical_hub = ""
         self.skip_gui = skip_gui
         if not self.skip_gui:
             # Set variables that are not set by testing
@@ -309,7 +310,7 @@ class ReportCruk:
         # Obtain clinical hub name in format for output XML
         from valid_data import output_xml_directory_name
         # Name of directory for output XML
-        clinical_hub = output_xml_directory_name[self.info_dict.get('clinical_hub')]
+        self.clinical_hub = output_xml_directory_name[self.info_dict.get('clinical_hub')]
 
         # Generate name for output xml
         formatted_date = datetime.today().strftime('%Y%m%d')
@@ -355,18 +356,18 @@ class ReportCruk:
             os.remove(os.path.join(self.pdf_location, output_pdf))
         shutil.move(os.path.join(os.getcwd(), output_pdf), self.pdf_location)
         # Remove xml from output path if already there and move xml
-        if os.path.exists(os.path.join(self.xml_location, clinical_hub, output_xml)):
-            if not os.access(os.path.join(self.xml_location, clinical_hub, output_xml), os.W_OK):
+        if os.path.exists(os.path.join(self.xml_location, self.clinical_hub, output_xml)):
+            if not os.access(os.path.join(self.xml_location, self.clinical_hub, output_xml), os.W_OK):
                 raise IOError(
                         "Please check if XML file is already open. If it is open, please close it and run the software "
                         "again")
-            os.remove(os.path.join(self.xml_location, clinical_hub, output_xml))
-        shutil.move(os.path.join(os.getcwd(), output_xml), os.path.join(self.xml_location, clinical_hub))
+            os.remove(os.path.join(self.xml_location, self.clinical_hub, output_xml))
+        shutil.move(os.path.join(os.getcwd(), output_xml), os.path.join(self.xml_location, self.clinical_hub))
 
         # Check XML file has copied correctly
         self.log.debug(f"Expected location of XML {output_xml} to send to CRUK is "
-                       f"{os.path.join(self.xml_location, clinical_hub)}")
-        if not os.path.exists(os.path.join(self.xml_location, clinical_hub, output_xml)):
+                       f"{os.path.join(self.xml_location, self.clinical_hub)}")
+        if not os.path.exists(os.path.join(self.xml_location, self.clinical_hub, output_xml)):
             raise FileNotFoundError(f"XML is not found in correct location for sending to CRUK. File copy "
                                     f"operation has not been successful")
 
