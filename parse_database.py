@@ -47,7 +47,10 @@ class ParseDatabase:
             ch = ch_orig.split(first_underscore)[0].strip()
         # Don't use get as we want a key error if value is not found as is not a clinical hub
         # Look this up to remove odd - character the Microsoft Office adds sometimes and is found in Excel database
-        ch_formatted = ch_dict[ch]
+        try:
+            ch_formatted = ch_dict[ch]
+        except KeyError as e:
+            raise KeyError(e)
         return ch_formatted
 
     @staticmethod

@@ -170,7 +170,11 @@ class TestCrukReport(unittest.TestCase):
             self.rc.report_cruk()
         self.assertEqual("KeyError('9-tissue-bronchoscopicbiopsy')", str(e.exception))
 
-
+    def test_incorrect_clinical_hub(self):
+        with self.assertRaises(Exception) as e:
+            self.rc.sample = "19M10"
+            self.rc.report_cruk()
+        self.assertEqual("KeyError('40')", str(e.exception))
 
 
     # Tests for data parsed out into dictionary
