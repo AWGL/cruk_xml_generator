@@ -168,7 +168,7 @@ class TestCrukReport(unittest.TestCase):
         with self.assertRaises(Exception) as e:
             self.rc.sample = "19M5"
             self.rc.report_cruk()
-        self.assertEqual("'9-tissue-bronchoscopicbiopsy'", str(e.exception))
+        self.assertEqual("KeyError('9-tissue-bronchoscopicbiopsy')", str(e.exception))
 
 
 

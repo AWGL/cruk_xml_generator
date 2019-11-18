@@ -82,7 +82,10 @@ class ParseDatabase:
         # Remove spaces from key and make lowercase to make consistent then lookup
         sample_type = sample_type.replace(" ", "").lower()
         # Don't use get as we want a key error if value is not found as is not a sample type
-        st_formatted = st_dict[sample_type]
+        try:
+            st_formatted = st_dict[sample_type]
+        except KeyError as e:
+            raise KeyError(e)
         return st_formatted
 
     @staticmethod
