@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <smpSample xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" smVersion="3.8">
-  <smClinicalHub name="13 - Leicester">
+  <smClinicalHub name="9 - Barts &amp; Brighton">
     <patient>
-      <organisationCode>YY476</organisationCode>
-      <localPatientIdentifier>6</localPatientIdentifier>
+      <organisationCode>YY479</organisationCode>
+      <localPatientIdentifier>9</localPatientIdentifier>
     </patient>
   </smClinicalHub>
   <sample>
     <clinicalHubElements>
-      <sourceSampleIdentifier>AF</sourceSampleIdentifier>
+      <sourceSampleIdentifier>AH</sourceSampleIdentifier>
       <typeOfSample>8</typeOfSample>
       <morphologySnomed><![CDATA[N/A]]></morphologySnomed>
       <tumourType>3</tumourType>
@@ -16,12 +16,12 @@
     </clinicalHubElements>
     <technologyHubElements>
       <dateSampleReceived>2019-10-26</dateSampleReceived>
-      <labSampleIdentifier>19M6</labSampleIdentifier>
+      <labSampleIdentifier>19M8</labSampleIdentifier>
       <reportReleaseDate>2019-11-18</reportReleaseDate>
       <volumeBankedNucleicAcid><![CDATA[0]]></volumeBankedNucleicAcid>
       <concentrationBankedNucleicAcid><![CDATA[9.73]]></concentrationBankedNucleicAcid>
       <bankedNucleicAcidLocation><![CDATA[Rm2.14 DNA bank_4oC]]></bankedNucleicAcidLocation>
-      <bankedNucleicAcidIdentifier><![CDATA[19M6]]></bankedNucleicAcidIdentifier>
+      <bankedNucleicAcidIdentifier><![CDATA[19M8]]></bankedNucleicAcidIdentifier>
     </technologyHubElements>
   </sample>
   <smTechnologyHub name="2 - Cardiff">
@@ -91,8 +91,8 @@
         <methodOfTest><![CDATA[19]]></methodOfTest>
         <scopeOfTest><![CDATA[ENST00000262643:Exons2-11]]></scopeOfTest>
         <dateTestResultsReleased>2019-11-18</dateTestResultsReleased>
-        <testResult><![CDATA[c.5435, c.430923, c.54353 A>C]]></testResult>
-        <testReport><![CDATA[Tier 5 variants everywhere]]></testReport>
+        <testResult><![CDATA[No variant detected]]></testResult>
+        <testReport><![CDATA[High confidence]]></testReport>
         <testStatus>1</testStatus>
         <comments><![CDATA[These results are intended for research purposes.]]></comments>
       </test>
@@ -434,7 +434,7 @@
         <testResult><![CDATA[No variant detected]]></testResult>
         <testReport><![CDATA[High confidence]]></testReport>
         <testStatus>1</testStatus>
-        <comments><![CDATA[These results are intended for research purposes. additional comment test.]]></comments>
+        <comments><![CDATA[These results are intended for research purposes.]]></comments>
       </test>
       <test>
         <gene>56</gene>
