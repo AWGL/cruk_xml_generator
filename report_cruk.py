@@ -374,7 +374,7 @@ class ReportCruk:
         self.log.info(f"XML file copied to directory for sending to CRUK")
 
         # Start popup- on button click close popup
-        #self.root.mainloop() #TODO comment back in when not testing- no solution currently
+        self.root.mainloop() #TODO comment back in when not testing- no solution currently
 
 
 class ModuleLogger:
