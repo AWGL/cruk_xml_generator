@@ -72,7 +72,7 @@ class MyEntryWindow(Dialog):
         self.wm_title("CRUK Generator Data Entry")
         master.grid()
         self.label1 = ttk.Label(master, text="Enter sample status: options are s (sequenced), f (failed) or w "
-                                             "withdrawn)")
+                                             "(withdrawn)")
         self.label1.grid(column=0, row=0)
         self.e1 = ttk.Entry(master)
         self.e1.grid(column=1, row=0, pady=10)
