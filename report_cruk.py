@@ -233,6 +233,9 @@ class ReportCruk:
         :return: string for logging indicating that all required data for the xml file is present in the input
         dictionary
         '''
+        # Dump data to log file to help with troubleshooting (if needed)
+        self.log.debug(f"Write out of dictionary of information: {self.info_dict}")
+
         # Sample level
         for k, v in self.info_dict.items():
             try:

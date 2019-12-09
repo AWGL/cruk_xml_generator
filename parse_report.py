@@ -114,6 +114,9 @@ def get_test_status(gene_data):
         test_status = test_status_dict.get("Success")
     if gene_status == "Failure":
         test_status = test_status_dict.get("Complete Fail")
+    else:
+        raise Exception(f"Invalid status for gene. Options are Success or Failure. Status for "
+                        f"gene {gene_data.get('GENE')} is {gene_status}")
     return test_status
 
 
