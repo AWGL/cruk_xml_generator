@@ -40,7 +40,7 @@ def report_table(wb):
     data = report_tab.values
     # Starting from column D (4) of Excel workbook- known a priori
     cols = next(data)[4:]
-    data = list(data)
+    data = list(filter(lambda x: any(i is not None for i in x), list(data)))
     idx = [r[4] for r in data]
     data_subset = (islice(r, 4, None) for r in data)
     report_df = DataFrame(data_subset, index=idx, columns=cols)
@@ -112,7 +112,7 @@ def get_test_status(gene_data):
     gene_status = gene_data.get("STATUS")
     if gene_status == "Success":
         test_status = test_status_dict.get("Success")
-    if gene_status == "Failure":
+    elif gene_status == "Failure":
         test_status = test_status_dict.get("Complete Fail")
     else:
         raise Exception(f"Invalid status for gene. Options are Success or Failure. Status for "
