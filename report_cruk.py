@@ -155,9 +155,15 @@ class ReportCruk:
         checker_2_field = parse_report.get_second_checker(patient_data_frame)
         # Details are initials <space> date, split into initials and date for inputting into pdf report
         checker_1 = checker_1_field.split()[0]
-        checker_1_date = checker_1_field.split()[1]
+        try:
+            checker_1_date = checker_1_field.split()[1]
+        except IndexError:
+            raise IndexError(f"Date part is missing from checker 1 field in Excel report")
         checker_2 = checker_2_field.split()[0]
-        checker_2_date = checker_2_field.split()[1]
+        try:
+            checker_2_date = checker_2_field.split()[1]
+        except IndexError:
+            raise IndexError(f"Date part is missing from checker 2 in Excel report")
         self.info_dict["reported_by_1"] = checker_1
         self.info_dict["date_reported_1"] = checker_1_date
         self.info_dict["reported_by_2"] = checker_2

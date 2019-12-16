@@ -110,13 +110,17 @@ def get_test_status(gene_data):
     from valid_data import test_status_dict
     test_status = None
     gene_status = gene_data.get("STATUS")
-    if gene_status == "Success":
+    if gene_status.lower() == "success":
         test_status = test_status_dict.get("Success")
-    elif gene_status == "Failure":
+    elif gene_status.lower() == "failure":
         test_status = test_status_dict.get("Complete Fail")
+    elif gene_status.lower() == "partial failure":
+        test_status = test_status_dict.get("Partial Fail")
+    elif gene_status.lower() == "not tested":
+        test_status = test_status_dict.get("Not Tested")
     else:
-        raise Exception(f"Invalid status for gene. Options are Success or Failure. Status for "
-                        f"gene {gene_data.get('GENE')} is {gene_status}")
+        raise Exception(f"Invalid status for gene. Options are Success, Failure, Partial Failure or Not Tested. "
+                        f"Status for gene {gene_data.get('GENE')} is {gene_status}")
     return test_status
 
 
