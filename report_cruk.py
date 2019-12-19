@@ -195,7 +195,7 @@ class ReportCruk:
         from valid_data import test_status_dict
         from valid_data import gene_scope_dict
         from valid_data import genes_dict
-        tested = "Not tested"
+        tested = "Not Tested"
         gene_dict = {}
         for gene in gene_scope_dict.keys():
             gene_data_dict = {}
@@ -218,7 +218,7 @@ class ReportCruk:
         from valid_data import test_status_dict
         from valid_data import gene_scope_dict
         from valid_data import genes_dict
-        tested = "Not tested"
+        tested = "Not Tested"
         gene_dict = {}
         for gene in gene_scope_dict.keys():
             gene_data_dict = {}
