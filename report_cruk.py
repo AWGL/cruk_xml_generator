@@ -163,7 +163,7 @@ class ReportCruk:
         try:
             checker_2_date = checker_2_field.split()[1]
         except IndexError:
-            raise IndexError(f"Date part is missing from checker 2 in Excel report")
+            raise IndexError(f"Date part is missing from checker 2 field in Excel report")
         self.info_dict["reported_by_1"] = checker_1
         self.info_dict["date_reported_1"] = checker_1_date
         self.info_dict["reported_by_2"] = checker_2
