@@ -24,7 +24,7 @@ git clone https://github.com/AWGL/cruk_xml_generator
 Create Conda environment:
 
 ```
-conda env create cruk_report_env.yml
+conda env create -f cruk_report_env.yml
 ```
 
 Set up the config file to point to the correct locations on the local computer:
