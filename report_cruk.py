@@ -205,7 +205,7 @@ class ReportCruk:
             gene_data_dict["test_results_date"] = datetime.today().strftime('%Y-%m-%d')
             gene_data_dict["test_results"] = tested
             gene_data_dict["test_report"] = "Failed QC step- insufficient sample. Repeat sample requested if available."
-            gene_data_dict["test_status"] = test_status_dict.get(tested)
+            gene_data_dict["test_status"] = test_status_dict[tested]
             gene_data_dict["comments"] = ""
             gene_dict[gene] = gene_data_dict
         self.info_dict["genes"] = gene_dict
@@ -228,7 +228,7 @@ class ReportCruk:
             gene_data_dict["test_results_date"] = datetime.today().strftime('%Y-%m-%d')
             gene_data_dict["test_results"] = tested
             gene_data_dict["test_report"] = "Withdrawn at request of clinical hub."
-            gene_data_dict["test_status"] = test_status_dict.get(tested)
+            gene_data_dict["test_status"] = test_status_dict[tested]
             gene_data_dict["comments"] = ""
             gene_dict[gene] = gene_data_dict
         self.info_dict["genes"] = gene_dict
