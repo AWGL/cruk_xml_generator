@@ -337,7 +337,7 @@ class ReportCruk:
         self.log.debug(f"XML file {output_xml} located at {os.getcwd()} generated")
 
         # Generate name for output pdf
-        output_pdf = f"{formatted_date} {self.info_dict.get('cruk_sample_id')}.pdf"
+        output_pdf = f"{self.info_dict.get('lab_id')}R_CRUKviasFTP.pdf"
         # Check if troubleshooting pdf file exists and is already open
         if os.path.exists(os.path.join(os.getcwd(), output_pdf)):
             if not os.access(os.path.join(os.getcwd(), output_pdf), os.W_OK):
