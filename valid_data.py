@@ -40,7 +40,7 @@ genes_dict = {"BRAF": "1", "ALK": "4", "PIK3CA": "5", "PTEN": "6", "PTEN LOH": "
               "BARD1": "49", "CDK12": "50", "CHEK1": "51", "CHEK2": "52", "FANCL": "53", "PPP2R2A": "54",
               "RAD51B": "55", "RAD51D": "56", "RAD54L": "57", "ARID1A": "58"}
 
-test_status_dict = {"Success":"1", "Partial Fail": "2", "Complete Fail":"3", "Not tested":"4"}
+test_status_dict = {"Success": "1", "Partial Fail": "2", "Complete Fail": "3", "Not Tested": "4"}
 
 gene_scope_dict = {"AKT1": "ENST00000349310:Exons 3-15", "ALK": "ENST00000389048:Exons 1-29",
                    "BRAF": "ENST00000288602:Exons1-18", "CCND1": "ENST00000227507:Exons1-5",
