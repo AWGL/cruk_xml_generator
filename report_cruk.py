@@ -28,6 +28,7 @@ class ReportCruk:
         os.remove(log_file)
 
     def __init__(self, skip_gui=False):
+        self.version_number = "1.0.0"
         self.info_dict = {}
         self.status = ""
         self.sample = ""
@@ -64,12 +65,12 @@ class ReportCruk:
             self.root.grid()
             # Places popup roughly in middle of screen
             self.root.eval('tk::PlaceWindow %s center' % self.root.winfo_pathname(self.root.winfo_id()))
-            self.root.wm_title("CRUK Generator")
+            self.root.wm_title(f"CRUK Generator v.{self.version_number}")
             self.root.label = ttk.Label(text="Software is working. Please wait.")
             self.root.label.grid(column=0, row=0)
 
             # Initialise an instance of the module logger
-            self.ml = ModuleLogger(self.root)
+            self.ml = ModuleLogger(self.root, self.version_number)
             self.log = self.ml.module_logger
             self.popup = self.ml.my_message
 
@@ -388,14 +389,14 @@ class ReportCruk:
 
 class ModuleLogger:
 
-    def __init__(self, parent_window):
+    def __init__(self, parent_window, version_number):
         # Create pop-up box for entering data
         from message_box import MyEntryWindow
-        self.data_entry = MyEntryWindow(parent_window)
+        self.data_entry = MyEntryWindow(parent_window, version=version_number)
 
         # Create log file pop-up box
         from message_box import MessageBox, MyHandlerText
-        self.my_message = MessageBox(parent_window)
+        self.my_message = MessageBox(parent_window, version=version_number)
         self.module_logger = logging.getLogger(__name__)
         self.module_logger.setLevel(logging.DEBUG)
 

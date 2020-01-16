@@ -5,11 +5,12 @@ import logging
 
 class Dialog(tk.Toplevel):
 
-    def __init__(self, parent, title=None):
+    def __init__(self, parent, title=None, version="unknown"):
         tk.Toplevel.__init__(self, parent)
         self.transient(parent)
         if title:
             self.title(title)
+        self.version = version
         self.parent = parent
         self.result = None
         body = tk.Frame(self)
@@ -69,7 +70,7 @@ class Dialog(tk.Toplevel):
 class MyEntryWindow(Dialog):
     def body(self, master):
         self.grid()
-        self.wm_title("CRUK Generator Data Entry")
+        self.wm_title(f"CRUK Generator Data Entry v.{self.version}")
         master.grid()
         self.label1 = ttk.Label(master, text="Enter sample status: options are s (sequenced), f (failed) or w "
                                              "(withdrawn)")
@@ -102,14 +103,14 @@ class MyEntryWindow(Dialog):
 
 class MessageBox:
 
-    def __init__(self, parent):
+    def __init__(self, parent, version="unknown"):
         self.parent = parent
         self.top = tk.Toplevel(parent)
         self.top.grid()
         # Places popup roughly in middle of screen
         self.top.geometry("+%d+%d" % (parent.winfo_rootx() - 150,
                                   parent.winfo_rooty() - 50))
-        self.top.wm_title("CRUK Generator Log")
+        self.top.wm_title(f"CRUK Generator Log v.{version}")
         self.mybutton = tk.Button(self.top, text="OK")
         self.mybutton.grid(column=0, row=2, sticky='EW')
         self.mybutton.bind("<ButtonRelease-1>", self.button_callback)
