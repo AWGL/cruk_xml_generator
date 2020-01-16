@@ -57,7 +57,7 @@ gene_scope_dict = {"AKT1": "ENST00000349310:Exons 3-15", "ALK": "ENST00000389048
                    "STK11": "ENST00000326873:Exons1-9", "TSC1": "ENST00000298552:Exons3-23",
                    "TSC2": "ENST00000219476:Exons2-42","ARID1A": "ENST00000324856:Exons1-20",
                    "ATM": "ENST00000278616:Exons2-63", "BARD1": "ENST00000260947:Exons1-11",
-                   "BRCA1": "ENST00000357654:Exons2-23", "BRCA2": "ENST00000380152:Exons2-26",
+                   "BRCA1": "ENST00000357654:Exons2-23", "BRCA2": "ENST00000380152:Exons2-27",
                    "BRIP1": "ENST00000259008:Exons2-20", "CDK12": "ENST00000447079:Exons1-14",
                    "CHEK1": "ENST00000438015:Exons2-13", "CHEK2": "ENST00000328354:Exons2-15",
                    "FANCL": "ENST00000233741:Exons1-14", "PALB2": "ENST00000261584:Exons1-13",
