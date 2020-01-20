@@ -28,7 +28,7 @@ class ReportCruk:
         os.remove(log_file)
 
     def __init__(self, skip_gui=False):
-        self.version_number = "1.0.0"
+        self.version_number = "1.0.1"
         self.info_dict = {}
         self.status = ""
         self.sample = ""
@@ -64,7 +64,15 @@ class ReportCruk:
             self.root = tk.Tk()
             self.root.grid()
             # Places popup roughly in middle of screen
-            self.root.eval('tk::PlaceWindow %s center' % self.root.winfo_pathname(self.root.winfo_id()))
+            w = self.root.winfo_reqwidth()
+            h = self.root.winfo_reqheight()
+            sw = self.root.winfo_screenwidth()
+            sh = self.root.winfo_screenheight()
+            x = (sw / 2) - w
+            y = (sh / 2) - h
+            self.root.x = x
+            self.root.y = y
+            self.root.geometry("+%d+%d" % (x, y))
             self.root.wm_title(f"CRUK Generator v.{self.version_number}")
             self.root.label = ttk.Label(text="Software is working. Please wait.")
             self.root.label.grid(column=0, row=0)
