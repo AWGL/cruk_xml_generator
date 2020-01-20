@@ -21,8 +21,7 @@ class Dialog(tk.Toplevel):
         if not self.initial_focus:
             self.initial_focus = self
         self.protocol("WM_DELETE_WINDOW", self.cancel)
-        self.geometry("+%d+%d" % (parent.winfo_rootx() - 200,
-                                    parent.winfo_rooty() - 50))
+        self.geometry("+%d+%d" % (self.parent.x, self.parent.y))
         self.initial_focus.focus_set()
         self.wait_window(self)
 
