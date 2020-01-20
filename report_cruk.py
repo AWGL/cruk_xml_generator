@@ -28,7 +28,7 @@ class ReportCruk:
         os.remove(log_file)
 
     def __init__(self, skip_gui=False):
-        self.version_number = "1.0.0"
+        self.version_number = "1.0.1"
         self.info_dict = {}
         self.status = ""
         self.sample = ""
