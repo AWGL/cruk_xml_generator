@@ -107,8 +107,7 @@ class MessageBox:
         self.top = tk.Toplevel(parent)
         self.top.grid()
         # Places popup roughly in middle of screen
-        self.top.geometry("+%d+%d" % (parent.winfo_rootx() - 150,
-                                  parent.winfo_rooty() - 50))
+        self.top.geometry("+%d+%d" % (self.parent.x, self.parent.y))
         self.top.wm_title(f"CRUK Generator Log v.{version}")
         self.mybutton = tk.Button(self.top, text="OK")
         self.mybutton.grid(column=0, row=2, sticky='EW')
